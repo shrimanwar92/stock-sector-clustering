@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quant Rotation & Execution Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .mono-font { font-family: 'JetBrains Mono', monospace; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #111827; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+    </style>
+</head>
+<body class="bg-[#0b0f19] text-gray-100 min-h-screen flex flex-col antialiased">
+
+    <!-- TOP HEADER BAR -->
+    <header class="border-b border-gray-800 bg-[#111827]/80 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-emerald-500/10">
+                <i class="fa-solid fa-chart-line-up text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                    QUANT WAVE <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-mono">PHASE 2</span>
+                </h1>
+                <p class="text-xs text-gray-400">Live Top-Down Sector Rotation & Signal Firewall Environment</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <div class="bg-[#1f2937] border border-gray-800 px-3 py-1.5 rounded-lg flex items-center gap-2 text-xs text-gray-300">
+                <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Workspace: Nifty 500 Engine</span>
+            </div>
+            <div class="text-xs text-gray-400 text-right hidden sm:block">
+                <p class="font-semibold text-gray-200">System Log Executed</p>
+                <p class="font-mono">2026-06-15 15:52:58</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN BODY SECTION -->
+    <main class="flex-1 p-6 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- LEFT COLUMN: CONTROLS & SECTOR ROTATION STATE -->
+        <section class="lg:col-span-5 flex flex-col gap-6">
+            
+            <!-- CONTROLS & STRATEGY TUNER -->
+            <div class="bg-[#111827] border border-gray-800 rounded-2xl p-5 shadow-xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-300 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-emerald-400"></i> Rules Firewall Settings
+                    </h3>
+                    <button onclick="resetSliders()" class="text-xs text-emerald-400 hover:text-emerald-300 transition flex items-center gap-1">
+                        <i class="fa-solid fa-rotate-left"></i> Reset Defaults
+                    </button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-1">
+                            <span class="text-gray-400">Max Allowable RSI (Overbought)</span>
+                            <span class="text-emerald-400 font-mono" id="rsi-val">75</span>
+                        </div>
+                        <input type="range" id="rsi-slider" min="65" max="85" value="75" step="1" oninput="updateRules()"
+                            class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-1">
+                            <span class="text-gray-400">Max EMA Distance Allowance</span>
+                            <span class="text-emerald-400 font-mono" id="ema-val">8.0%</span>
+                        </div>
+                        <input type="range" id="ema-slider" min="4" max="15" value="8" step="0.5" oninput="updateRules()"
+                            class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-1">
+                            <span class="text-gray-400">Min Vol Ratio (Breakout)</span>
+                            <span class="text-emerald-400 font-mono" id="vol-val">1.25x</span>
+                        </div>
+                        <input type="range" id="vol-slider" min="1.0" max="2.0" value="1.25" step="0.05" oninput="updateRules()"
+                            class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-1">
+                            <span class="text-gray-400">Asset Price Floor Limit</span>
+                            <span class="text-emerald-400 font-mono" id="price-val">₹15</span>
+                        </div>
+                        <input type="range" id="price-slider" min="5" max="100" value="15" step="5" oninput="updateRules()"
+                            class="w-full h-1.5 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-emerald-500">
+                    </div>
+                </div>
+
+                <div class="mt-4 p-3 bg-emerald-500/5 border border-emerald-500/10 rounded-xl flex items-start gap-3">
+                    <i class="fa-solid fa-circle-info text-emerald-400 mt-0.5 text-sm"></i>
+                    <p class="text-[11px] text-gray-400 leading-relaxed">
+                        Tuning parameters triggers real-time execution audits across the <span class="text-gray-200 font-semibold">96 target tickers</span> in the sandbox. Overbought vetoes will auto-adjust based on the selected RSI threshold.
+                    </p>
+                </div>
+            </div>
+
+            <!-- REGIME ROTATION SUMMARY CARD -->
+            <div class="bg-[#111827] border border-gray-800 rounded-2xl p-5 shadow-xl flex-1 flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-gray-300">
+                        <i class="fa-solid fa-layer-group text-teal-400 mr-1"></i> Macro Cluster Regimes
+                    </h3>
+                    <span class="text-xs bg-teal-500/10 text-teal-300 px-2 py-0.5 rounded border border-teal-500/10 font-mono">5 Clusters</span>
+                </div>
+
+                <div class="space-y-3 overflow-y-auto flex-1 pr-1" style="max-height: 380px;">
+                    <div class="bg-gray-900/50 border border-gray-800 hover:border-emerald-500/30 rounded-xl p-3.5 transition cursor-pointer" onclick="filterByRegime('🔥 ULTRA_MOMENTUM_LEADERS')">
+                        <div class="flex justify-between items-start mb-1.5">
+                            <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                                <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                                🔥 ULTRA MOMENTUM LEADERS
+                            </span>
+                            <span class="text-[10px] font-mono text-gray-400 bg-gray-800 px-1.5 py-0.5 rounded">High Speed Highway</span>
+                        </div>
+                        <p class="text-xs text-gray-300 leading-relaxed mb-2">Steady upward grind with strong institutional backing holding shares overnight.</p>
+                        <div class="flex items-center gap-4 text-[10px] text-gray-400 font-mono">
+                            <span><i class="fa-solid fa-arrow-trend-up text-emerald-400 mr-1"></i>Avg Return: +65.9%</span>
+                            <span><i class="fa-solid fa-truck-ramp-box text-blue-400 mr-1"></i>Avg Delivery: 64.6%</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900/50 border border-gray-800 hover:border-cyan-500/30 rounded-xl p-3.5 transition cursor-pointer" onclick="filterByRegime('🚀 ACTIVE_BREAKOUT_FIELDS')">
+                        <div class="flex justify-between items-start mb-1.5">
+                            <span class="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
+                                <span class="h-2 w-2 rounded-full bg-cyan-400"></span>
+                                🚀 ACTIVE BREAKOUT FIELDS
+                            </span>
+                            <span class="text-[10px] font-mono text-gray-400 bg-gray-800 px-1.5 py-0.5 rounded">The Rocket Launch</span>
+                        </div>
+                        <p class="text-xs text-gray-300 leading-relaxed mb-2">Rapid momentum, but low overnight delivery suggests heavy intraday retail churn.</p>
+                        <div class="flex items-center gap-4 text-[10px] text-gray-400 font-mono">
+                            <span><i class="fa-solid fa-arrow-trend-up text-cyan-400 mr-1"></i>Avg Return: +43.9%</span>
+                            <span><i class="fa-solid fa-truck-ramp-box text-blue-400 mr-1"></i>Avg Delivery: 23.0%</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900/50 border border-gray-800 hover:border-yellow-500/30 rounded-xl p-3.5 transition cursor-pointer" onclick="filterByRegime('📈 STABLE_UPWARD_ACCUMULATION')">
+                        <div class="flex justify-between items-start mb-1.5">
+                            <span class="text-xs font-bold text-yellow-400 flex items-center gap-1.5">
+                                <span class="h-2 w-2 rounded-full bg-yellow-400"></span>
+                                📈 STABLE UPWARD ACCUMULATION
+                            </span>
+                            <span class="text-[10px] font-mono text-gray-400 bg-gray-800 px-1.5 py-0.5 rounded">Packing Shopping Cart</span>
+                        </div>
+                        <p class="text-xs text-gray-300 leading-relaxed mb-2">Quiet daily fund purchases keeping volume flat while prices creep up.</p>
+                        <div class="flex items-center gap-4 text-[10px] text-gray-400 font-mono">
+                            <span><i class="fa-solid fa-arrow-trend-up text-yellow-400 mr-1"></i>Avg Return: +34.0%</span>
+                            <span><i class="fa-solid fa-truck-ramp-box text-blue-400 mr-1"></i>Avg Delivery: 13.0%</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900/50 border border-gray-800 hover:border-indigo-500/30 rounded-xl p-3.5 transition cursor-pointer" onclick="filterByRegime('⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION')">
+                        <div class="flex justify-between items-start mb-1.5">
+                            <span class="text-xs font-bold text-indigo-400 flex items-center gap-1.5">
+                                <span class="h-2 w-2 rounded-full bg-indigo-400"></span>
+                                ⏳ NEUTRAL SIDEWAYS CONSOLIDATION
+                            </span>
+                            <span class="text-[10px] font-mono text-gray-400 bg-gray-800 px-1.5 py-0.5 rounded">The Waiting Room</span>
+                        </div>
+                        <p class="text-xs text-gray-300 leading-relaxed mb-2">Sideways coiling, low active momentum. Ready to swing either way.</p>
+                        <div class="flex items-center gap-4 text-[10px] text-gray-400 font-mono">
+                            <span><i class="fa-solid fa-arrow-trend-up text-indigo-400 mr-1"></i>Avg Return: +2.3%</span>
+                            <span><i class="fa-solid fa-truck-ramp-box text-blue-400 mr-1"></i>Avg Delivery: 43.7%</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-900/50 border border-gray-800 hover:border-rose-500/30 rounded-xl p-3.5 transition cursor-pointer" onclick="filterByRegime('❄️ DEEP_BEARISH_CAPITULATION')">
+                        <div class="flex justify-between items-start mb-1.5">
+                            <span class="text-xs font-bold text-rose-400 flex items-center gap-1.5">
+                                <span class="h-2 w-2 rounded-full bg-rose-400"></span>
+                                ❄️ DEEP BEARISH CAPITALIZATION
+                            </span>
+                            <span class="text-[10px] font-mono text-gray-400 bg-gray-800 px-1.5 py-0.5 rounded">Clearance Rack</span>
+                        </div>
+                        <p class="text-xs text-gray-300 leading-relaxed mb-2">High-volume panic dumping across retail and institutional segments.</p>
+                        <div class="flex items-center gap-4 text-[10px] text-gray-400 font-mono">
+                            <span><i class="fa-solid fa-arrow-trend-up text-rose-400 mr-1"></i>Avg Return: +1.2%</span>
+                            <span><i class="fa-solid fa-truck-ramp-box text-blue-400 mr-1"></i>Avg Delivery: 50.2%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT COLUMN: SIGNAL INTERACTION VIEWPORT -->
+        <section class="lg:col-span-7 flex flex-col gap-6">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div class="bg-[#111827] border border-gray-800 p-4 rounded-xl flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-400 uppercase">Insider Breakouts</p>
+                        <p class="text-xl font-bold text-emerald-400 font-mono mt-1" id="stat-insiders">0</p>
+                    </div>
+                    <div class="h-8 w-8 bg-emerald-500/10 text-emerald-400 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                </div>
+                <div class="bg-[#111827] border border-gray-800 p-4 rounded-xl flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-400 uppercase">Launchpads</p>
+                        <p class="text-xl font-bold text-yellow-400 font-mono mt-1" id="stat-launchpads">0</p>
+                    </div>
+                    <div class="h-8 w-8 bg-yellow-500/10 text-yellow-400 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>
+                </div>
+                <div class="bg-[#111827] border border-gray-800 p-4 rounded-xl flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-400 uppercase">Buy Vetoes</p>
+                        <p class="text-xl font-bold text-red-400 font-mono mt-1" id="stat-vetoes">0</p>
+                    </div>
+                    <div class="h-8 w-8 bg-red-500/10 text-red-400 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-ban"></i>
+                    </div>
+                </div>
+                <div class="bg-[#111827] border border-gray-800 p-4 rounded-xl flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-semibold text-gray-400 uppercase">Active Scanners</p>
+                        <p class="text-xl font-bold text-teal-400 font-mono mt-1" id="stat-scanned">0</p>
+                    </div>
+                    <div class="h-8 w-8 bg-teal-500/10 text-teal-400 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-crosshairs"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIGNAL DATATABLE CARD -->
+            <div class="bg-[#111827] border border-gray-800 rounded-2xl p-5 shadow-xl flex-1 flex flex-col min-h-[480px]">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+                    <div>
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-gray-300">
+                            <i class="fa-solid fa-wallet text-emerald-400 mr-1"></i> Firewall Execution Ledger
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-0.5">Filter, review, and extract dynamic trade orders</p>
+                    </div>
+                    
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <div class="relative flex-1 sm:flex-none">
+                            <input type="text" id="ticker-search" placeholder="Search Ticker..." oninput="filterData()"
+                                class="bg-gray-900 border border-gray-800 rounded-lg px-3 py-1.5 text-xs text-gray-300 placeholder-gray-500 focus:outline-none focus:border-emerald-500 w-full">
+                            <i class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-xs text-gray-500"></i>
+                        </div>
+                        <button onclick="copyToClipboard()" class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+                            <i class="fa-solid fa-copy"></i> Export Signals
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-4 p-2 bg-gray-900/50 rounded-xl border border-gray-800">
+                    <button onclick="setFilter('ALL')" class="filter-btn text-[11px] font-bold px-2.5 py-1 rounded-md bg-gray-800 text-gray-300 hover:bg-gray-700 transition" id="filter-all">ALL</button>
+                    <button onclick="setFilter('🚀 INSIDER BREAKOUT')" class="filter-btn text-[11px] font-bold px-2.5 py-1 rounded-md text-emerald-400 bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/20 transition">INSIDER BREAKOUT</button>
+                    <button onclick="setFilter('🚀 ACTIVE BREAKOUT')" class="filter-btn text-[11px] font-bold px-2.5 py-1 rounded-md text-cyan-400 bg-cyan-500/5 hover:bg-cyan-500/10 border border-cyan-500/20 transition">ACTIVE BREAKOUT</button>
+                    <button onclick="setFilter('🏢 INSTITUTIONAL LAUNCHPAD')" class="filter-btn text-[11px] font-bold px-2.5 py-1 rounded-md text-yellow-400 bg-yellow-500/5 hover:bg-yellow-500/10 border border-yellow-500/20 transition">LAUNCHPAD</button>
+                    <button onclick="setFilter('🛑 OVEREXTENDED')" class="filter-btn text-[11px] font-bold px-2.5 py-1 rounded-md text-red-400 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 transition">VETOES</button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto max-h-[500px]">
+                    <table class="w-full text-left text-xs text-gray-300">
+                        <thead class="text-[10px] font-bold uppercase tracking-wider text-gray-500 border-b border-gray-800 bg-gray-900/20 sticky top-0 z-10">
+                            <tr>
+                                <th class="py-3 px-4 bg-[#111827]">Symbol</th>
+                                <th class="py-3 px-4 bg-[#111827]">Strategic Label</th>
+                                <th class="py-3 px-4 text-right bg-[#111827]">Close</th>
+                                <th class="py-3 px-4 text-right bg-[#111827]">RSI</th>
+                                <th class="py-3 px-4 text-right bg-[#111827]">EMA Dist</th>
+                                <th class="py-3 px-4 bg-[#111827]">Decision Reasoning</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ticker-rows" class="divide-y divide-gray-800/60"></tbody>
+                    </table>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-gray-800 flex justify-between items-center text-[11px] text-gray-500">
+                    <span>Showing <strong id="visible-count" class="text-gray-400 font-bold">0</strong> of <strong class="text-gray-400 font-bold" id="total-count">0</strong> tickers</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- DETAILED STOCK FOCUS SUMMARY CARD FOR THE SELECTED ROW -->
+    <section class="max-w-7xl w-full mx-auto px-6 pb-8">
+        <div class="bg-[#111827] border border-gray-800 rounded-2xl p-6 shadow-xl" id="detail-pane" style="display: none;">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4 pb-4 border-b border-gray-800/60">
+                <div>
+                    <h2 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                        <span id="detail-symbol" class="font-mono text-emerald-400">TICKER</span> - 
+                        <span id="detail-sector" class="text-sm text-gray-400 font-normal">Sector Category</span>
+                    </h2>
+                    <p class="text-xs text-gray-400 mt-1">LLM Semantic Analysis and Quantitative Audit Summary</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span id="detail-label" class="px-2.5 py-1 rounded text-[11px] font-bold border">LABEL</span>
+                    <span id="detail-sentiment" class="px-2.5 py-1 rounded text-[11px] font-bold border">SENTIMENT</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Catalyst -->
+                <div class="bg-gray-900/40 border border-gray-800/80 p-4 rounded-xl">
+                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-bullhorn text-emerald-400"></i> Fundamental Catalyst
+                    </h4>
+                    <p id="detail-catalyst" class="text-xs text-gray-200 leading-relaxed">No active fundamental catalyst logged for this ticker session.</p>
+                </div>
+                <!-- Strategic Threat -->
+                <div class="bg-gray-900/40 border border-gray-800/80 p-4 rounded-xl">
+                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-shield-halved text-rose-400"></i> Structural Risk Threat
+                    </h4>
+                    <p id="detail-threat" class="text-xs text-gray-200 leading-relaxed">No operational metrics logged.</p>
+                </div>
+                <!-- Confidence Score Radial -->
+                <div class="bg-gray-900/40 border border-gray-800/80 p-4 rounded-xl flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-gauge-high text-cyan-400"></i> System Decision Confidence
+                        </h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">Qualitative analysis mapping score combined with indicators.</p>
+                    </div>
+                    <div class="flex items-center gap-4 mt-3">
+                        <div class="text-3xl font-extrabold text-white font-mono" id="detail-confidence">0%</div>
+                        <div class="w-full bg-gray-800 rounded-full h-2.5">
+                            <div class="bg-cyan-500 h-2.5 rounded-full" id="detail-confidence-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-gray-850 bg-[#0b0f19] py-4 px-6 text-center text-xs text-gray-500 flex flex-wrap justify-between items-center gap-4 mt-auto">
+        <p>© 2026 Quant Trading Framework Engine. Phase 2 Interactive Sandbox.</p>
+    </footer>
+
+    <script>
+        const initialTickers = [
+            {
+                        "symbol": "TTML",
+                        "label": "\ud83d\ude80 INSIDER BREAKOUT",
+                        "close": 46.44,
+                        "rsi": 65.82278474151013,
+                        "emaDist": 7.073309144867683,
+                        "volRatio": 3.0937481051359232,
+                        "macdAccel": 0.015720461257003215,
+                        "ibaSco": 2,
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Significant insider buying activity signaling strong confidence in future prospects.",
+                        "confidence": 90,
+                        "threat": "Intensified competition in the telecommunication sector and potential regulatory changes."
+            },
+            {
+                        "symbol": "MRPL",
+                        "label": "\ud83d\ude80 INSIDER BREAKOUT",
+                        "close": 161.01,
+                        "rsi": 61.60972783511801,
+                        "emaDist": 3.2483008740714276,
+                        "volRatio": 2.0690839102653085,
+                        "macdAccel": 0.15689442222488825,
+                        "ibaSco": 2,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Insider activity suggests robust refining margins and favorable outlook for crude oil prices.",
+                        "confidence": 88,
+                        "threat": "Volatility in crude oil prices and government policy shifts affecting refining margins."
+            },
+            {
+                        "symbol": "PETRONET",
+                        "label": "\ud83d\ude80 INSIDER BREAKOUT",
+                        "close": 274.75,
+                        "rsi": 52.58620688068517,
+                        "emaDist": 1.4910333384825976,
+                        "volRatio": 1.6797790657001972,
+                        "macdAccel": 0.3651988949349827,
+                        "ibaSco": 1,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Insider confidence driven by strong LNG demand and expansion of gas infrastructure.",
+                        "confidence": 88,
+                        "threat": "Global LNG price fluctuations and potential delays in pipeline projects."
+            },
+            {
+                        "symbol": "JSWINFRA",
+                        "label": "\ud83d\ude80 ACTIVE BREAKOUT",
+                        "close": 291.0,
+                        "rsi": 61.31034481574693,
+                        "emaDist": 5.410884185089384,
+                        "volRatio": 2.019910492620722,
+                        "macdAccel": 0.8515500113617092,
+                        "ibaSco": 0,
+                        "sector": "SERVICES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Strong technical breakout driven by increased government spending on infrastructure.",
+                        "confidence": 85,
+                        "threat": "Slowdown in infrastructure development or unexpected changes in regulatory environment."
+            },
+            {
+                        "symbol": "HINDPETRO",
+                        "label": "\ud83d\ude80 ACTIVE BREAKOUT",
+                        "close": 388.9,
+                        "rsi": 49.65706446552173,
+                        "emaDist": 1.8017861613403765,
+                        "volRatio": 1.3394512613226126,
+                        "macdAccel": 0.04956524910655791,
+                        "ibaSco": 0,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Positive momentum from strong refining margins and steady demand for petroleum products.",
+                        "confidence": 85,
+                        "threat": "Global crude oil price volatility and government control over fuel pricing."
+            },
+            {
+                        "symbol": "KANSAINER",
+                        "label": "\ud83d\ude80 ACTIVE BREAKOUT",
+                        "close": 216.5,
+                        "rsi": 45.75971727675879,
+                        "emaDist": 1.3599479678367732,
+                        "volRatio": 1.3421107860436183,
+                        "macdAccel": 0.9327583001824107,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Active breakout on expectations of robust demand in the consumer durables sector and festive season sales.",
+                        "confidence": 82,
+                        "threat": "Rising raw material costs and increasing competition from unorganized players."
+            },
+            {
+                        "symbol": "NSLNISP",
+                        "label": "\ud83c\udfe2 INSTITUTIONAL LAUNCHPAD",
+                        "close": 47.24,
+                        "rsi": 57.012750419026496,
+                        "emaDist": 0.609631405415989,
+                        "volRatio": 0.46347807747489417,
+                        "macdAccel": -0.5752107287395838,
+                        "ibaSco": 2,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Institutional interest in the metals and mining sector, possibly due to favorable commodity prices.",
+                        "confidence": 78,
+                        "threat": "Volatile commodity prices and potential environmental regulatory changes."
+            },
+            {
+                        "symbol": "NMDC",
+                        "label": "\ud83c\udfe2 INSTITUTIONAL LAUNCHPAD",
+                        "close": 90.93,
+                        "rsi": 55.551550080110985,
+                        "emaDist": 0.4362705414474315,
+                        "volRatio": 0.7179882702838751,
+                        "macdAccel": -0.24433718582609742,
+                        "ibaSco": 2,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Institutional backing indicates sustained demand for iron ore and positive sentiment in mining.",
+                        "confidence": 78,
+                        "threat": "Fluctuations in global iron ore prices and government policies on mining leases."
+            },
+            {
+                        "symbol": "NHPC",
+                        "label": "\ud83c\udfe2 INSTITUTIONAL LAUNCHPAD",
+                        "close": 73.79,
+                        "rsi": 39.76712939736949,
+                        "emaDist": -2.8461601150363958,
+                        "volRatio": 0.44679603609487745,
+                        "macdAccel": 0.08541727383371389,
+                        "ibaSco": 3,
+                        "sector": "POWER",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Institutional interest driven by government push for renewable energy and hydropower projects.",
+                        "confidence": 75,
+                        "threat": "Delays in project execution and impact of adverse weather on hydropower generation."
+            },
+            {
+                        "symbol": "ATGL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 728.5,
+                        "rsi": 59.59685598165732,
+                        "emaDist": 2.949421926461155,
+                        "volRatio": 0.4032058799876418,
+                        "macdAccel": -6.472929110869366,
+                        "ibaSco": 0,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Launchpad momentum from expansion of city gas distribution networks and growing demand for natural gas.",
+                        "confidence": 70,
+                        "threat": "Regulatory interventions in gas pricing and competition from alternative energy sources."
+            },
+            {
+                        "symbol": "ADANIENSOL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1489.6,
+                        "rsi": 58.20034608572427,
+                        "emaDist": 1.0218900962607804,
+                        "volRatio": 0.5138715993405587,
+                        "macdAccel": -15.232946880188614,
+                        "ibaSco": 0,
+                        "sector": "POWER",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Positive outlook for sustainable energy solutions and robust project pipeline.",
+                        "confidence": 70,
+                        "threat": "High capital expenditure requirements and regulatory challenges for new energy projects."
+            },
+            {
+                        "symbol": "HFCL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 171.86,
+                        "rsi": 62.13193802329079,
+                        "emaDist": 3.168774646507106,
+                        "volRatio": 0.480527887705436,
+                        "macdAccel": -2.9768905772479073,
+                        "ibaSco": 0,
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Launchpad driven by strong demand for optical fiber cables and telecom equipment due to 5G rollout.",
+                        "confidence": 70,
+                        "threat": "Intense competition in telecom equipment manufacturing and rapid technological obsolescence."
+            },
+            {
+                        "symbol": "GSPL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 268.35,
+                        "rsi": 44.837166219667836,
+                        "emaDist": -3.233961997737077,
+                        "volRatio": 1.3874629594900585,
+                        "macdAccel": -3.1795007362851324,
+                        "ibaSco": 1,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Positive sentiment from expansion of natural gas pipeline infrastructure and industrial demand growth.",
+                        "confidence": 70,
+                        "threat": "Regulatory dependency for pipeline tariffs and competition from other energy transport modes."
+            },
+            {
+                        "symbol": "CHENNPETRO",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1137.7,
+                        "rsi": 67.88774002673435,
+                        "emaDist": 1.70291214694291,
+                        "volRatio": 0.9928458723546891,
+                        "macdAccel": -14.067710507983932,
+                        "ibaSco": 1,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Launchpad activity indicates improved refining margins and stable demand for petroleum products.",
+                        "confidence": 68,
+                        "threat": "Volatility in crude oil prices and stricter environmental regulations on refining."
+            },
+            {
+                        "symbol": "JSWENERGY",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 559.35,
+                        "rsi": 52.943313948101704,
+                        "emaDist": -0.9413166287952869,
+                        "volRatio": 0.7310453199043575,
+                        "macdAccel": -3.307479425973746,
+                        "ibaSco": 0,
+                        "sector": "POWER",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Strong power demand outlook and strategic expansion into renewable energy projects.",
+                        "confidence": 70,
+                        "threat": "Fuel supply risks and regulatory challenges impacting power tariffs."
+            },
+            {
+                        "symbol": "REDINGTON",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 236.13,
+                        "rsi": 60.09911598122974,
+                        "emaDist": 2.3991693007142967,
+                        "volRatio": 0.4330915711435211,
+                        "macdAccel": -1.345649179936276,
+                        "ibaSco": 1,
+                        "sector": "SERVICES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Growth in IT hardware and software distribution market, boosted by digital transformation initiatives.",
+                        "confidence": 68,
+                        "threat": "Supply chain disruptions and intense competition in the distribution sector."
+            },
+            {
+                        "symbol": "VIPIND",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 314.95,
+                        "rsi": 54.483021741604254,
+                        "emaDist": 1.0624405717151635,
+                        "volRatio": 0.1585116817749887,
+                        "macdAccel": -2.566137651174541,
+                        "ibaSco": 1,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Increased travel and tourism driving demand for luggage; brand strength and market positioning.",
+                        "confidence": 65,
+                        "threat": "Economic slowdown impacting discretionary consumer spending and competition from unorganized sector."
+            },
+            {
+                        "symbol": "ADANIGREEN",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1485.7,
+                        "rsi": 58.41606498010419,
+                        "emaDist": 3.1785902904236627,
+                        "volRatio": 0.4961341097520271,
+                        "macdAccel": -6.937748048074198,
+                        "ibaSco": 1,
+                        "sector": "POWER",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Government's renewable energy push and a strong pipeline of green energy projects.",
+                        "confidence": 72,
+                        "threat": "High debt levels associated with large-scale project financing and land acquisition challenges."
+            },
+            {
+                        "symbol": "ADANIENT",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 2921.6,
+                        "rsi": 55.16448785983006,
+                        "emaDist": 2.3348068534414232,
+                        "volRatio": 0.5250320783471314,
+                        "macdAccel": -14.268987814369268,
+                        "ibaSco": 1,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Diversified business model benefiting from broad infrastructure development and positive market sentiment.",
+                        "confidence": 75,
+                        "threat": "Regulatory and political risks due to its vast business interests and scrutiny on group debt."
+            },
+            {
+                        "symbol": "VAIBHAVGBL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 230.46,
+                        "rsi": 58.32908811654599,
+                        "emaDist": 2.086150479971674,
+                        "volRatio": 0.6844987856533358,
+                        "macdAccel": -0.24426548459501296,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "E-commerce growth and expanding demand for lifestyle and jewelry products in international markets.",
+                        "confidence": 65,
+                        "threat": "Currency fluctuations and intense competition from larger e-commerce platforms."
+            },
+            {
+                        "symbol": "GUJGASLTD",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 388.0,
+                        "rsi": 58.23271129730783,
+                        "emaDist": 0.5889510278578292,
+                        "volRatio": 0.582125816487727,
+                        "macdAccel": -2.5153416532519834,
+                        "ibaSco": 1,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Expansion of natural gas supply network in Gujarat and recovering industrial demand.",
+                        "confidence": 70,
+                        "threat": "Volatility in natural gas prices and regulatory caps on distribution tariffs."
+            },
+            {
+                        "symbol": "SAFARI",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1535.1,
+                        "rsi": 50.850661624213586,
+                        "emaDist": -0.48770657123999756,
+                        "volRatio": 0.4004081610543367,
+                        "macdAccel": -10.33415984636869,
+                        "ibaSco": 1,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Increased leisure travel boosting luggage sales; new product launches and market penetration.",
+                        "confidence": 65,
+                        "threat": "Impact of economic downturns on consumer discretionary spending and raw material price increases."
+            },
+            {
+                        "symbol": "IGL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 163.52,
+                        "rsi": 61.958793643851244,
+                        "emaDist": 1.1171328231662865,
+                        "volRatio": 0.5326977620147889,
+                        "macdAccel": -0.23993060329805516,
+                        "ibaSco": 0,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Expansion of CNG/PNG infrastructure in Delhi NCR and government's focus on cleaner fuels.",
+                        "confidence": 70,
+                        "threat": "Regulatory price controls and increasing competition from electric vehicles."
+            },
+            {
+                        "symbol": "GAIL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 170.5,
+                        "rsi": 65.98751229300609,
+                        "emaDist": 3.006686113252469,
+                        "volRatio": 0.7704037439338993,
+                        "macdAccel": -0.03671711033233538,
+                        "ibaSco": 0,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Growth in natural gas demand and pipeline transmission capacity; diversified business portfolio.",
+                        "confidence": 72,
+                        "threat": "Global natural gas price volatility and competition in the petrochemical segment."
+            },
+            {
+                        "symbol": "DIXON",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 11546.0,
+                        "rsi": 45.88400374151432,
+                        "emaDist": 1.366396207085497,
+                        "volRatio": 0.9013912988339532,
+                        "macdAccel": -9.23901468222158,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Strong demand for electronic manufacturing services, bolstered by government PLI schemes.",
+                        "confidence": 75,
+                        "threat": "Dependency on key clients, intense competition, and rapid technological shifts in electronics."
+            },
+            {
+                        "symbol": "FSL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 247.55,
+                        "rsi": 34.14193158839855,
+                        "emaDist": -2.6470198444490287,
+                        "volRatio": 0.3748999267042587,
+                        "macdAccel": -1.260051296847994,
+                        "ibaSco": 0,
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "ROUTE",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 521.9,
+                        "rsi": 53.935098838082105,
+                        "emaDist": 0.5139951773345238,
+                        "volRatio": 0.5021181318005863,
+                        "macdAccel": -1.0275950711508373,
+                        "ibaSco": 1,
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "ITI",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 299.25,
+                        "rsi": 59.383259897244656,
+                        "emaDist": 1.3046672098047032,
+                        "volRatio": 0.5703291396856531,
+                        "macdAccel": -0.7647839998114194,
+                        "ibaSco": 0,
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "MGL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1094.9,
+                        "rsi": 58.84428760113007,
+                        "emaDist": 1.248387179579029,
+                        "volRatio": 0.7942772044850646,
+                        "macdAccel": 2.0682704036815096,
+                        "ibaSco": 0,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "BPCL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 302.35,
+                        "rsi": 54.845656844682864,
+                        "emaDist": 2.5604566107325835,
+                        "volRatio": 1.0874398262960745,
+                        "macdAccel": 0.8235960979271377,
+                        "ibaSco": 0,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "ADANIPORTS",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1812.9,
+                        "rsi": 54.77590007065811,
+                        "emaDist": 1.4937429769019932,
+                        "volRatio": 1.0987179011718675,
+                        "macdAccel": -1.4231180927174591,
+                        "ibaSco": 0,
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "INDIGOPNTS",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 995.2,
+                        "rsi": 48.11059907523712,
+                        "emaDist": 3.266801542942827,
+                        "volRatio": 0.5566682668205705,
+                        "macdAccel": 3.8378558975928883,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "KAJARIACER",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1082.3,
+                        "rsi": 57.30550284122527,
+                        "emaDist": -0.1408278276784973,
+                        "volRatio": 0.6284304843122496,
+                        "macdAccel": -0.9414986956103952,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "JSWSTEEL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1297.6,
+                        "rsi": 53.37800111252208,
+                        "emaDist": 1.1763111804101507,
+                        "volRatio": 0.6900298967323087,
+                        "macdAccel": 2.418489507089946,
+                        "ibaSco": 0,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "TITAN",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 4184.0,
+                        "rsi": 55.74167952305445,
+                        "emaDist": 0.9430359388463819,
+                        "volRatio": 0.907245563816644,
+                        "macdAccel": -6.597140436653284,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "CASTROLIND",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 182.68,
+                        "rsi": 53.20512812554785,
+                        "emaDist": -0.17910374649591598,
+                        "volRatio": 0.7489103129502972,
+                        "macdAccel": -0.06890085290991943,
+                        "ibaSco": 0,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "IOC",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 140.94,
+                        "rsi": 52.27765724413116,
+                        "emaDist": 1.408049522013652,
+                        "volRatio": 0.8207622673811794,
+                        "macdAccel": 0.1475813808734312,
+                        "ibaSco": 0,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "LLOYDSME",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1761.9,
+                        "rsi": 52.72606382815125,
+                        "emaDist": 1.1228276201524063,
+                        "volRatio": 0.8781687012774965,
+                        "macdAccel": 0.09789349256664082,
+                        "ibaSco": 0,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "GPPL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 153.88,
+                        "rsi": 52.63500322911873,
+                        "emaDist": -0.38419931130779383,
+                        "volRatio": 0.538397611395837,
+                        "macdAccel": -0.26106729696491826,
+                        "ibaSco": 0,
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "INDUSTOWER",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 421.2,
+                        "rsi": 41.11384110441287,
+                        "emaDist": -0.6497542633016706,
+                        "volRatio": 0.6477439632589573,
+                        "macdAccel": -0.9002288533983869,
+                        "ibaSco": 0,
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "VOLTAS",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1285.4,
+                        "rsi": 53.63904080458166,
+                        "emaDist": -0.08963387744685948,
+                        "volRatio": 0.46126331215163596,
+                        "macdAccel": -0.6864340632140546,
+                        "ibaSco": 1,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "ADANIPOWER",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 223.07,
+                        "rsi": 52.244702493338615,
+                        "emaDist": -1.0413764627815767,
+                        "volRatio": 0.6470175187365764,
+                        "macdAccel": -0.8032010658256068,
+                        "ibaSco": 0,
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "CAMPUS",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 238.4,
+                        "rsi": 51.5598729549442,
+                        "emaDist": -1.4647574126915508,
+                        "volRatio": 0.3559006342476671,
+                        "macdAccel": -0.6880600799846692,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "BHARTIARTL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1822.5,
+                        "rsi": 38.78954607728994,
+                        "emaDist": -0.044731796138295664,
+                        "volRatio": 0.6357511113680445,
+                        "macdAccel": 2.246004052157991,
+                        "ibaSco": 0,
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "BERGEPAINT",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 515.15,
+                        "rsi": 55.95744680184337,
+                        "emaDist": 2.299992493542587,
+                        "volRatio": 1.2265001916385805,
+                        "macdAccel": 2.955066729765629,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "KALYANKJIL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 344.75,
+                        "rsi": 46.34844868115631,
+                        "emaDist": -3.322630338464839,
+                        "volRatio": 0.8200681834388956,
+                        "macdAccel": -2.2078173005427946,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "HAVELLS",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1154.1,
+                        "rsi": 40.084745760333895,
+                        "emaDist": -1.8075333914666611,
+                        "volRatio": 0.6134719611464898,
+                        "macdAccel": 1.9238913364909962,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "METROBRAND",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1000.5,
+                        "rsi": 30.346820806792778,
+                        "emaDist": -1.9737049965835012,
+                        "volRatio": 0.5775795534488372,
+                        "macdAccel": 0.28705167796441433,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "BLUESTARCO",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1583.8,
+                        "rsi": 39.343786293406446,
+                        "emaDist": -1.8557785167552059,
+                        "volRatio": 0.6534235126211938,
+                        "macdAccel": 4.354735280338154,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "RELIANCE",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1293.0,
+                        "rsi": 31.553689259497617,
+                        "emaDist": -1.5086467578697005,
+                        "volRatio": 0.8783389699667835,
+                        "macdAccel": 3.5783967364069227,
+                        "ibaSco": 0,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "No active catalyst logged.",
+                        "confidence": 60,
+                        "threat": "No structural risk identified."
+            },
+            {
+                        "symbol": "BLUEDART",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 4758.6,
+                        "rsi": 41.59276017994161,
+                        "emaDist": -1.4914572039492364,
+                        "volRatio": 1.4100371848111215,
+                        "macdAccel": 20.88934640127073,
+                        "ibaSco": 1,
+                        "sector": "SERVICES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Strong growth in e-commerce and logistics demand, expansion of delivery networks, and festive season volume surge.",
+                        "confidence": 85,
+                        "threat": "Intense competition in the logistics sector, fuel price volatility, and potential regulatory changes impacting operations."
+            },
+            {
+                        "symbol": "BATAINDIA",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 669.1,
+                        "rsi": 41.18190211840676,
+                        "emaDist": -1.1420721345352614,
+                        "volRatio": 0.6803037177751662,
+                        "macdAccel": 1.529095341486622,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Increasing discretionary spending, new product launches, expansion of retail footprint, and strong brand recall.",
+                        "confidence": 80,
+                        "threat": "Competition from online retailers, raw material price fluctuations, and evolving fashion trends requiring constant adaptation."
+            },
+            {
+                        "symbol": "SJVN",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 72.61,
+                        "rsi": 48.427260768153225,
+                        "emaDist": -1.204758324537463,
+                        "volRatio": 0.5005476274616759,
+                        "macdAccel": -0.010668885688906005,
+                        "ibaSco": 0,
+                        "sector": "POWER",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Government's focus on renewable energy projects, new project commissioning, and stable demand for power across regions.",
+                        "confidence": 88,
+                        "threat": "Project execution delays, environmental regulations, and interest rate sensitivity for large capital-intensive projects."
+            },
+            {
+                        "symbol": "POWERGRID",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 284.8,
+                        "rsi": 39.89361700939339,
+                        "emaDist": -2.392887998664149,
+                        "volRatio": 0.6152968258793389,
+                        "macdAccel": 0.5737324244893669,
+                        "ibaSco": 0,
+                        "sector": "POWER",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Crucial role in India's power transmission infrastructure, substantial government capital expenditure in the power sector, and stable revenue streams from transmission charges.",
+                        "confidence": 90,
+                        "threat": "Regulatory risks, delays in new transmission line approvals, and potential issues with payment from state discoms."
+            },
+            {
+                        "symbol": "CELLO",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 377.3,
+                        "rsi": 47.63948497217976,
+                        "emaDist": -2.2288840407076194,
+                        "volRatio": 0.34702052023485125,
+                        "macdAccel": -0.26068147832117994,
+                        "ibaSco": 1,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Growing demand for household products, established brand loyalty, and expansion of its distribution network in domestic and international markets.",
+                        "confidence": 78,
+                        "threat": "Competition from both organized and unorganized sectors, raw material price volatility, and potential slowdown in consumer spending."
+            },
+            {
+                        "symbol": "RAILTEL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 308.75,
+                        "rsi": 43.39732401852747,
+                        "emaDist": -1.4712550228362888,
+                        "volRatio": 0.9903934548058253,
+                        "macdAccel": -0.09996143060964746,
+                        "ibaSco": 0,
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Government-backed digital initiatives, expansion of optic fiber network across railways, and modernization projects within the Indian railway system.",
+                        "confidence": 85,
+                        "threat": "Intense competition in telecom infrastructure, dependency on government projects for revenue, and rapid technological obsolescence."
+            },
+            {
+                        "symbol": "VGUARD",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 299.15,
+                        "rsi": 45.50264549301529,
+                        "emaDist": -2.387629616592975,
+                        "volRatio": 0.3057220904688055,
+                        "macdAccel": -0.09793115374316486,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Robust demand for electrical appliances, increasing urbanization and electrification, and a diversified product portfolio mitigating risks.",
+                        "confidence": 82,
+                        "threat": "Raw material price volatility, intense competition in the consumer durables segment, and cyclical demand for certain products."
+            },
+            {
+                        "symbol": "DELHIVERY",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 440.5,
+                        "rsi": 45.19621108751355,
+                        "emaDist": -1.2088819735422005,
+                        "volRatio": 1.089601968505024,
+                        "macdAccel": 0.650622562415307,
+                        "ibaSco": 0,
+                        "sector": "SERVICES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "E-commerce boom driving parcel volumes, strategic expansion into tier 2 and tier 3 cities, and technological advancements in logistics for efficiency.",
+                        "confidence": 80,
+                        "threat": "High operational costs, competitive pressure from established and emerging logistics players, and labor availability challenges."
+            },
+            {
+                        "symbol": "JSL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 694.55,
+                        "rsi": 36.77763818772055,
+                        "emaDist": -1.0331388061756734,
+                        "volRatio": 0.7825229660810163,
+                        "macdAccel": 4.057919890605191,
+                        "ibaSco": 0,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Strong demand for stainless steel in various industries (automotive, infrastructure, consumer goods), driven by economic recovery.",
+                        "confidence": 75,
+                        "threat": "Volatility in raw material prices (nickel, chromium), import competition from other steel-producing nations, and global economic slowdown."
+            },
+            {
+                        "symbol": "JINDALSTEL",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 1148.5,
+                        "rsi": 31.188725487520514,
+                        "emaDist": -3.0747984546913196,
+                        "volRatio": 0.9508523427913088,
+                        "macdAccel": -0.9184047618118765,
+                        "ibaSco": 0,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Infrastructure push by the government, strong domestic demand for steel products, and ongoing capacity expansion projects enhancing output.",
+                        "confidence": 77,
+                        "threat": "Cyclical nature of the steel industry, raw material price fluctuations (iron ore, coking coal), and environmental compliance costs."
+            },
+            {
+                        "symbol": "AMBER",
+                        "label": "\ud83c\udfe2 LAUNCHPAD",
+                        "close": 7420.0,
+                        "rsi": 51.842900301676245,
+                        "emaDist": -2.6082081023518398,
+                        "volRatio": 0.6895795626030533,
+                        "macdAccel": -33.143879526718855,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Increasing demand for air conditioners in India, benefits from the PLI scheme, and market share gains due to manufacturing expertise.",
+                        "confidence": 85,
+                        "threat": "Intense competition in the AC manufacturing space, seasonal demand for products, dependence on key clients, and raw material price volatility."
+            },
+            {
+                        "symbol": "TATACOMM",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 1966.6,
+                        "rsi": 50.28901733947521,
+                        "emaDist": 4.235469691944509,
+                        "volRatio": 0.46008784961773835,
+                        "macdAccel": -5.598462848599397,
+                        "ibaSco": 0,
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Digital transformation initiatives and growth in the enterprise segment, balanced by competitive pressures in the telecom sector.",
+                        "confidence": 55,
+                        "threat": "Intense competition from other telecom service providers, rapid technological changes requiring continuous investment, and regulatory hurdles."
+            },
+            {
+                        "symbol": "INDIGO",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 4709.7,
+                        "rsi": 63.30878743162851,
+                        "emaDist": 5.203641113942466,
+                        "volRatio": 1.1486447412678193,
+                        "macdAccel": 11.770093092440419,
+                        "ibaSco": 0,
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Strong recovery in domestic air travel demand, but margins are pressured by high fuel costs and intense competition in the aviation sector.",
+                        "confidence": 50,
+                        "threat": "Fuel price volatility, intense competition among airlines, regulatory changes in aviation, and geopolitical events impacting travel."
+            },
+            {
+                        "symbol": "CERA",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 6144.0,
+                        "rsi": 68.22742474836522,
+                        "emaDist": 7.7380329900158005,
+                        "volRatio": 0.9115728702276048,
+                        "macdAccel": 51.901980853250336,
+                        "ibaSco": 2,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Growth in the housing sector and real estate development, but potential slowdown in discretionary spending and raw material cost pressures.",
+                        "confidence": 58,
+                        "threat": "Real estate market cyclicality, competition from unorganized sectors, and increases in raw material costs impacting profitability."
+            },
+            {
+                        "symbol": "MMTC",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 68.06,
+                        "rsi": 58.84851341085989,
+                        "emaDist": 4.0625304210029896,
+                        "volRatio": 3.324379008913637,
+                        "macdAccel": -0.14162079418967966,
+                        "ibaSco": 2,
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Government trading policies and commodity price fluctuations, but a lack of clear long-term growth drivers and operational efficiency concerns.",
+                        "confidence": 40,
+                        "threat": "Dependence on government policy changes, commodity price volatility affecting trading margins, and limited operational autonomy."
+            },
+            {
+                        "symbol": "ASIANPAINT",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 2747.4,
+                        "rsi": 67.17752234693329,
+                        "emaDist": 3.59740395862403,
+                        "volRatio": 0.8204506337155123,
+                        "macdAccel": 2.748330223172168,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Robust housing demand and construction activity, but increasing competition from other players and raw material inflation impacting margins.",
+                        "confidence": 60,
+                        "threat": "Raw material price volatility (especially crude oil derivatives), intense competition in the paint industry, and a potential slowdown in real estate."
+            },
+            {
+                        "symbol": "COALINDIA",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 443.5,
+                        "rsi": 41.682600374970605,
+                        "emaDist": -3.7119915656121965,
+                        "volRatio": 0.3632308607485969,
+                        "macdAccel": -3.155891358957456,
+                        "ibaSco": 0,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Steady demand for coal from the power sector, but environmental concerns and the global shift towards renewable energy pose long-term risks.",
+                        "confidence": 55,
+                        "threat": "Environmental regulations, global push for renewable energy, labor issues, and geological challenges in mining operations."
+            },
+            {
+                        "symbol": "TATAPOWER",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 393.55,
+                        "rsi": 36.233183847403375,
+                        "emaDist": -3.6586736900578862,
+                        "volRatio": 0.9884586307653307,
+                        "macdAccel": -0.7360520593503384,
+                        "ibaSco": 0,
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Focus on renewable energy expansion, but high existing debt, regulatory uncertainties, and challenges with legacy thermal assets.",
+                        "confidence": 50,
+                        "threat": "Regulatory risks in the power sector, high capital expenditure requirements for renewable projects, and integration challenges of new assets."
+            },
+            {
+                        "symbol": "TORNTPOWER",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 1392.0,
+                        "rsi": 27.214377405301647,
+                        "emaDist": -4.453908486211349,
+                        "volRatio": 0.555469225540887,
+                        "macdAccel": -2.216598572207481,
+                        "ibaSco": 0,
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Stable power distribution business providing consistent revenue, but limited high-growth opportunities and significant regulatory oversight.",
+                        "confidence": 58,
+                        "threat": "Regulatory policies and tariff revisions, high debt burden for infrastructure projects, and challenges in passing through fuel cost increases."
+            },
+            {
+                        "symbol": "CENTURYPLY",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 724.6,
+                        "rsi": 29.557608163210432,
+                        "emaDist": -4.127022184658327,
+                        "volRatio": 0.39609139211464384,
+                        "macdAccel": -1.8172517925581513,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Demand from the housing and interior design segments, but raw material price pressures and competition from organized and unorganized players.",
+                        "confidence": 52,
+                        "threat": "Raw material price volatility (timber, chemicals), intense competition from unorganized players, and potential slowdown in construction activity."
+            },
+            {
+                        "symbol": "GESHIP",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 1389.1,
+                        "rsi": 25.451967386819717,
+                        "emaDist": -6.2490684315611595,
+                        "volRatio": 0.28334325766671825,
+                        "macdAccel": 0.004715362194254169,
+                        "ibaSco": 0,
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Volatile shipping rates and global trade uncertainties, partially offset by a relatively strong balance sheet and strategic fleet management.",
+                        "confidence": 45,
+                        "threat": "Global trade slowdown, freight rate volatility, fuel price fluctuations, and geopolitical risks affecting international shipping routes."
+            },
+            {
+                        "symbol": "HINDALCO",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 1021.6,
+                        "rsi": 32.86384976345816,
+                        "emaDist": -5.030831447119855,
+                        "volRatio": 1.2487323679155558,
+                        "macdAccel": -7.0506907633986415,
+                        "ibaSco": 0,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Strong aluminum demand from infrastructure and automotive sectors, but global metal price volatility and high energy input costs.",
+                        "confidence": 55,
+                        "threat": "Global commodity price volatility (aluminum, copper), energy costs, environmental regulations, and import competition from other producers."
+            },
+            {
+                        "symbol": "SAIL",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 184.09,
+                        "rsi": 31.709401699915986,
+                        "emaDist": -3.6312389969701147,
+                        "volRatio": 0.4867099041634762,
+                        "macdAccel": -0.30494907329255705,
+                        "ibaSco": 0,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Government push for infrastructure development, but operational inefficiencies and the highly cyclical nature of the steel industry.",
+                        "confidence": 48,
+                        "threat": "Cyclicality of the steel industry, high debt levels, intense competition, raw material price fluctuations, and aging infrastructure."
+            },
+            {
+                        "symbol": "GMDCLTD",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 612.3,
+                        "rsi": 41.77507343439004,
+                        "emaDist": -4.943441952620201,
+                        "volRatio": 0.7988338356663998,
+                        "macdAccel": -2.469286844104433,
+                        "ibaSco": 0,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Demand for lignite and bauxite, but faces challenges with environmental clearances for mining projects and competition.",
+                        "confidence": 42,
+                        "threat": "Regulatory hurdles for mining permits, environmental activism, commodity price volatility, and limited diversification of its revenue streams."
+            },
+            {
+                        "symbol": "ECLERX",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 1396.0,
+                        "rsi": 30.949884670930373,
+                        "emaDist": -4.1007738120703605,
+                        "volRatio": 0.5074866576094056,
+                        "macdAccel": 0.3570341046765293,
+                        "ibaSco": 0,
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Growing demand for digital transformation and outsourcing services, but intense competition in IT services and currency fluctuation risks.",
+                        "confidence": 50,
+                        "threat": "Intense competition in the IT services sector, currency exchange rate volatility impacting revenues, talent retention challenges, and global economic slowdown affecting client spending."
+            },
+            {
+                        "symbol": "VEDL",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 309.65,
+                        "rsi": 39.259259253443055,
+                        "emaDist": -8.996318497627504,
+                        "volRatio": 0.7824773494881694,
+                        "macdAccel": -1.0433046062607332,
+                        "ibaSco": 0,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Volatility in global base metal prices and ongoing corporate restructuring news.",
+                        "confidence": 70,
+                        "threat": "Global economic slowdown impacting metal demand and commodity price fluctuations."
+            },
+            {
+                        "symbol": "CESC",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 168.15,
+                        "rsi": 38.018494041419856,
+                        "emaDist": -4.517712446472847,
+                        "volRatio": 0.5136505720061133,
+                        "macdAccel": -0.40069870671793284,
+                        "ibaSco": 0,
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Regulatory environment, power demand fluctuations, and fuel cost uncertainties.",
+                        "confidence": 65,
+                        "threat": "Rising coal prices and increasing regulatory scrutiny on power tariffs."
+            },
+            {
+                        "symbol": "NATIONALUM",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 376.85,
+                        "rsi": 38.53503184331571,
+                        "emaDist": -5.841944704215467,
+                        "volRatio": 0.5929871014631256,
+                        "macdAccel": -1.4055912471658498,
+                        "ibaSco": 0,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Fluctuation in global aluminum prices and domestic demand-supply dynamics.",
+                        "confidence": 70,
+                        "threat": "Over-reliance on global commodity cycles and potential import competition."
+            },
+            {
+                        "symbol": "TATASTEEL",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 197.86,
+                        "rsi": 31.731699437463902,
+                        "emaDist": -4.154770088700455,
+                        "volRatio": 0.9595327056555488,
+                        "macdAccel": -0.4934738404489156,
+                        "ibaSco": 0,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Global steel demand outlook, raw material price volatility, and European operations performance.",
+                        "confidence": 75,
+                        "threat": "Geopolitical tensions impacting steel exports and high energy costs in European operations."
+            },
+            {
+                        "symbol": "NLCINDIA",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 316.3,
+                        "rsi": 32.99340131419426,
+                        "emaDist": -4.339366300283046,
+                        "volRatio": 2.2759902681715833,
+                        "macdAccel": -1.7323686135095206,
+                        "ibaSco": 1,
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Government focus on renewable energy projects vs. thermal power, and domestic coal supply.",
+                        "confidence": 65,
+                        "threat": "Environmental regulations and the long-term shift away from coal-based power generation."
+            },
+            {
+                        "symbol": "HINDCOPPER",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 510.0,
+                        "rsi": 35.11037067478932,
+                        "emaDist": -4.385014403529032,
+                        "volRatio": 0.7011810624610157,
+                        "macdAccel": 0.1487110740215103,
+                        "ibaSco": 0,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Global copper demand driven by EVs and green technologies, but price volatility.",
+                        "confidence": 70,
+                        "threat": "Limited domestic reserves, high import dependency, and capital expenditure requirements."
+            },
+            {
+                        "symbol": "HINDZINC",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 559.9,
+                        "rsi": 25.987387982981588,
+                        "emaDist": -5.723318125613236,
+                        "volRatio": 0.9802942081245669,
+                        "macdAccel": 1.1145280997330858,
+                        "ibaSco": 0,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Global zinc prices, ongoing royalty disputes, and operational efficiencies.",
+                        "confidence": 70,
+                        "threat": "Volatility in global zinc and lead prices, and regulatory uncertainties."
+            },
+            {
+                        "symbol": "JAIBALAJI",
+                        "label": "\u23f3 UNCONFIRMED CHOP",
+                        "close": 65.85,
+                        "rsi": 31.089351258552554,
+                        "emaDist": -6.601493905519934,
+                        "volRatio": 0.3049091562045382,
+                        "macdAccel": 0.1617649703313766,
+                        "ibaSco": 0,
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Regional steel and ferroalloy demand, and raw material availability.",
+                        "confidence": 60,
+                        "threat": "Intense competition from larger players and sensitivity to regional economic cycles."
+            },
+            {
+                        "symbol": "AEGISLOG",
+                        "label": "\ud83d\uded1 OVEREXTENDED",
+                        "close": 944.4,
+                        "rsi": 84.31892650591209,
+                        "emaDist": 21.41001158881801,
+                        "volRatio": 5.409519176621989,
+                        "macdAccel": 14.85134139724758,
+                        "ibaSco": 4,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Recent significant run-up without strong fundamental changes, risk of profit-booking.",
+                        "confidence": 80,
+                        "threat": "High sensitivity to crude oil price volatility and government policy changes in oil and gas logistics."
+            },
+            {
+                        "symbol": "STLTECH",
+                        "label": "\ud83d\uded1 OVEREXTENDED",
+                        "close": 583.65,
+                        "rsi": 69.88557074803684,
+                        "emaDist": 10.366433679293326,
+                        "volRatio": 0.9696440416032754,
+                        "macdAccel": -11.436186524110198,
+                        "ibaSco": 0,
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Concerns over valuation after recent gains, potential slowdown in global telecom infra spending.",
+                        "confidence": 80,
+                        "threat": "Intense competition, dependence on global telecom infrastructure rollout cycles, and potential impact of currency fluctuations."
+            },
+            {
+                        "symbol": "TEJASNET",
+                        "label": "\ud83d\uded1 OVEREXTENDED",
+                        "close": 598.85,
+                        "rsi": 74.40253920447483,
+                        "emaDist": 13.126250527701593,
+                        "volRatio": 1.2621253529762557,
+                        "macdAccel": -0.340541587461626,
+                        "ibaSco": 2,
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Valuation concerns following strong performance, potential order book execution risks.",
+                        "confidence": 80,
+                        "threat": "High R&D costs, rapid technological obsolescence, and reliance on government contracts and BSNL."
+            },
+            {
+                        "symbol": "QUESS",
+                        "label": "\ud83d\uded1 OVEREXTENDED",
+                        "close": 244.02,
+                        "rsi": 83.94736840172263,
+                        "emaDist": 9.88051521510218,
+                        "volRatio": 0.6999325713281214,
+                        "macdAccel": 0.2545072921291691,
+                        "ibaSco": 1,
+                        "sector": "SERVICES",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Valuation stretched after recent rally, potential slowdown in hiring or staffing services demand.",
+                        "confidence": 75,
+                        "threat": "Economic downturn impacting corporate hiring, intense competition in staffing, and labor law changes."
+            },
+            {
+                        "symbol": "TVSSCS",
+                        "label": "\ud83d\uded1 OVEREXTENDED",
+                        "close": 132.26,
+                        "rsi": 58.948602028707846,
+                        "emaDist": 9.103839656938282,
+                        "volRatio": 1.1768976565859472,
+                        "macdAccel": -0.18424883755172994,
+                        "ibaSco": 1,
+                        "sector": "SERVICES",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Recent price surge not fully supported by immediate fundamental improvements, risk of correction.",
+                        "confidence": 75,
+                        "threat": "Dependence on automotive sector performance and increasing competition in logistics and supply chain services."
+            },
+            {
+                        "symbol": "WHIRLPOOL",
+                        "label": "\ud83d\udcc9 DEEP FLUSH",
+                        "close": 769.95,
+                        "rsi": 20.133963748763776,
+                        "emaDist": -6.181421156883843,
+                        "volRatio": 0.8314204548889417,
+                        "macdAccel": 1.864692736034577,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Weak consumer demand, intense competition from local brands, and inflationary pressures on raw materials.",
+                        "confidence": 85,
+                        "threat": "Stiff competition from domestic and international brands, and sensitivity to discretionary consumer spending."
+            },
+            {
+                        "symbol": "NTPC",
+                        "label": "\ud83d\udcc9 DEEP FLUSH",
+                        "close": 353.9,
+                        "rsi": 21.25723738134657,
+                        "emaDist": -4.751343794980601,
+                        "volRatio": 1.0790910606376432,
+                        "macdAccel": 0.568460973980816,
+                        "ibaSco": 0,
+                        "sector": "POWER",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Concerns over capital expenditure for green transition, environmental regulations, and potential tariff pressures.",
+                        "confidence": 80,
+                        "threat": "Regulatory risks, dependence on coal for a significant portion of generation, and high debt for expansion."
+            },
+            {
+                        "symbol": "CROMPTON",
+                        "label": "\ud83d\udcc9 DEEP FLUSH",
+                        "close": 256.2,
+                        "rsi": 13.039309680104523,
+                        "emaDist": -5.107965872547747,
+                        "volRatio": 0.9604386261650962,
+                        "macdAccel": 0.4994671755851634,
+                        "ibaSco": 0,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Weak sales performance, margin pressure due to raw material costs, and increased competition.",
+                        "confidence": 85,
+                        "threat": "Intense competition in consumer appliances, supply chain disruptions, and inflationary impact on consumer spending."
+            },
+            {
+                        "symbol": "CONCOR",
+                        "label": "\ud83d\udcc9 DEEP FLUSH",
+                        "close": 450.2,
+                        "rsi": 24.426078968393355,
+                        "emaDist": -3.841803410086781,
+                        "volRatio": 0.7265249475772908,
+                        "macdAccel": 2.1249930858177812,
+                        "ibaSco": 0,
+                        "sector": "SERVICES",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Uncertainty regarding privatization timeline, competitive pressures from private logistics players, and impact of DFCs.",
+                        "confidence": 80,
+                        "threat": "Policy uncertainties regarding divestment, infrastructure bottlenecks, and competition from road logistics."
+            },
+            {
+                        "symbol": "ONGC",
+                        "label": "\ud83d\udcc9 DEEP FLUSH",
+                        "close": 246.2,
+                        "rsi": 11.713286710419808,
+                        "emaDist": -8.479898261389152,
+                        "volRatio": 1.0920532086326666,
+                        "macdAccel": -0.3329749379228897,
+                        "ibaSco": 0,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Fluctuating global crude prices, government's windfall tax policy, and high exploration costs.",
+                        "confidence": 85,
+                        "threat": "High sensitivity to global crude oil prices, government intervention in pricing, and declining output from mature fields."
+            },
+            {
+                        "symbol": "OIL",
+                        "label": "\ud83d\udcc9 DEEP FLUSH",
+                        "close": 417.8,
+                        "rsi": 19.56925361846291,
+                        "emaDist": -11.103401186995653,
+                        "volRatio": 2.570624112762981,
+                        "macdAccel": -6.188851926764683,
+                        "ibaSco": 1,
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Volatility in crude oil and natural gas prices, and regulatory environment for exploration and production.",
+                        "confidence": 85,
+                        "threat": "Geopolitical risks, environmental activism, and high capital intensity for exploration projects."
+            },
+            {
+                        "symbol": "RAJESHEXPO",
+                        "label": "\ud83d\udcc9 DEEP FLUSH",
+                        "close": 76.41,
+                        "rsi": 26.33104499819018,
+                        "emaDist": -23.894450646921005,
+                        "volRatio": 2.9691749234311278,
+                        "macdAccel": -1.193939865120318,
+                        "ibaSco": 1,
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Concerns over demand for luxury goods, inventory management, and gold price volatility.",
+                        "confidence": 80,
+                        "threat": "High working capital requirements, sensitivity to gold price fluctuations, and competition from unorganized sector."
+            },
+            {
+                        "symbol": "ALLCARGO",
+                        "label": "\ud83d\udcc9 DEEP FLUSH",
+                        "close": 15.49,
+                        "rsi": 20.266666657208887,
+                        "emaDist": -35.26079421676185,
+                        "volRatio": 1.4946341665673863,
+                        "macdAccel": 0.8268771363501948,
+                        "ibaSco": 0,
+                        "sector": "SERVICES",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Global trade slowdown impacting logistics volumes, intense competition, and high operational costs.",
+                        "confidence": 80,
+                        "threat": "Global economic downturn impacting trade, intense competition in freight forwarding, and infrastructure limitations."
+            }
+];
+
+        let activeTickers = JSON.parse(JSON.stringify(initialTickers));
+        let activeFilter = 'ALL';
+        let activeRegimeFilter = null;
+
+        let params = {
+            maxRsi: 75,
+            maxEma: 8.0,
+            minVol: 1.25,
+            priceFloor: 15
+        };
+
+        function resetSliders() {
+            document.getElementById('rsi-slider').value = 75;
+            document.getElementById('ema-slider').value = 8.0;
+            document.getElementById('vol-slider').value = 1.25;
+            document.getElementById('price-slider').value = 15;
+            updateRules();
+        }
+
+        function updateRules() {
+            params.maxRsi = parseFloat(document.getElementById('rsi-slider').value);
+            params.maxEma = parseFloat(document.getElementById('ema-slider').value);
+            params.minVol = parseFloat(document.getElementById('vol-slider').value);
+            params.priceFloor = parseFloat(document.getElementById('price-slider').value);
+
+            document.getElementById('rsi-val').innerText = params.maxRsi;
+            document.getElementById('ema-val').innerText = params.maxEma.toFixed(1) + "%";
+            document.getElementById('vol-val').innerText = params.minVol.toFixed(2) + "x";
+            document.getElementById('price-val').innerText = "₹" + params.priceFloor;
+
+            recalculateSignals();
+        }
+
+        function recalculateSignals() {
+            activeTickers = initialTickers.map(t => {
+                let rec = { ...t };
+                
+                if (rec.close < params.priceFloor) {
+                    rec.label = "📉 DEEP FLUSH";
+                    rec.reason = `Vetoed. Asset price (₹${rec.close.toFixed(2)}) is below the system liquidity floor limit of ₹${params.priceFloor}.`;
+                    return rec;
+                }
+
+                if (rec.rsi >= params.maxRsi || rec.emaDist > params.maxEma) {
+                    rec.label = "🛑 OVEREXTENDED";
+                    rec.reason = `Buy Veto. RSI (${rec.rsi.toFixed(1)} >= ${params.maxRsi}) or distance to 20EMA (${rec.emaDist.toFixed(1)}% > ${params.maxEma}%) is overextended.`;
+                }
+                else if (rec.rsi <= 25 || rec.emaDist < -10) {
+                    rec.label = "📉 DEEP FLUSH";
+                    rec.reason = `Avoid Asset. RSI (${rec.rsi.toFixed(1)} <= 25) or drop below 20EMA (${rec.emaDist.toFixed(1)}%) indicates active capitulation.`;
+                }
+                else if (rec.volRatio >= params.minVol && rec.macdAccel > 0 && rec.emaDist > 0) {
+                    if (rec.ibaSco >= 1) {
+                        rec.label = "🚀 INSIDER BREAKOUT";
+                        rec.reason = `Confirmed Entry. Volume (${rec.volRatio.toFixed(2)}x) with turning MACD and ${rec.ibaSco} block trades.`;
+                    } else {
+                        rec.label = "🚀 ACTIVE BREAKOUT";
+                        rec.reason = `Momentum Entry. Volume (${rec.volRatio.toFixed(2)}x) and positive MACD direction. No blocks logged.`;
+                    }
+                }
+                else if (rec.emaDist >= -3.5 && rec.emaDist <= 3.5) {
+                    if (rec.ibaSco >= 2) {
+                        rec.label = "🏢 INSTITUTIONAL LAUNCHPAD";
+                        rec.reason = `Accumulation Area. Price coiling tight (${rec.emaDist.toFixed(1)}%) with ${rec.ibaSco} large blocks.`;
+                    } else {
+                        rec.label = "🏢 LAUNCHPAD";
+                        rec.reason = `Standard Consolidation. Trading tight inside core support levels (${rec.emaDist.toFixed(1)}%).`;
+                    }
+                }
+                else {
+                    rec.label = "⏳ UNCONFIRMED CHOP";
+                    rec.reason = `Neutral Zone. Did not meet strategy triggers (RSI: ${rec.rsi.toFixed(1)}, Vol Ratio: ${rec.volRatio.toFixed(2)}x).`;
+                }
+                return rec;
+            });
+
+            filterData();
+            updateStats();
+        }
+
+        function updateStats() {
+            let insiders = activeTickers.filter(t => t.label === "🚀 INSIDER BREAKOUT").length;
+            let launchpads = activeTickers.filter(t => t.label.includes("LAUNCHPAD")).length;
+            let vetoes = activeTickers.filter(t => t.label === "🛑 OVEREXTENDED").length;
+            let scanned = activeTickers.length;
+
+            document.getElementById('stat-insiders').innerText = insiders;
+            document.getElementById('stat-launchpads').innerText = launchpads;
+            document.getElementById('stat-vetoes').innerText = vetoes;
+            document.getElementById('stat-scanned').innerText = scanned;
+            document.getElementById('total-count').innerText = scanned;
+        }
+
+        function setFilter(filterType) {
+            activeFilter = filterType;
+            activeRegimeFilter = null;
+            filterData();
+        }
+
+        function filterByRegime(regimeName) {
+            activeRegimeFilter = regimeName;
+            filterData();
+        }
+
+        function filterData() {
+            const searchQuery = document.getElementById('ticker-search').value.toUpperCase();
+            const tbody = document.getElementById('ticker-rows');
+            tbody.innerHTML = '';
+
+            let filtered = activeTickers;
+
+            if (activeFilter !== 'ALL') {
+                filtered = filtered.filter(t => t.label === activeFilter);
+            }
+
+            if (activeRegimeFilter) {
+                const regimeSectors = getSectorsForRegime(activeRegimeFilter);
+                filtered = filtered.filter(t => regimeSectors.includes(t.sector));
+            }
+
+            if (searchQuery) {
+                filtered = filtered.filter(t => t.symbol.includes(searchQuery));
+            }
+
+            document.getElementById('visible-count').innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="py-8 text-center text-gray-500 font-medium">
+                            <i class="fa-solid fa-triangle-exclamation text-yellow-500 text-lg mb-2"></i><br>
+                            No matching tickers found within current sandbox settings.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            filtered.forEach(t => {
+                let badgeColor = "bg-gray-800 text-gray-400 border-gray-700";
+                if (t.label.includes("INSIDER")) badgeColor = "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+                else if (t.label.includes("ACTIVE")) badgeColor = "bg-cyan-500/10 text-cyan-400 border-cyan-500/20";
+                else if (t.label.includes("INSTITUTIONAL")) badgeColor = "bg-yellow-500/10 text-yellow-400 border-yellow-500/20";
+                else if (t.label.includes("LAUNCHPAD")) badgeColor = "bg-amber-500/10 text-amber-300 border-amber-500/20";
+                else if (t.label.includes("OVEREXTENDED")) badgeColor = "bg-red-500/10 text-red-400 border-red-500/20";
+                else if (t.label.includes("DEEP FLUSH")) badgeColor = "bg-rose-500/10 text-rose-300 border-rose-500/20";
+
+                const rowHtml = `
+                    <tr class="hover:bg-gray-900/40 transition cursor-pointer" onclick="viewTickerDetail('${t.symbol}')">
+                        <td class="py-3 px-4 font-bold tracking-tight text-white font-mono">${t.symbol}</td>
+                        <td class="py-3 px-4">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold border ${badgeColor}">
+                                ${t.label}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-right font-mono text-gray-200">₹${t.close.toFixed(2)}</td>
+                        <td class="py-3 px-4 text-right font-mono ${t.rsi >= 70 ? 'text-red-400' : t.rsi <= 30 ? 'text-emerald-400' : 'text-gray-400'}">${t.rsi.toFixed(1)}</td>
+                        <td class="py-3 px-4 text-right font-mono ${t.emaDist > 0 ? 'text-emerald-400' : 'text-rose-400'}">${t.emaDist.toFixed(2)}%</td>
+                        <td class="py-3 px-4 text-xs text-gray-400 leading-relaxed">${t.reason || 'Consolidating and maintaining standard coiling bounds.'}</td>
+                    </tr>
+                `;
+                tbody.insertAdjacentHTML('beforeend', rowHtml);
+            });
+        }
+
+        function viewTickerDetail(symbol) {
+            const ticker = activeTickers.find(t => t.symbol === symbol);
+            if (!ticker) return;
+
+            document.getElementById('detail-pane').style.display = 'block';
+            document.getElementById('detail-symbol').innerText = ticker.symbol;
+            document.getElementById('detail-sector').innerText = ticker.sector.replace(/_/g, " ");
+            document.getElementById('detail-label').innerText = ticker.label;
+            
+            // Set Dynamic Label Badge Style
+            const labelBadge = document.getElementById('detail-label');
+            labelBadge.className = "px-2.5 py-1 rounded text-[11px] font-bold border " + 
+                (ticker.label.includes("BREAKOUT") ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-gray-800 text-gray-400 border-gray-700");
+
+            // Set Sentiment Badge Style
+            const sentimentBadge = document.getElementById('detail-sentiment');
+            sentimentBadge.innerText = ticker.sentiment;
+            if (ticker.sentiment === "BULLISH") {
+                sentimentBadge.className = "px-2.5 py-1 rounded text-[11px] font-bold border bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+            } else if (ticker.sentiment === "BEARISH") {
+                sentimentBadge.className = "px-2.5 py-1 rounded text-[11px] font-bold border bg-rose-500/10 text-rose-400 border-rose-500/20";
+            } else {
+                sentimentBadge.className = "px-2.5 py-1 rounded text-[11px] font-bold border bg-gray-800 text-gray-400 border-gray-700";
+            }
+
+            document.getElementById('detail-catalyst').innerText = ticker.news_catalyst;
+            document.getElementById('detail-threat').innerText = ticker.threat;
+            document.getElementById('detail-confidence').innerText = ticker.confidence + "%";
+            document.getElementById('detail-confidence-bar').style.width = ticker.confidence + "%";
+
+            // Smooth Scroll to Details Pane
+            document.getElementById('detail-pane').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function getSectorsForRegime(regimeName) {
+            const map = {
+                "🔥 ULTRA_MOMENTUM_LEADERS": ["TELECOMMUNICATION"],
+                "🚀 ACTIVE_BREAKOUT_FIELDS": ["POWER", "METALS_&_MINING"],
+                "📈 STABLE_UPWARD_ACCUMULATION": ["OIL_GAS_&_CONSUMABLE_FUELS"],
+                "⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION": ["CONSUMER_DURABLES", "FINANCIAL_SERVICES", "FAST_MOVING_CONSUMER_GOODS", "MEDIA_ENTERTAINMENT_&_PUBLICATION", "INFORMATION_TECHNOLOGY", "REALTY"],
+                "❄️ DEEP_BEARISH_CAPITULATION": ["SERVICES", "CAPITAL_GOODS", "TEXTILES", "CHEMICALS", "FOREST_MATERIALS", "AUTOMOBILE_AND_AUTO_COMPONENTS", "HEALTHCARE", "CONSUMER_SERVICES", "DIVERSIFIED", "CONSTRUCTION_MATERIALS", "CONSTRUCTION"]
+            };
+            return map[regimeName] || [];
+        }
+
+        function copyToClipboard() {
+            const orders = activeTickers.filter(t => t.label.includes("BREAKOUT"));
+            let text = "SYMBOL,SIGNAL,PRICE,RSI,EMA_DIST,SENTIMENT,CATALYST\n";
+            orders.forEach(o => {
+                text += `${o.symbol},${o.label},${o.close},${o.rsi},${o.emaDist}%,${o.sentiment},"${o.news_catalyst}"\n`;
+            });
+
+            const dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+
+            const toast = document.createElement("div");
+            toast.className = "fixed bottom-5 right-5 bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg shadow-xl z-50 flex items-center gap-2 border border-emerald-400/20";
+            toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> Formatted Dynamic Manifest Exported! (${orders.length} orders)`;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        window.onload = function() {
+            recalculateSignals();
+        };
+    </script>
+</body>
+</html>
