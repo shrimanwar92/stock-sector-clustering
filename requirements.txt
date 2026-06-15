@@ -1,0 +1,6 @@
+nselib
+numpy
+pandas
+scikit-learn
+lxml
+python-dotenv

@@ -1,0 +1,73 @@
+========================================================================================================================
+ PRODUCTION QUANT DATA LOGS: STAGE 2 GATEWAY INDUSTRY ROUTING TRAIL
+ Generated on: 2026-06-15 15:49:58 | Target Universe: Nifty 500
+========================================================================================================================
+
+📈 SELECTED ACTIVE SECTOR ROUTING TRACKS:
+['SERVICES', 'OIL_GAS_&_CONSUMABLE_FUELS', 'METALS_&_MINING', 'TELECOMMUNICATION', 'CONSUMER_DURABLES', 'POWER']
+
+## ROUTING LOG METADATA DETAILED JUSTIFICATION:
+------------------------------------------------------------------------------------------------------------------------
+📍 SECTOR: TELECOMMUNICATION                   | STATUS: ✅ PASSED FOR ANALYSIS 
+   REASON: Target Momentum parameters achieved.
+--------------------------------------------------------------------------------
+📍 SECTOR: POWER                               | STATUS: ✅ PASSED FOR ANALYSIS 
+   REASON: Target Momentum parameters achieved.
+--------------------------------------------------------------------------------
+📍 SECTOR: OIL_GAS_&_CONSUMABLE_FUELS          | STATUS: ✅ PASSED FOR ANALYSIS 
+   REASON: ALERT: High Return Alpha Outlier matched via Safety Filter Exception Rule.
+--------------------------------------------------------------------------------
+📍 SECTOR: METALS_&_MINING                     | STATUS: ✅ PASSED FOR ANALYSIS 
+   REASON: Target Momentum parameters achieved.
+--------------------------------------------------------------------------------
+📍 SECTOR: SERVICES                            | STATUS: ✅ PASSED FOR ANALYSIS 
+   REASON: ALERT: High Return Alpha Outlier matched via Safety Filter Exception Rule.
+--------------------------------------------------------------------------------
+📍 SECTOR: CONSUMER_DURABLES                   | STATUS: ✅ PASSED FOR ANALYSIS 
+   REASON: ALERT: High Return Alpha Outlier matched via Safety Filter Exception Rule.
+--------------------------------------------------------------------------------
+📍 SECTOR: CAPITAL_GOODS                       | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: FINANCIAL_SERVICES                  | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: TEXTILES                            | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: CHEMICALS                           | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: REALTY                              | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: FOREST_MATERIALS                    | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: AUTOMOBILE_AND_AUTO_COMPONENTS      | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: HEALTHCARE                          | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: CONSUMER_SERVICES                   | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: DIVERSIFIED                         | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: FAST_MOVING_CONSUMER_GOODS          | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: MEDIA_ENTERTAINMENT_&_PUBLICATION   | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: INFORMATION_TECHNOLOGY              | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: CONSTRUCTION_MATERIALS              | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------
+📍 SECTOR: CONSTRUCTION                        | STATUS: ❌ FILTERED / EXCLUDED 
+   REASON: Underperforming performance metrics; velocity remains locked below minimum trend line.
+--------------------------------------------------------------------------------

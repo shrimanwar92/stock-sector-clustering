@@ -1,0 +1,597 @@
+============================================================================================================================================
+ PRODUCTION QUANT DATA LOGS: MICRO TECHNICAL EXECUTION INTERACTION FIREWALL
+ Generated on: 2026-06-15 15:50:41 | Scored Workload Universe Size: 96 Tickers
+============================================================================================================================================
+
+## SECTION 1: EXECUTION TRADING LEDGER
+--------------------------------------------------------------------------------------------------------------------------------------------
+    Symbol           Strategic_Label    Close  Feature_RSI  Feature_EMA_Dist
+      TTML        🚀 INSIDER BREAKOUT    46.44    65.822785          7.073309
+      MRPL        🚀 INSIDER BREAKOUT   161.01    61.609728          3.248301
+  PETRONET        🚀 INSIDER BREAKOUT   274.75    52.586207          1.491033
+  JSWINFRA         🚀 ACTIVE BREAKOUT   291.00    61.310345          5.410884
+ HINDPETRO         🚀 ACTIVE BREAKOUT   388.90    49.657064          1.801786
+ KANSAINER         🚀 ACTIVE BREAKOUT   216.50    45.759717          1.359948
+   NSLNISP 🏢 INSTITUTIONAL LAUNCHPAD    47.24    57.012750          0.609631
+      NMDC 🏢 INSTITUTIONAL LAUNCHPAD    90.93    55.551550          0.436271
+      NHPC 🏢 INSTITUTIONAL LAUNCHPAD    73.79    39.767129         -2.846160
+      ATGL               🏢 LAUNCHPAD   728.50    59.596856          2.949422
+ADANIENSOL               🏢 LAUNCHPAD  1489.60    58.200346          1.021890
+      HFCL               🏢 LAUNCHPAD   171.86    62.131938          3.168775
+      GSPL               🏢 LAUNCHPAD   268.35    44.837166         -3.233962
+CHENNPETRO               🏢 LAUNCHPAD  1137.70    67.887740          1.702912
+ JSWENERGY               🏢 LAUNCHPAD   559.35    52.943314         -0.941317
+ REDINGTON               🏢 LAUNCHPAD   236.13    60.099116          2.399169
+    VIPIND               🏢 LAUNCHPAD   314.95    54.483022          1.062441
+ADANIGREEN               🏢 LAUNCHPAD  1485.70    58.416065          3.178590
+  ADANIENT               🏢 LAUNCHPAD  2921.60    55.164488          2.334807
+VAIBHAVGBL               🏢 LAUNCHPAD   230.46    58.329088          2.086150
+ GUJGASLTD               🏢 LAUNCHPAD   388.00    58.232711          0.588951
+    SAFARI               🏢 LAUNCHPAD  1535.10    50.850662         -0.487707
+       IGL               🏢 LAUNCHPAD   163.52    61.958794          1.117133
+      GAIL               🏢 LAUNCHPAD   170.50    65.987512          3.006686
+     DIXON               🏢 LAUNCHPAD 11546.00    45.884004          1.366396
+       FSL               🏢 LAUNCHPAD   247.55    34.141932         -2.647020
+     ROUTE               🏢 LAUNCHPAD   521.90    53.935099          0.513995
+       ITI               🏢 LAUNCHPAD   299.25    59.383260          1.304667
+       MGL               🏢 LAUNCHPAD  1094.90    58.844288          1.248387
+      BPCL               🏢 LAUNCHPAD   302.35    54.845657          2.560457
+ADANIPORTS               🏢 LAUNCHPAD  1812.90    54.775900          1.493743
+INDIGOPNTS               🏢 LAUNCHPAD   995.20    48.110599          3.266802
+KAJARIACER               🏢 LAUNCHPAD  1082.30    57.305503         -0.140828
+  JSWSTEEL               🏢 LAUNCHPAD  1297.60    53.378001          1.176311
+     TITAN               🏢 LAUNCHPAD  4184.00    55.741680          0.943036
+CASTROLIND               🏢 LAUNCHPAD   182.68    53.205128         -0.179104
+       IOC               🏢 LAUNCHPAD   140.94    52.277657          1.408050
+  LLOYDSME               🏢 LAUNCHPAD  1761.90    52.726064          1.122828
+      GPPL               🏢 LAUNCHPAD   153.88    52.635003         -0.384199
+INDUSTOWER               🏢 LAUNCHPAD   421.20    41.113841         -0.649754
+    VOLTAS               🏢 LAUNCHPAD  1285.40    53.639041         -0.089634
+ADANIPOWER               🏢 LAUNCHPAD   223.07    52.244702         -1.041376
+    CAMPUS               🏢 LAUNCHPAD   238.40    51.559873         -1.464757
+BHARTIARTL               🏢 LAUNCHPAD  1822.50    38.789546         -0.044732
+BERGEPAINT               🏢 LAUNCHPAD   515.15    55.957447          2.299992
+KALYANKJIL               🏢 LAUNCHPAD   344.75    46.348449         -3.322630
+   HAVELLS               🏢 LAUNCHPAD  1154.10    40.084746         -1.807533
+METROBRAND               🏢 LAUNCHPAD  1000.50    30.346821         -1.973705
+BLUESTARCO               🏢 LAUNCHPAD  1583.80    39.343786         -1.855779
+  RELIANCE               🏢 LAUNCHPAD  1293.00    31.553689         -1.508647
+  BLUEDART               🏢 LAUNCHPAD  4758.60    41.592760         -1.491457
+ BATAINDIA               🏢 LAUNCHPAD   669.10    41.181902         -1.142072
+      SJVN               🏢 LAUNCHPAD    72.61    48.427261         -1.204758
+ POWERGRID               🏢 LAUNCHPAD   284.80    39.893617         -2.392888
+     CELLO               🏢 LAUNCHPAD   377.30    47.639485         -2.228884
+   RAILTEL               🏢 LAUNCHPAD   308.75    43.397324         -1.471255
+    VGUARD               🏢 LAUNCHPAD   299.15    45.502645         -2.387630
+ DELHIVERY               🏢 LAUNCHPAD   440.50    45.196211         -1.208882
+       JSL               🏢 LAUNCHPAD   694.55    36.777638         -1.033139
+JINDALSTEL               🏢 LAUNCHPAD  1148.50    31.188725         -3.074798
+     AMBER               🏢 LAUNCHPAD  7420.00    51.842900         -2.608208
+  TATACOMM        ⏳ UNCONFIRMED CHOP  1966.60    50.289017          4.235470
+    INDIGO        ⏳ UNCONFIRMED CHOP  4709.70    63.308787          5.203641
+      CERA        ⏳ UNCONFIRMED CHOP  6144.00    68.227425          7.738033
+      MMTC        ⏳ UNCONFIRMED CHOP    68.06    58.848513          4.062530
+ASIANPAINT        ⏳ UNCONFIRMED CHOP  2747.40    67.177522          3.597404
+ COALINDIA        ⏳ UNCONFIRMED CHOP   443.50    41.682600         -3.711992
+ TATAPOWER        ⏳ UNCONFIRMED CHOP   393.55    36.233184         -3.658674
+TORNTPOWER        ⏳ UNCONFIRMED CHOP  1392.00    27.214377         -4.453908
+CENTURYPLY        ⏳ UNCONFIRMED CHOP   724.60    29.557608         -4.127022
+    GESHIP        ⏳ UNCONFIRMED CHOP  1389.10    25.451967         -6.249068
+  HINDALCO        ⏳ UNCONFIRMED CHOP  1021.60    32.863850         -5.030831
+      SAIL        ⏳ UNCONFIRMED CHOP   184.09    31.709402         -3.631239
+   GMDCLTD        ⏳ UNCONFIRMED CHOP   612.30    41.775073         -4.943442
+    ECLERX        ⏳ UNCONFIRMED CHOP  1396.00    30.949885         -4.100774
+      VEDL        ⏳ UNCONFIRMED CHOP   309.65    39.259259         -8.996318
+      CESC        ⏳ UNCONFIRMED CHOP   168.15    38.018494         -4.517712
+NATIONALUM        ⏳ UNCONFIRMED CHOP   376.85    38.535032         -5.841945
+ TATASTEEL        ⏳ UNCONFIRMED CHOP   197.86    31.731699         -4.154770
+  NLCINDIA        ⏳ UNCONFIRMED CHOP   316.30    32.993401         -4.339366
+HINDCOPPER        ⏳ UNCONFIRMED CHOP   510.00    35.110371         -4.385014
+  HINDZINC        ⏳ UNCONFIRMED CHOP   559.90    25.987388         -5.723318
+ JAIBALAJI        ⏳ UNCONFIRMED CHOP    65.85    31.089351         -6.601494
+  AEGISLOG            🛑 OVEREXTENDED   944.40    84.318927         21.410012
+   STLTECH            🛑 OVEREXTENDED   583.65    69.885571         10.366434
+  TEJASNET            🛑 OVEREXTENDED   598.85    74.402539         13.126251
+     QUESS            🛑 OVEREXTENDED   244.02    83.947368          9.880515
+    TVSSCS            🛑 OVEREXTENDED   132.26    58.948602          9.103840
+ WHIRLPOOL              📉 DEEP FLUSH   769.95    20.133964         -6.181421
+      NTPC              📉 DEEP FLUSH   353.90    21.257237         -4.751344
+  CROMPTON              📉 DEEP FLUSH   256.20    13.039310         -5.107966
+    CONCOR              📉 DEEP FLUSH   450.20    24.426079         -3.841803
+      ONGC              📉 DEEP FLUSH   246.20    11.713287         -8.479898
+       OIL              📉 DEEP FLUSH   417.80    19.569254        -11.103401
+RAJESHEXPO              📉 DEEP FLUSH    76.41    26.331045        -23.894451
+  ALLCARGO              📉 DEEP FLUSH    15.49    20.266667        -35.260794
+
+============================================================================================================================================
+
+## SECTION 2: SYSTEM RAW FEATURE METADATA MATRICES
+--------------------------------------------------------------------------------------------------------------------------------------------
+Symbol       | Close      | RSI (14) | EMA Dist % | Vol Ratio  | MACD Accel   | Block Score 
+--------------------------------------------------------------------------------------------------------------------------------------------
+TTML         | 46.44      | 65.8     | 7.07       | 3.09       | 0.0157       | 2           
+MRPL         | 161.01     | 61.6     | 3.25       | 2.07       | 0.1569       | 2           
+PETRONET     | 274.75     | 52.6     | 1.49       | 1.68       | 0.3652       | 1           
+JSWINFRA     | 291.00     | 61.3     | 5.41       | 2.02       | 0.8516       | 0           
+HINDPETRO    | 388.90     | 49.7     | 1.80       | 1.34       | 0.0496       | 0           
+KANSAINER    | 216.50     | 45.8     | 1.36       | 1.34       | 0.9328       | 0           
+NSLNISP      | 47.24      | 57.0     | 0.61       | 0.46       | -0.5752      | 2           
+NMDC         | 90.93      | 55.6     | 0.44       | 0.72       | -0.2443      | 2           
+NHPC         | 73.79      | 39.8     | -2.85      | 0.45       | 0.0854       | 3           
+ATGL         | 728.50     | 59.6     | 2.95       | 0.40       | -6.4729      | 0           
+ADANIENSOL   | 1489.60    | 58.2     | 1.02       | 0.51       | -15.2329     | 0           
+HFCL         | 171.86     | 62.1     | 3.17       | 0.48       | -2.9769      | 0           
+GSPL         | 268.35     | 44.8     | -3.23      | 1.39       | -3.1795      | 1           
+CHENNPETRO   | 1137.70    | 67.9     | 1.70       | 0.99       | -14.0677     | 1           
+JSWENERGY    | 559.35     | 52.9     | -0.94      | 0.73       | -3.3075      | 0           
+REDINGTON    | 236.13     | 60.1     | 2.40       | 0.43       | -1.3456      | 1           
+VIPIND       | 314.95     | 54.5     | 1.06       | 0.16       | -2.5661      | 1           
+ADANIGREEN   | 1485.70    | 58.4     | 3.18       | 0.50       | -6.9377      | 1           
+ADANIENT     | 2921.60    | 55.2     | 2.33       | 0.53       | -14.2690     | 1           
+VAIBHAVGBL   | 230.46     | 58.3     | 2.09       | 0.68       | -0.2443      | 0           
+GUJGASLTD    | 388.00     | 58.2     | 0.59       | 0.58       | -2.5153      | 1           
+SAFARI       | 1535.10    | 50.9     | -0.49      | 0.40       | -10.3342     | 1           
+IGL          | 163.52     | 62.0     | 1.12       | 0.53       | -0.2399      | 0           
+GAIL         | 170.50     | 66.0     | 3.01       | 0.77       | -0.0367      | 0           
+DIXON        | 11546.00   | 45.9     | 1.37       | 0.90       | -9.2390      | 0           
+FSL          | 247.55     | 34.1     | -2.65      | 0.37       | -1.2601      | 0           
+ROUTE        | 521.90     | 53.9     | 0.51       | 0.50       | -1.0276      | 1           
+ITI          | 299.25     | 59.4     | 1.30       | 0.57       | -0.7648      | 0           
+MGL          | 1094.90    | 58.8     | 1.25       | 0.79       | 2.0683       | 0           
+BPCL         | 302.35     | 54.8     | 2.56       | 1.09       | 0.8236       | 0           
+ADANIPORTS   | 1812.90    | 54.8     | 1.49       | 1.10       | -1.4231      | 0           
+INDIGOPNTS   | 995.20     | 48.1     | 3.27       | 0.56       | 3.8379       | 0           
+KAJARIACER   | 1082.30    | 57.3     | -0.14      | 0.63       | -0.9415      | 0           
+JSWSTEEL     | 1297.60    | 53.4     | 1.18       | 0.69       | 2.4185       | 0           
+TITAN        | 4184.00    | 55.7     | 0.94       | 0.91       | -6.5971      | 0           
+CASTROLIND   | 182.68     | 53.2     | -0.18      | 0.75       | -0.0689      | 0           
+IOC          | 140.94     | 52.3     | 1.41       | 0.82       | 0.1476       | 0           
+LLOYDSME     | 1761.90    | 52.7     | 1.12       | 0.88       | 0.0979       | 0           
+GPPL         | 153.88     | 52.6     | -0.38      | 0.54       | -0.2611      | 0           
+INDUSTOWER   | 421.20     | 41.1     | -0.65      | 0.65       | -0.9002      | 0           
+VOLTAS       | 1285.40    | 53.6     | -0.09      | 0.46       | -0.6864      | 1           
+ADANIPOWER   | 223.07     | 52.2     | -1.04      | 0.65       | -0.8032      | 0           
+CAMPUS       | 238.40     | 51.6     | -1.46      | 0.36       | -0.6881      | 0           
+BHARTIARTL   | 1822.50    | 38.8     | -0.04      | 0.64       | 2.2460       | 0           
+BERGEPAINT   | 515.15     | 56.0     | 2.30       | 1.23       | 2.9551       | 0           
+KALYANKJIL   | 344.75     | 46.3     | -3.32      | 0.82       | -2.2078      | 0           
+HAVELLS      | 1154.10    | 40.1     | -1.81      | 0.61       | 1.9239       | 0           
+METROBRAND   | 1000.50    | 30.3     | -1.97      | 0.58       | 0.2871       | 0           
+BLUESTARCO   | 1583.80    | 39.3     | -1.86      | 0.65       | 4.3547       | 0           
+RELIANCE     | 1293.00    | 31.6     | -1.51      | 0.88       | 3.5784       | 0           
+BLUEDART     | 4758.60    | 41.6     | -1.49      | 1.41       | 20.8893      | 1           
+BATAINDIA    | 669.10     | 41.2     | -1.14      | 0.68       | 1.5291       | 0           
+SJVN         | 72.61      | 48.4     | -1.20      | 0.50       | -0.0107      | 0           
+POWERGRID    | 284.80     | 39.9     | -2.39      | 0.62       | 0.5737       | 0           
+CELLO        | 377.30     | 47.6     | -2.23      | 0.35       | -0.2607      | 1           
+RAILTEL      | 308.75     | 43.4     | -1.47      | 0.99       | -0.1000      | 0           
+VGUARD       | 299.15     | 45.5     | -2.39      | 0.31       | -0.0979      | 0           
+DELHIVERY    | 440.50     | 45.2     | -1.21      | 1.09       | 0.6506       | 0           
+JSL          | 694.55     | 36.8     | -1.03      | 0.78       | 4.0579       | 0           
+JINDALSTEL   | 1148.50    | 31.2     | -3.07      | 0.95       | -0.9184      | 0           
+AMBER        | 7420.00    | 51.8     | -2.61      | 0.69       | -33.1439     | 0           
+TATACOMM     | 1966.60    | 50.3     | 4.24       | 0.46       | -5.5985      | 0           
+INDIGO       | 4709.70    | 63.3     | 5.20       | 1.15       | 11.7701      | 0           
+CERA         | 6144.00    | 68.2     | 7.74       | 0.91       | 51.9020      | 2           
+MMTC         | 68.06      | 58.8     | 4.06       | 3.32       | -0.1416      | 2           
+ASIANPAINT   | 2747.40    | 67.2     | 3.60       | 0.82       | 2.7483       | 0           
+COALINDIA    | 443.50     | 41.7     | -3.71      | 0.36       | -3.1559      | 0           
+TATAPOWER    | 393.55     | 36.2     | -3.66      | 0.99       | -0.7361      | 0           
+TORNTPOWER   | 1392.00    | 27.2     | -4.45      | 0.56       | -2.2166      | 0           
+CENTURYPLY   | 724.60     | 29.6     | -4.13      | 0.40       | -1.8173      | 0           
+GESHIP       | 1389.10    | 25.5     | -6.25      | 0.28       | 0.0047       | 0           
+HINDALCO     | 1021.60    | 32.9     | -5.03      | 1.25       | -7.0507      | 0           
+SAIL         | 184.09     | 31.7     | -3.63      | 0.49       | -0.3049      | 0           
+GMDCLTD      | 612.30     | 41.8     | -4.94      | 0.80       | -2.4693      | 0           
+ECLERX       | 1396.00    | 30.9     | -4.10      | 0.51       | 0.3570       | 0           
+VEDL         | 309.65     | 39.3     | -9.00      | 0.78       | -1.0433      | 0           
+CESC         | 168.15     | 38.0     | -4.52      | 0.51       | -0.4007      | 0           
+NATIONALUM   | 376.85     | 38.5     | -5.84      | 0.59       | -1.4056      | 0           
+TATASTEEL    | 197.86     | 31.7     | -4.15      | 0.96       | -0.4935      | 0           
+NLCINDIA     | 316.30     | 33.0     | -4.34      | 2.28       | -1.7324      | 1           
+HINDCOPPER   | 510.00     | 35.1     | -4.39      | 0.70       | 0.1487       | 0           
+HINDZINC     | 559.90     | 26.0     | -5.72      | 0.98       | 1.1145       | 0           
+JAIBALAJI    | 65.85      | 31.1     | -6.60      | 0.30       | 0.1618       | 0           
+AEGISLOG     | 944.40     | 84.3     | 21.41      | 5.41       | 14.8513      | 4           
+STLTECH      | 583.65     | 69.9     | 10.37      | 0.97       | -11.4362     | 0           
+TEJASNET     | 598.85     | 74.4     | 13.13      | 1.26       | -0.3405      | 2           
+QUESS        | 244.02     | 83.9     | 9.88       | 0.70       | 0.2545       | 1           
+TVSSCS       | 132.26     | 58.9     | 9.10       | 1.18       | -0.1842      | 1           
+WHIRLPOOL    | 769.95     | 20.1     | -6.18      | 0.83       | 1.8647       | 0           
+NTPC         | 353.90     | 21.3     | -4.75      | 1.08       | 0.5685       | 0           
+CROMPTON     | 256.20     | 13.0     | -5.11      | 0.96       | 0.4995       | 0           
+CONCOR       | 450.20     | 24.4     | -3.84      | 0.73       | 2.1250       | 0           
+ONGC         | 246.20     | 11.7     | -8.48      | 1.09       | -0.3330      | 0           
+OIL          | 417.80     | 19.6     | -11.10     | 2.57       | -6.1889      | 1           
+RAJESHEXPO   | 76.41      | 26.3     | -23.89     | 2.97       | -1.1939      | 1           
+ALLCARGO     | 15.49      | 20.3     | -35.26     | 1.49       | 0.8269       | 0           
+
+
+============================================================================================================================================
+
+## SECTION 3: EXPANDED MICRO SYSTEM DECISION REASONS
+--------------------------------------------------------------------------------------------------------------------------------------------
+🎯 TICKER  : TTML
+   SIGNAL  : 🚀 INSIDER BREAKOUT
+   FIREWALL: Confirmed entry signal. Volume Expansion (3.09x) backed by positive MACD velocity and 2 institutional block trades.
+--------------------------------------------------------------------------------
+🎯 TICKER  : MRPL
+   SIGNAL  : 🚀 INSIDER BREAKOUT
+   FIREWALL: Confirmed entry signal. Volume Expansion (2.07x) backed by positive MACD velocity and 2 institutional block trades.
+--------------------------------------------------------------------------------
+🎯 TICKER  : PETRONET
+   SIGNAL  : 🚀 INSIDER BREAKOUT
+   FIREWALL: Confirmed entry signal. Volume Expansion (1.68x) backed by positive MACD velocity and 1 institutional block trades.
+--------------------------------------------------------------------------------
+🎯 TICKER  : JSWINFRA
+   SIGNAL  : 🚀 ACTIVE BREAKOUT
+   FIREWALL: Momentum entry confirmation. Volume Expansion (2.02x) and positive MACD directional velocity. No major blocks detected.
+--------------------------------------------------------------------------------
+🎯 TICKER  : HINDPETRO
+   SIGNAL  : 🚀 ACTIVE BREAKOUT
+   FIREWALL: Momentum entry confirmation. Volume Expansion (1.34x) and positive MACD directional velocity. No major blocks detected.
+--------------------------------------------------------------------------------
+🎯 TICKER  : KANSAINER
+   SIGNAL  : 🚀 ACTIVE BREAKOUT
+   FIREWALL: Momentum entry confirmation. Volume Expansion (1.34x) and positive MACD directional velocity. No major blocks detected.
+--------------------------------------------------------------------------------
+🎯 TICKER  : NSLNISP
+   SIGNAL  : 🏢 INSTITUTIONAL LAUNCHPAD
+   FIREWALL: High Priority Accumulation. Price coiling tight to core average (0.6%) with significant institutional block absorption (2 hits).
+--------------------------------------------------------------------------------
+🎯 TICKER  : NMDC
+   SIGNAL  : 🏢 INSTITUTIONAL LAUNCHPAD
+   FIREWALL: High Priority Accumulation. Price coiling tight to core average (0.4%) with significant institutional block absorption (2 hits).
+--------------------------------------------------------------------------------
+🎯 TICKER  : NHPC
+   SIGNAL  : 🏢 INSTITUTIONAL LAUNCHPAD
+   FIREWALL: High Priority Accumulation. Price coiling tight to core average (-2.8%) with significant institutional block absorption (3 hits).
+--------------------------------------------------------------------------------
+🎯 TICKER  : ATGL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (2.9%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : ADANIENSOL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (1.0%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : HFCL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (3.2%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : GSPL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-3.2%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : CHENNPETRO
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (1.7%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : JSWENERGY
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-0.9%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : REDINGTON
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (2.4%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : VIPIND
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (1.1%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : ADANIGREEN
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (3.2%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : ADANIENT
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (2.3%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : VAIBHAVGBL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (2.1%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : GUJGASLTD
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (0.6%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : SAFARI
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-0.5%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : IGL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (1.1%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : GAIL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (3.0%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : DIXON
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (1.4%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : FSL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-2.6%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : ROUTE
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (0.5%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : ITI
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (1.3%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : MGL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (1.2%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : BPCL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (2.6%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : ADANIPORTS
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (1.5%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : INDIGOPNTS
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (3.3%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : KAJARIACER
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-0.1%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : JSWSTEEL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (1.2%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : TITAN
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (0.9%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : CASTROLIND
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-0.2%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : IOC
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (1.4%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : LLOYDSME
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (1.1%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : GPPL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-0.4%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : INDUSTOWER
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-0.6%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : VOLTAS
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-0.1%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : ADANIPOWER
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-1.0%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : CAMPUS
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-1.5%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : BHARTIARTL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-0.0%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : BERGEPAINT
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (2.3%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : KALYANKJIL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-3.3%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : HAVELLS
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-1.8%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : METROBRAND
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-2.0%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : BLUESTARCO
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-1.9%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : RELIANCE
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-1.5%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : BLUEDART
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-1.5%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : BATAINDIA
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-1.1%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : SJVN
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-1.2%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : POWERGRID
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-2.4%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : CELLO
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-2.2%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : RAILTEL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-1.5%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : VGUARD
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-2.4%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : DELHIVERY
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-1.2%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : JSL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-1.0%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : JINDALSTEL
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-3.1%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : AMBER
+   SIGNAL  : 🏢 LAUNCHPAD
+   FIREWALL: Standard Compression Watch. Asset consolidating cleanly within historical moving average structural boundaries (-2.6%).
+--------------------------------------------------------------------------------
+🎯 TICKER  : TATACOMM
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 50.3, EMA_Dist: 4.2%, Vol_Ratio: 0.46x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : INDIGO
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 63.3, EMA_Dist: 5.2%, Vol_Ratio: 1.15x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : CERA
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 68.2, EMA_Dist: 7.7%, Vol_Ratio: 0.91x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : MMTC
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 58.8, EMA_Dist: 4.1%, Vol_Ratio: 3.32x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : ASIANPAINT
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 67.2, EMA_Dist: 3.6%, Vol_Ratio: 0.82x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : COALINDIA
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 41.7, EMA_Dist: -3.7%, Vol_Ratio: 0.36x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : TATAPOWER
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 36.2, EMA_Dist: -3.7%, Vol_Ratio: 0.99x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : TORNTPOWER
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 27.2, EMA_Dist: -4.5%, Vol_Ratio: 0.56x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : CENTURYPLY
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 29.6, EMA_Dist: -4.1%, Vol_Ratio: 0.40x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : GESHIP
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 25.5, EMA_Dist: -6.2%, Vol_Ratio: 0.28x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : HINDALCO
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 32.9, EMA_Dist: -5.0%, Vol_Ratio: 1.25x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : SAIL
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 31.7, EMA_Dist: -3.6%, Vol_Ratio: 0.49x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : GMDCLTD
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 41.8, EMA_Dist: -4.9%, Vol_Ratio: 0.80x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : ECLERX
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 30.9, EMA_Dist: -4.1%, Vol_Ratio: 0.51x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : VEDL
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 39.3, EMA_Dist: -9.0%, Vol_Ratio: 0.78x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : CESC
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 38.0, EMA_Dist: -4.5%, Vol_Ratio: 0.51x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : NATIONALUM
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 38.5, EMA_Dist: -5.8%, Vol_Ratio: 0.59x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : TATASTEEL
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 31.7, EMA_Dist: -4.2%, Vol_Ratio: 0.96x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : NLCINDIA
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 33.0, EMA_Dist: -4.3%, Vol_Ratio: 2.28x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : HINDCOPPER
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 35.1, EMA_Dist: -4.4%, Vol_Ratio: 0.70x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : HINDZINC
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 26.0, EMA_Dist: -5.7%, Vol_Ratio: 0.98x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : JAIBALAJI
+   SIGNAL  : ⏳ UNCONFIRMED CHOP
+   FIREWALL: Neutral/No Trade Zone. Indicators did not meet precise strategy parameters (RSI: 31.1, EMA_Dist: -6.6%, Vol_Ratio: 0.30x).
+--------------------------------------------------------------------------------
+🎯 TICKER  : AEGISLOG
+   SIGNAL  : 🛑 OVEREXTENDED
+   FIREWALL: Buy Veto triggered. RSI (84.3 >= 75) or price distance to 20EMA (21.4%) indicates an overextended exhaustion zone.
+--------------------------------------------------------------------------------
+🎯 TICKER  : STLTECH
+   SIGNAL  : 🛑 OVEREXTENDED
+   FIREWALL: Buy Veto triggered. RSI (69.9 >= 75) or price distance to 20EMA (10.4%) indicates an overextended exhaustion zone.
+--------------------------------------------------------------------------------
+🎯 TICKER  : TEJASNET
+   SIGNAL  : 🛑 OVEREXTENDED
+   FIREWALL: Buy Veto triggered. RSI (74.4 >= 75) or price distance to 20EMA (13.1%) indicates an overextended exhaustion zone.
+--------------------------------------------------------------------------------
+🎯 TICKER  : QUESS
+   SIGNAL  : 🛑 OVEREXTENDED
+   FIREWALL: Buy Veto triggered. RSI (83.9 >= 75) or price distance to 20EMA (9.9%) indicates an overextended exhaustion zone.
+--------------------------------------------------------------------------------
+🎯 TICKER  : TVSSCS
+   SIGNAL  : 🛑 OVEREXTENDED
+   FIREWALL: Buy Veto triggered. RSI (58.9 >= 75) or price distance to 20EMA (9.1%) indicates an overextended exhaustion zone.
+--------------------------------------------------------------------------------
+🎯 TICKER  : WHIRLPOOL
+   SIGNAL  : 📉 DEEP FLUSH
+   FIREWALL: Avoid Asset. RSI (20.1 <= 25) or price extension below 20EMA (-6.2%) signals steep capitulation trend.
+--------------------------------------------------------------------------------
+🎯 TICKER  : NTPC
+   SIGNAL  : 📉 DEEP FLUSH
+   FIREWALL: Avoid Asset. RSI (21.3 <= 25) or price extension below 20EMA (-4.8%) signals steep capitulation trend.
+--------------------------------------------------------------------------------
+🎯 TICKER  : CROMPTON
+   SIGNAL  : 📉 DEEP FLUSH
+   FIREWALL: Avoid Asset. RSI (13.0 <= 25) or price extension below 20EMA (-5.1%) signals steep capitulation trend.
+--------------------------------------------------------------------------------
+🎯 TICKER  : CONCOR
+   SIGNAL  : 📉 DEEP FLUSH
+   FIREWALL: Avoid Asset. RSI (24.4 <= 25) or price extension below 20EMA (-3.8%) signals steep capitulation trend.
+--------------------------------------------------------------------------------
+🎯 TICKER  : ONGC
+   SIGNAL  : 📉 DEEP FLUSH
+   FIREWALL: Avoid Asset. RSI (11.7 <= 25) or price extension below 20EMA (-8.5%) signals steep capitulation trend.
+--------------------------------------------------------------------------------
+🎯 TICKER  : OIL
+   SIGNAL  : 📉 DEEP FLUSH
+   FIREWALL: Avoid Asset. RSI (19.6 <= 25) or price extension below 20EMA (-11.1%) signals steep capitulation trend.
+--------------------------------------------------------------------------------
+🎯 TICKER  : RAJESHEXPO
+   SIGNAL  : 📉 DEEP FLUSH
+   FIREWALL: Avoid Asset. RSI (26.3 <= 25) or price extension below 20EMA (-23.9%) signals steep capitulation trend.
+--------------------------------------------------------------------------------
+🎯 TICKER  : ALLCARGO
+   SIGNAL  : 📉 DEEP FLUSH
+   FIREWALL: Avoid Asset. RSI (20.3 <= 25) or price extension below 20EMA (-35.3%) signals steep capitulation trend.
+--------------------------------------------------------------------------------

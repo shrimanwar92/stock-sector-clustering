@@ -1,0 +1,129 @@
+========================================================================================================================
+ PRODUCTION QUANT DATA LOGS: SYSTEM SECTOR ROTATION AUDIT
+ Generated on: 2026-06-15 10:20:07 | Universe: Nifty 500
+========================================================================================================================
+
+## SECTION 1: DETAILED SECTOR MATRIX
+------------------------------------------------------------------------------------------------------------------------
+                           Sector                     Macro_Regime  Sector_Rolling_Return  Sector_Delivery_Avg
+                TELECOMMUNICATION         🔥 ULTRA_MOMENTUM_LEADERS              65.977211               64.655
+                            POWER         🚀 ACTIVE_BREAKOUT_FIELDS              59.878725               16.770
+       OIL_GAS_&_CONSUMABLE_FUELS     📈 STABLE_UPWARD_ACCUMULATION              34.048627               13.050
+                  METALS_&_MINING         🚀 ACTIVE_BREAKOUT_FIELDS              28.079544               29.320
+                         SERVICES     ❄️ DEEP_BEARISH_CAPITULATION              21.471047               50.695
+                CONSUMER_DURABLES ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION              15.384165               38.185
+                    CAPITAL_GOODS     ❄️ DEEP_BEARISH_CAPITULATION              11.025099               44.890
+               FINANCIAL_SERVICES ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION               8.838037               50.880
+                         TEXTILES     ❄️ DEEP_BEARISH_CAPITULATION               4.624814               60.175
+                        CHEMICALS     ❄️ DEEP_BEARISH_CAPITULATION               3.918367               47.575
+                           REALTY ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION               3.616178               47.310
+                 FOREST_MATERIALS     ❄️ DEEP_BEARISH_CAPITULATION               1.173887               54.220
+   AUTOMOBILE_AND_AUTO_COMPONENTS     ❄️ DEEP_BEARISH_CAPITULATION              -0.413020               44.245
+                       HEALTHCARE     ❄️ DEEP_BEARISH_CAPITULATION              -0.574529               51.500
+                CONSUMER_SERVICES     ❄️ DEEP_BEARISH_CAPITULATION              -1.242158               55.065
+                      DIVERSIFIED     ❄️ DEEP_BEARISH_CAPITULATION              -3.419801               55.630
+       FAST_MOVING_CONSUMER_GOODS ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION              -3.431935               44.425
+MEDIA_ENTERTAINMENT_&_PUBLICATION ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION              -4.718560               43.925
+           INFORMATION_TECHNOLOGY ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION              -5.335829               37.850
+           CONSTRUCTION_MATERIALS     ❄️ DEEP_BEARISH_CAPITULATION              -5.991662               48.145
+                     CONSTRUCTION     ❄️ DEEP_BEARISH_CAPITULATION             -17.089620               40.390
+
+========================================================================================================================
+
+## SECTION 2: MATHEMATICAL CLUSTER CENTROIDS METADATA
+------------------------------------------------------------------------------------------------------------------------
+🔥 ULTRA_MOMENTUM_LEADERS            | 65.98           | 64.66           | 0.38              
+🚀 ACTIVE_BREAKOUT_FIELDS            | 43.98           | 23.04           | 0.64              
+📈 STABLE_UPWARD_ACCUMULATION        | 34.05           | 13.05           | 2.95              
+⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION    | 2.39            | 43.76           | 1.23              
+❄️ DEEP_BEARISH_CAPITULATION        | 1.23            | 50.23           | 0.74              
+
+
+========================================================================================================================
+
+## SECTION 3: EXPLICIT DECISION REASON LOG FILE
+------------------------------------------------------------------------------------------------------------------------
+📍 SECTOR: TELECOMMUNICATION
+   REGIME: 🔥 ULTRA_MOMENTUM_LEADERS
+   AUDIT : Assigned to 🔥 ULTRA_MOMENTUM_LEADERS because the sector features a 3-Month return profile of 66.0%, sustained overnight institutional delivery weight of 64.7%, and an active volume expansion multiplier of 0.38x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: POWER
+   REGIME: 🚀 ACTIVE_BREAKOUT_FIELDS
+   AUDIT : Assigned to 🚀 ACTIVE_BREAKOUT_FIELDS because the sector features a 3-Month return profile of 59.9%, sustained overnight institutional delivery weight of 16.8%, and an active volume expansion multiplier of 0.44x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: OIL_GAS_&_CONSUMABLE_FUELS
+   REGIME: 📈 STABLE_UPWARD_ACCUMULATION
+   AUDIT : Assigned to 📈 STABLE_UPWARD_ACCUMULATION because the sector features a 3-Month return profile of 34.0%, sustained overnight institutional delivery weight of 13.1%, and an active volume expansion multiplier of 2.95x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: METALS_&_MINING
+   REGIME: 🚀 ACTIVE_BREAKOUT_FIELDS
+   AUDIT : Assigned to 🚀 ACTIVE_BREAKOUT_FIELDS because the sector features a 3-Month return profile of 28.1%, sustained overnight institutional delivery weight of 29.3%, and an active volume expansion multiplier of 0.84x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: SERVICES
+   REGIME: ❄️ DEEP_BEARISH_CAPITULATION
+   AUDIT : Assigned to ❄️ DEEP_BEARISH_CAPITULATION because the sector features a 3-Month return profile of 21.5%, sustained overnight institutional delivery weight of 50.7%, and an active volume expansion multiplier of 0.94x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: CONSUMER_DURABLES
+   REGIME: ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION
+   AUDIT : Assigned to ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION because the sector features a 3-Month return profile of 15.4%, sustained overnight institutional delivery weight of 38.2%, and an active volume expansion multiplier of 0.90x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: CAPITAL_GOODS
+   REGIME: ❄️ DEEP_BEARISH_CAPITULATION
+   AUDIT : Assigned to ❄️ DEEP_BEARISH_CAPITULATION because the sector features a 3-Month return profile of 11.0%, sustained overnight institutional delivery weight of 44.9%, and an active volume expansion multiplier of 0.42x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: FINANCIAL_SERVICES
+   REGIME: ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION
+   AUDIT : Assigned to ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION because the sector features a 3-Month return profile of 8.8%, sustained overnight institutional delivery weight of 50.9%, and an active volume expansion multiplier of 1.52x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: TEXTILES
+   REGIME: ❄️ DEEP_BEARISH_CAPITULATION
+   AUDIT : Assigned to ❄️ DEEP_BEARISH_CAPITULATION because the sector features a 3-Month return profile of 4.6%, sustained overnight institutional delivery weight of 60.2%, and an active volume expansion multiplier of 0.89x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: CHEMICALS
+   REGIME: ❄️ DEEP_BEARISH_CAPITULATION
+   AUDIT : Assigned to ❄️ DEEP_BEARISH_CAPITULATION because the sector features a 3-Month return profile of 3.9%, sustained overnight institutional delivery weight of 47.6%, and an active volume expansion multiplier of 0.68x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: REALTY
+   REGIME: ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION
+   AUDIT : Assigned to ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION because the sector features a 3-Month return profile of 3.6%, sustained overnight institutional delivery weight of 47.3%, and an active volume expansion multiplier of 1.23x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: FOREST_MATERIALS
+   REGIME: ❄️ DEEP_BEARISH_CAPITULATION
+   AUDIT : Assigned to ❄️ DEEP_BEARISH_CAPITULATION because the sector features a 3-Month return profile of 1.2%, sustained overnight institutional delivery weight of 54.2%, and an active volume expansion multiplier of 1.06x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: AUTOMOBILE_AND_AUTO_COMPONENTS
+   REGIME: ❄️ DEEP_BEARISH_CAPITULATION
+   AUDIT : Assigned to ❄️ DEEP_BEARISH_CAPITULATION because the sector features a 3-Month return profile of -0.4%, sustained overnight institutional delivery weight of 44.2%, and an active volume expansion multiplier of 0.49x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: HEALTHCARE
+   REGIME: ❄️ DEEP_BEARISH_CAPITULATION
+   AUDIT : Assigned to ❄️ DEEP_BEARISH_CAPITULATION because the sector features a 3-Month return profile of -0.6%, sustained overnight institutional delivery weight of 51.5%, and an active volume expansion multiplier of 0.91x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: CONSUMER_SERVICES
+   REGIME: ❄️ DEEP_BEARISH_CAPITULATION
+   AUDIT : Assigned to ❄️ DEEP_BEARISH_CAPITULATION because the sector features a 3-Month return profile of -1.2%, sustained overnight institutional delivery weight of 55.1%, and an active volume expansion multiplier of 0.59x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: DIVERSIFIED
+   REGIME: ❄️ DEEP_BEARISH_CAPITULATION
+   AUDIT : Assigned to ❄️ DEEP_BEARISH_CAPITULATION because the sector features a 3-Month return profile of -3.4%, sustained overnight institutional delivery weight of 55.6%, and an active volume expansion multiplier of 0.65x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: FAST_MOVING_CONSUMER_GOODS
+   REGIME: ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION
+   AUDIT : Assigned to ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION because the sector features a 3-Month return profile of -3.4%, sustained overnight institutional delivery weight of 44.4%, and an active volume expansion multiplier of 1.46x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: MEDIA_ENTERTAINMENT_&_PUBLICATION
+   REGIME: ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION
+   AUDIT : Assigned to ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION because the sector features a 3-Month return profile of -4.7%, sustained overnight institutional delivery weight of 43.9%, and an active volume expansion multiplier of 1.32x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: INFORMATION_TECHNOLOGY
+   REGIME: ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION
+   AUDIT : Assigned to ⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION because the sector features a 3-Month return profile of -5.3%, sustained overnight institutional delivery weight of 37.9%, and an active volume expansion multiplier of 0.98x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: CONSTRUCTION_MATERIALS
+   REGIME: ❄️ DEEP_BEARISH_CAPITULATION
+   AUDIT : Assigned to ❄️ DEEP_BEARISH_CAPITULATION because the sector features a 3-Month return profile of -6.0%, sustained overnight institutional delivery weight of 48.1%, and an active volume expansion multiplier of 0.97x relative to its historical baseline values.
+------------------------------------------------------------
+📍 SECTOR: CONSTRUCTION
+   REGIME: ❄️ DEEP_BEARISH_CAPITULATION
+   AUDIT : Assigned to ❄️ DEEP_BEARISH_CAPITULATION because the sector features a 3-Month return profile of -17.1%, sustained overnight institutional delivery weight of 40.4%, and an active volume expansion multiplier of 0.58x relative to its historical baseline values.
+------------------------------------------------------------
