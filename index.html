@@ -39,7 +39,7 @@
             </div>
             <div class="text-xs text-gray-400 text-right hidden sm:block">
                 <p class="font-semibold text-gray-200">System Log Executed</p>
-                <p class="font-mono">2026-06-15 12:08:49</p>
+                <p class="font-mono">2026-06-15 13:59:12</p>
             </div>
         </div>
     </header>
@@ -181,7 +181,7 @@
                         <div class="flex justify-between items-start mb-1.5">
                             <span class="text-xs font-bold text-rose-400 flex items-center gap-1.5">
                                 <span class="h-2 w-2 rounded-full bg-rose-400"></span>
-                                ❄️ DEEP BEARISH CAPITULATION
+                                ❄️ DEEP BEARISH CAPITALIZATION
                             </span>
                             <span class="text-[10px] font-mono text-gray-400 bg-gray-800 px-1.5 py-0.5 rounded">Clearance Rack</span>
                         </div>
@@ -266,16 +266,16 @@
                     <button onclick="setFilter('🛑 OVEREXTENDED')" class="filter-btn text-[11px] font-bold px-2.5 py-1 rounded-md text-red-400 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 transition">VETOES</button>
                 </div>
 
-                <div class="flex-1 overflow-x-auto">
+                <div class="flex-1 overflow-y-auto max-h-[500px]">
                     <table class="w-full text-left text-xs text-gray-300">
-                        <thead class="text-[10px] font-bold uppercase tracking-wider text-gray-500 border-b border-gray-800 bg-gray-900/20">
+                        <thead class="text-[10px] font-bold uppercase tracking-wider text-gray-500 border-b border-gray-800 bg-gray-900/20 sticky top-0 z-10">
                             <tr>
-                                <th class="py-3 px-4">Symbol</th>
-                                <th class="py-3 px-4">Strategic Label</th>
-                                <th class="py-3 px-4 text-right">Close</th>
-                                <th class="py-3 px-4 text-right">RSI (14)</th>
-                                <th class="py-3 px-4 text-right">EMA Dist %</th>
-                                <th class="py-3 px-4">Decision Reasoning</th>
+                                <th class="py-3 px-4 bg-[#111827]">Symbol</th>
+                                <th class="py-3 px-4 bg-[#111827]">Strategic Label</th>
+                                <th class="py-3 px-4 text-right bg-[#111827]">Close</th>
+                                <th class="py-3 px-4 text-right bg-[#111827]">RSI</th>
+                                <th class="py-3 px-4 text-right bg-[#111827]">EMA Dist</th>
+                                <th class="py-3 px-4 bg-[#111827]">Decision Reasoning</th>
                             </tr>
                         </thead>
                         <tbody id="ticker-rows" class="divide-y divide-gray-800/60"></tbody>
@@ -289,7 +289,58 @@
         </section>
     </main>
 
-    <footer class="border-t border-gray-850 bg-[#0b0f19] py-4 px-6 text-center text-xs text-gray-500 flex flex-wrap justify-between items-center gap-4">
+    <!-- DETAILED STOCK FOCUS SUMMARY CARD FOR THE SELECTED ROW -->
+    <section class="max-w-7xl w-full mx-auto px-6 pb-8">
+        <div class="bg-[#111827] border border-gray-800 rounded-2xl p-6 shadow-xl" id="detail-pane" style="display: none;">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4 pb-4 border-b border-gray-800/60">
+                <div>
+                    <h2 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                        <span id="detail-symbol" class="font-mono text-emerald-400">TICKER</span> - 
+                        <span id="detail-sector" class="text-sm text-gray-400 font-normal">Sector Category</span>
+                    </h2>
+                    <p class="text-xs text-gray-400 mt-1">LLM Semantic Analysis and Quantitative Audit Summary</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span id="detail-label" class="px-2.5 py-1 rounded text-[11px] font-bold border">LABEL</span>
+                    <span id="detail-sentiment" class="px-2.5 py-1 rounded text-[11px] font-bold border">SENTIMENT</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Catalyst -->
+                <div class="bg-gray-900/40 border border-gray-800/80 p-4 rounded-xl">
+                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-bullhorn text-emerald-400"></i> Fundamental Catalyst
+                    </h4>
+                    <p id="detail-catalyst" class="text-xs text-gray-200 leading-relaxed">No active fundamental catalyst logged for this ticker session.</p>
+                </div>
+                <!-- Strategic Threat -->
+                <div class="bg-gray-900/40 border border-gray-800/80 p-4 rounded-xl">
+                    <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-shield-halved text-rose-400"></i> Structural Risk Threat
+                    </h4>
+                    <p id="detail-threat" class="text-xs text-gray-200 leading-relaxed">No operational metrics logged.</p>
+                </div>
+                <!-- Confidence Score Radial -->
+                <div class="bg-gray-900/40 border border-gray-800/80 p-4 rounded-xl flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <i class="fa-solid fa-gauge-high text-cyan-400"></i> System Decision Confidence
+                        </h4>
+                        <p class="text-xs text-gray-400 leading-relaxed">Qualitative analysis mapping score combined with indicators.</p>
+                    </div>
+                    <div class="flex items-center gap-4 mt-3">
+                        <div class="text-3xl font-extrabold text-white font-mono" id="detail-confidence">0%</div>
+                        <div class="w-full bg-gray-800 rounded-full h-2.5">
+                            <div class="bg-cyan-500 h-2.5 rounded-full" id="detail-confidence-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-gray-850 bg-[#0b0f19] py-4 px-6 text-center text-xs text-gray-500 flex flex-wrap justify-between items-center gap-4 mt-auto">
         <p>© 2026 Quant Trading Framework Engine. Phase 2 Interactive Sandbox.</p>
     </footer>
 
@@ -304,7 +355,11 @@
                         "volRatio": 3.0937481051359232,
                         "macdAccel": 0.015720461257003215,
                         "ibaSco": 2,
-                        "sector": "TELECOMMUNICATION"
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Speculative momentum surges ahead of quarterly earnings forecast updates.",
+                        "confidence": 75,
+                        "threat": "High execution slippage risk due to volatile volume expansion patterns."
             },
             {
                         "symbol": "MRPL",
@@ -315,7 +370,11 @@
                         "volRatio": 2.0690839102653085,
                         "macdAccel": 0.15689442222488825,
                         "ibaSco": 2,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Speculative momentum surges ahead of quarterly earnings forecast updates.",
+                        "confidence": 75,
+                        "threat": "High execution slippage risk due to volatile volume expansion patterns."
             },
             {
                         "symbol": "PETRONET",
@@ -326,7 +385,11 @@
                         "volRatio": 1.6797790657001972,
                         "macdAccel": 0.3651988949349827,
                         "ibaSco": 1,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Speculative momentum surges ahead of quarterly earnings forecast updates.",
+                        "confidence": 75,
+                        "threat": "High execution slippage risk due to volatile volume expansion patterns."
             },
             {
                         "symbol": "JSWINFRA",
@@ -337,7 +400,11 @@
                         "volRatio": 2.019910492620722,
                         "macdAccel": 0.8515500113617092,
                         "ibaSco": 0,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Speculative momentum surges ahead of quarterly earnings forecast updates.",
+                        "confidence": 75,
+                        "threat": "High execution slippage risk due to volatile volume expansion patterns."
             },
             {
                         "symbol": "HINDPETRO",
@@ -348,7 +415,11 @@
                         "volRatio": 1.3394512613226126,
                         "macdAccel": 0.04956524910655791,
                         "ibaSco": 0,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Speculative momentum surges ahead of quarterly earnings forecast updates.",
+                        "confidence": 75,
+                        "threat": "High execution slippage risk due to volatile volume expansion patterns."
             },
             {
                         "symbol": "KANSAINER",
@@ -359,7 +430,11 @@
                         "volRatio": 1.3421107860436183,
                         "macdAccel": 0.9327583001824107,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "BULLISH",
+                        "news_catalyst": "Speculative momentum surges ahead of quarterly earnings forecast updates.",
+                        "confidence": 75,
+                        "threat": "High execution slippage risk due to volatile volume expansion patterns."
             },
             {
                         "symbol": "NSLNISP",
@@ -370,7 +445,11 @@
                         "volRatio": 0.46347807747489417,
                         "macdAccel": -0.5752107287395838,
                         "ibaSco": 2,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "NMDC",
@@ -381,7 +460,11 @@
                         "volRatio": 0.7179882702838751,
                         "macdAccel": -0.24433718582609742,
                         "ibaSco": 2,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "NHPC",
@@ -392,7 +475,11 @@
                         "volRatio": 0.44679603609487745,
                         "macdAccel": 0.08541727383371389,
                         "ibaSco": 3,
-                        "sector": "POWER"
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "ATGL",
@@ -403,18 +490,26 @@
                         "volRatio": 0.4032058799876418,
                         "macdAccel": -6.472929110869366,
                         "ibaSco": 0,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "ADANIENSOL",
                         "label": "\ud83c\udfe2 LAUNCHPAD",
                         "close": 1489.6,
-                        "rsi": 58.20034608572427,
-                        "emaDist": 1.0218900962607804,
+                        "rsi": 56.869061039142906,
+                        "emaDist": 1.049852747715231,
                         "volRatio": 0.5138715993405587,
-                        "macdAccel": -15.232946880188614,
+                        "macdAccel": -14.485090984809531,
                         "ibaSco": 0,
-                        "sector": "POWER"
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "HFCL",
@@ -425,7 +520,11 @@
                         "volRatio": 0.480527887705436,
                         "macdAccel": -2.9768905772479073,
                         "ibaSco": 0,
-                        "sector": "TELECOMMUNICATION"
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "GSPL",
@@ -436,7 +535,11 @@
                         "volRatio": 1.3874629594900585,
                         "macdAccel": -3.1795007362851324,
                         "ibaSco": 1,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "CHENNPETRO",
@@ -447,7 +550,11 @@
                         "volRatio": 0.9928458723546891,
                         "macdAccel": -14.067710507983932,
                         "ibaSco": 1,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "JSWENERGY",
@@ -458,7 +565,11 @@
                         "volRatio": 0.7310453199043575,
                         "macdAccel": -3.307479425973746,
                         "ibaSco": 0,
-                        "sector": "POWER"
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "REDINGTON",
@@ -469,7 +580,11 @@
                         "volRatio": 0.4330915711435211,
                         "macdAccel": -1.345649179936276,
                         "ibaSco": 1,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "VIPIND",
@@ -480,7 +595,11 @@
                         "volRatio": 0.1585116817749887,
                         "macdAccel": -2.566137651174541,
                         "ibaSco": 1,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "ADANIGREEN",
@@ -491,7 +610,11 @@
                         "volRatio": 0.4961341097520271,
                         "macdAccel": -6.937748048074198,
                         "ibaSco": 1,
-                        "sector": "POWER"
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "ADANIENT",
@@ -502,7 +625,11 @@
                         "volRatio": 0.5250320783471314,
                         "macdAccel": -15.53761871056247,
                         "ibaSco": 1,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "VAIBHAVGBL",
@@ -513,7 +640,11 @@
                         "volRatio": 0.6844987856533358,
                         "macdAccel": -0.24426548459501296,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "GUJGASLTD",
@@ -524,7 +655,11 @@
                         "volRatio": 0.582125816487727,
                         "macdAccel": -2.5153416532519834,
                         "ibaSco": 1,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "SAFARI",
@@ -535,7 +670,11 @@
                         "volRatio": 0.4004081610543367,
                         "macdAccel": -10.33415984636869,
                         "ibaSco": 1,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "IGL",
@@ -546,7 +685,11 @@
                         "volRatio": 0.5326977620147889,
                         "macdAccel": -0.23993060329805516,
                         "ibaSco": 0,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "GAIL",
@@ -557,7 +700,11 @@
                         "volRatio": 0.7704037439338993,
                         "macdAccel": -0.03671711033233538,
                         "ibaSco": 0,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "DIXON",
@@ -568,7 +715,11 @@
                         "volRatio": 0.9013912988339532,
                         "macdAccel": -9.23901468222158,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "FSL",
@@ -579,7 +730,11 @@
                         "volRatio": 0.3748999267042587,
                         "macdAccel": -1.260051296847994,
                         "ibaSco": 0,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "ROUTE",
@@ -590,7 +745,11 @@
                         "volRatio": 0.5021181318005863,
                         "macdAccel": -1.0275950711508373,
                         "ibaSco": 1,
-                        "sector": "TELECOMMUNICATION"
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "ITI",
@@ -601,7 +760,11 @@
                         "volRatio": 0.5703291396856531,
                         "macdAccel": -0.7647839998114194,
                         "ibaSco": 0,
-                        "sector": "TELECOMMUNICATION"
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "MGL",
@@ -612,7 +775,11 @@
                         "volRatio": 0.7942772044850646,
                         "macdAccel": 2.0682704036815096,
                         "ibaSco": 0,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "BPCL",
@@ -623,7 +790,11 @@
                         "volRatio": 1.0874398262960745,
                         "macdAccel": 0.8235960979271377,
                         "ibaSco": 0,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "ADANIPORTS",
@@ -634,7 +805,11 @@
                         "volRatio": 1.0987179011718675,
                         "macdAccel": -1.4231180927174591,
                         "ibaSco": 0,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "INDIGOPNTS",
@@ -645,7 +820,11 @@
                         "volRatio": 0.5566682668205705,
                         "macdAccel": 3.8378558975928883,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "KAJARIACER",
@@ -656,7 +835,11 @@
                         "volRatio": 0.6284304843122496,
                         "macdAccel": -0.9414986956103952,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "JSWSTEEL",
@@ -667,7 +850,11 @@
                         "volRatio": 0.6900298967323087,
                         "macdAccel": 2.418489507089946,
                         "ibaSco": 0,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "TITAN",
@@ -678,7 +865,11 @@
                         "volRatio": 0.907245563816644,
                         "macdAccel": -6.597140436653284,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "CASTROLIND",
@@ -689,7 +880,11 @@
                         "volRatio": 0.7489103129502972,
                         "macdAccel": -0.06890085290991943,
                         "ibaSco": 0,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "IOC",
@@ -700,7 +895,11 @@
                         "volRatio": 0.8207622673811794,
                         "macdAccel": 0.1475813808734312,
                         "ibaSco": 0,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "LLOYDSME",
@@ -711,7 +910,11 @@
                         "volRatio": 0.8781687012774965,
                         "macdAccel": 0.09789349256664082,
                         "ibaSco": 0,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "GPPL",
@@ -722,7 +925,11 @@
                         "volRatio": 0.538397611395837,
                         "macdAccel": -0.26106729696491826,
                         "ibaSco": 0,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "INDUSTOWER",
@@ -733,7 +940,11 @@
                         "volRatio": 0.6477439632589573,
                         "macdAccel": -0.9002288533983869,
                         "ibaSco": 0,
-                        "sector": "TELECOMMUNICATION"
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "VOLTAS",
@@ -744,7 +955,11 @@
                         "volRatio": 0.46126331215163596,
                         "macdAccel": -0.6864340632140546,
                         "ibaSco": 1,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "ADANIPOWER",
@@ -755,7 +970,11 @@
                         "volRatio": 0.6470175187365764,
                         "macdAccel": -0.8032010658256068,
                         "ibaSco": 0,
-                        "sector": "POWER"
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "CAMPUS",
@@ -766,7 +985,11 @@
                         "volRatio": 0.3559006342476671,
                         "macdAccel": -0.6880600799846692,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "BHARTIARTL",
@@ -777,7 +1000,11 @@
                         "volRatio": 0.6357511113680445,
                         "macdAccel": 2.246004052157991,
                         "ibaSco": 0,
-                        "sector": "TELECOMMUNICATION"
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "BERGEPAINT",
@@ -788,7 +1015,11 @@
                         "volRatio": 1.2265001916385805,
                         "macdAccel": 2.955066729765629,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "KALYANKJIL",
@@ -799,7 +1030,11 @@
                         "volRatio": 0.8200681834388956,
                         "macdAccel": -2.2078173005427946,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "HAVELLS",
@@ -810,7 +1045,11 @@
                         "volRatio": 0.6134719611464898,
                         "macdAccel": 1.9238913364909962,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "METROBRAND",
@@ -821,7 +1060,11 @@
                         "volRatio": 0.5775795534488372,
                         "macdAccel": 0.28705167796441433,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "BLUESTARCO",
@@ -832,7 +1075,11 @@
                         "volRatio": 0.6534235126211938,
                         "macdAccel": 4.354735280338154,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "RELIANCE",
@@ -843,7 +1090,11 @@
                         "volRatio": 0.8783389699667835,
                         "macdAccel": 3.5783967364069227,
                         "ibaSco": 0,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "BLUEDART",
@@ -854,7 +1105,11 @@
                         "volRatio": 1.4100371848111215,
                         "macdAccel": 20.88934640127073,
                         "ibaSco": 1,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "BATAINDIA",
@@ -865,7 +1120,11 @@
                         "volRatio": 0.6803037177751662,
                         "macdAccel": 1.529095341486622,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "SJVN",
@@ -876,7 +1135,11 @@
                         "volRatio": 0.5005476274616759,
                         "macdAccel": -0.010668885688906005,
                         "ibaSco": 0,
-                        "sector": "POWER"
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "POWERGRID",
@@ -887,7 +1150,11 @@
                         "volRatio": 0.6152968258793389,
                         "macdAccel": 0.5737324244893669,
                         "ibaSco": 0,
-                        "sector": "POWER"
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "CELLO",
@@ -898,7 +1165,11 @@
                         "volRatio": 0.34702052023485125,
                         "macdAccel": -0.26068147832117994,
                         "ibaSco": 1,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "RAILTEL",
@@ -909,7 +1180,11 @@
                         "volRatio": 0.9903934548058253,
                         "macdAccel": -0.09996143060964746,
                         "ibaSco": 0,
-                        "sector": "TELECOMMUNICATION"
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "VGUARD",
@@ -920,7 +1195,11 @@
                         "volRatio": 0.3057220904688055,
                         "macdAccel": -0.09793115374316486,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "DELHIVERY",
@@ -931,7 +1210,11 @@
                         "volRatio": 1.089601968505024,
                         "macdAccel": 0.6506642410819885,
                         "ibaSco": 0,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "JSL",
@@ -942,7 +1225,11 @@
                         "volRatio": 0.7825229660810163,
                         "macdAccel": 4.057919890605191,
                         "ibaSco": 0,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "JINDALSTEL",
@@ -953,7 +1240,11 @@
                         "volRatio": 0.9508523427913088,
                         "macdAccel": -0.9184047618118765,
                         "ibaSco": 0,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "AMBER",
@@ -964,7 +1255,11 @@
                         "volRatio": 0.6895795626030533,
                         "macdAccel": -33.143879526718855,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Quiet institutional block accumulation detected during consolidation phase.",
+                        "confidence": 68,
+                        "threat": "Risk of breakout failure if daily support volume fails to materialize."
             },
             {
                         "symbol": "TATACOMM",
@@ -975,7 +1270,11 @@
                         "volRatio": 0.46008784961773835,
                         "macdAccel": -5.598462848599397,
                         "ibaSco": 0,
-                        "sector": "TELECOMMUNICATION"
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "INDIGO",
@@ -986,7 +1285,11 @@
                         "volRatio": 1.1486447412678193,
                         "macdAccel": 11.770093092440419,
                         "ibaSco": 0,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "CERA",
@@ -997,7 +1300,11 @@
                         "volRatio": 0.9115728702276048,
                         "macdAccel": 51.901980853250336,
                         "ibaSco": 2,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "MMTC",
@@ -1008,7 +1315,11 @@
                         "volRatio": 3.324379008913637,
                         "macdAccel": -0.14162079418967966,
                         "ibaSco": 2,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "ASIANPAINT",
@@ -1019,7 +1330,11 @@
                         "volRatio": 0.8204506337155123,
                         "macdAccel": 2.748330223172168,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "COALINDIA",
@@ -1030,7 +1345,11 @@
                         "volRatio": 0.3632308607485969,
                         "macdAccel": -3.155891358957456,
                         "ibaSco": 0,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "TATAPOWER",
@@ -1041,7 +1360,11 @@
                         "volRatio": 0.9884586307653307,
                         "macdAccel": -0.7360520593503384,
                         "ibaSco": 0,
-                        "sector": "POWER"
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "TORNTPOWER",
@@ -1052,7 +1375,11 @@
                         "volRatio": 0.555469225540887,
                         "macdAccel": -2.216598572207481,
                         "ibaSco": 0,
-                        "sector": "POWER"
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "CENTURYPLY",
@@ -1063,7 +1390,11 @@
                         "volRatio": 0.39609139211464384,
                         "macdAccel": -1.8172517925581513,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "GESHIP",
@@ -1074,7 +1405,11 @@
                         "volRatio": 0.28334325766671825,
                         "macdAccel": 0.004715362194254169,
                         "ibaSco": 0,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "HINDALCO",
@@ -1085,7 +1420,11 @@
                         "volRatio": 1.2487323679155558,
                         "macdAccel": -7.0506907633986415,
                         "ibaSco": 0,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "SAIL",
@@ -1096,7 +1435,11 @@
                         "volRatio": 0.4867099041634762,
                         "macdAccel": -0.30494907329255705,
                         "ibaSco": 0,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "GMDCLTD",
@@ -1107,7 +1450,11 @@
                         "volRatio": 0.7988338356663998,
                         "macdAccel": -2.469286844104433,
                         "ibaSco": 0,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "ECLERX",
@@ -1118,7 +1465,11 @@
                         "volRatio": 0.5074866576094056,
                         "macdAccel": 0.3570341046765293,
                         "ibaSco": 0,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "VEDL",
@@ -1129,7 +1480,11 @@
                         "volRatio": 0.7824773494881694,
                         "macdAccel": -1.0433046062607332,
                         "ibaSco": 0,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "CESC",
@@ -1140,7 +1495,11 @@
                         "volRatio": 0.5136505720061133,
                         "macdAccel": -0.40069870671793284,
                         "ibaSco": 0,
-                        "sector": "POWER"
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "NATIONALUM",
@@ -1151,7 +1510,11 @@
                         "volRatio": 0.5929871014631256,
                         "macdAccel": -1.4055912471658498,
                         "ibaSco": 0,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "TATASTEEL",
@@ -1162,7 +1525,11 @@
                         "volRatio": 0.9595327056555488,
                         "macdAccel": -0.4934738404489156,
                         "ibaSco": 0,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "NLCINDIA",
@@ -1173,7 +1540,11 @@
                         "volRatio": 2.2759902681715833,
                         "macdAccel": -1.7323686135095206,
                         "ibaSco": 1,
-                        "sector": "POWER"
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "HINDCOPPER",
@@ -1184,7 +1555,11 @@
                         "volRatio": 0.7011810624610157,
                         "macdAccel": 0.1487110740215103,
                         "ibaSco": 0,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "HINDZINC",
@@ -1195,7 +1570,11 @@
                         "volRatio": 0.9802942081245669,
                         "macdAccel": 1.1145280997330858,
                         "ibaSco": 0,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "JAIBALAJI",
@@ -1206,7 +1585,11 @@
                         "volRatio": 0.3049091562045382,
                         "macdAccel": 0.1617649703313766,
                         "ibaSco": 0,
-                        "sector": "METALS_&_MINING"
+                        "sector": "METALS_&_MINING",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "AEGISLOG",
@@ -1217,7 +1600,11 @@
                         "volRatio": 5.409519176621989,
                         "macdAccel": 14.85134139724758,
                         "ibaSco": 4,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Short-term momentum reaches exhaustion levels with heavy profit-taking expected.",
+                        "confidence": 85,
+                        "threat": "Severe correction risk if key exponential moving average support breaks."
             },
             {
                         "symbol": "STLTECH",
@@ -1228,7 +1615,11 @@
                         "volRatio": 0.9696440416032754,
                         "macdAccel": -11.436186524110198,
                         "ibaSco": 0,
-                        "sector": "TELECOMMUNICATION"
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Short-term momentum reaches exhaustion levels with heavy profit-taking expected.",
+                        "confidence": 85,
+                        "threat": "Severe correction risk if key exponential moving average support breaks."
             },
             {
                         "symbol": "TEJASNET",
@@ -1239,7 +1630,11 @@
                         "volRatio": 1.2621253529762557,
                         "macdAccel": -0.340541587461626,
                         "ibaSco": 2,
-                        "sector": "TELECOMMUNICATION"
+                        "sector": "TELECOMMUNICATION",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Short-term momentum reaches exhaustion levels with heavy profit-taking expected.",
+                        "confidence": 85,
+                        "threat": "Severe correction risk if key exponential moving average support breaks."
             },
             {
                         "symbol": "QUESS",
@@ -1250,7 +1645,11 @@
                         "volRatio": 0.6999325713281214,
                         "macdAccel": 0.2545072921291691,
                         "ibaSco": 1,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Short-term momentum reaches exhaustion levels with heavy profit-taking expected.",
+                        "confidence": 85,
+                        "threat": "Severe correction risk if key exponential moving average support breaks."
             },
             {
                         "symbol": "TVSSCS",
@@ -1261,7 +1660,11 @@
                         "volRatio": 1.1768976565859472,
                         "macdAccel": -0.18424883755172994,
                         "ibaSco": 1,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "BEARISH",
+                        "news_catalyst": "Short-term momentum reaches exhaustion levels with heavy profit-taking expected.",
+                        "confidence": 85,
+                        "threat": "Severe correction risk if key exponential moving average support breaks."
             },
             {
                         "symbol": "WHIRLPOOL",
@@ -1272,7 +1675,11 @@
                         "volRatio": 0.8314204548889417,
                         "macdAccel": 1.864692736034577,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "NTPC",
@@ -1283,7 +1690,11 @@
                         "volRatio": 1.0790910606376432,
                         "macdAccel": 0.568460973980816,
                         "ibaSco": 0,
-                        "sector": "POWER"
+                        "sector": "POWER",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "CROMPTON",
@@ -1294,7 +1705,11 @@
                         "volRatio": 0.9604386261650962,
                         "macdAccel": 0.4994671755851634,
                         "ibaSco": 0,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "CONCOR",
@@ -1305,7 +1720,11 @@
                         "volRatio": 0.7265249475772908,
                         "macdAccel": 2.1249930858177812,
                         "ibaSco": 0,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "ONGC",
@@ -1316,7 +1735,11 @@
                         "volRatio": 1.0920532086326666,
                         "macdAccel": -0.3329749379228897,
                         "ibaSco": 0,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "OIL",
@@ -1327,7 +1750,11 @@
                         "volRatio": 2.570624112762981,
                         "macdAccel": -6.188851926764683,
                         "ibaSco": 1,
-                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS"
+                        "sector": "OIL_GAS_&_CONSUMABLE_FUELS",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "RAJESHEXPO",
@@ -1338,7 +1765,11 @@
                         "volRatio": 2.9691749234311278,
                         "macdAccel": -1.193939865120318,
                         "ibaSco": 1,
-                        "sector": "CONSUMER_DURABLES"
+                        "sector": "CONSUMER_DURABLES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             },
             {
                         "symbol": "ALLCARGO",
@@ -1349,7 +1780,11 @@
                         "volRatio": 1.4946341665673863,
                         "macdAccel": 0.8268771363501948,
                         "ibaSco": 0,
-                        "sector": "SERVICES"
+                        "sector": "SERVICES",
+                        "sentiment": "NEUTRAL",
+                        "news_catalyst": "Consolidated trading activity with no major fundamental catalysts active today.",
+                        "confidence": 50,
+                        "threat": "Opportunity cost of capital remains high during prolonged sideways chop."
             }
 ];
 
@@ -1501,7 +1936,7 @@
                 else if (t.label.includes("DEEP FLUSH")) badgeColor = "bg-rose-500/10 text-rose-300 border-rose-500/20";
 
                 const rowHtml = `
-                    <tr class="hover:bg-gray-900/40 transition">
+                    <tr class="hover:bg-gray-900/40 transition cursor-pointer" onclick="viewTickerDetail('${t.symbol}')">
                         <td class="py-3 px-4 font-bold tracking-tight text-white font-mono">${t.symbol}</td>
                         <td class="py-3 px-4">
                             <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold border ${badgeColor}">
@@ -1518,6 +1953,40 @@
             });
         }
 
+        function viewTickerDetail(symbol) {
+            const ticker = activeTickers.find(t => t.symbol === symbol);
+            if (!ticker) return;
+
+            document.getElementById('detail-pane').style.display = 'block';
+            document.getElementById('detail-symbol').innerText = ticker.symbol;
+            document.getElementById('detail-sector').innerText = ticker.sector.replace(/_/g, " ");
+            document.getElementById('detail-label').innerText = ticker.label;
+            
+            // Set Dynamic Label Badge Style
+            const labelBadge = document.getElementById('detail-label');
+            labelBadge.className = "px-2.5 py-1 rounded text-[11px] font-bold border " + 
+                (ticker.label.includes("BREAKOUT") ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20" : "bg-gray-800 text-gray-400 border-gray-700");
+
+            // Set Sentiment Badge Style
+            const sentimentBadge = document.getElementById('detail-sentiment');
+            sentimentBadge.innerText = ticker.sentiment;
+            if (ticker.sentiment === "BULLISH") {
+                sentimentBadge.className = "px-2.5 py-1 rounded text-[11px] font-bold border bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+            } else if (ticker.sentiment === "BEARISH") {
+                sentimentBadge.className = "px-2.5 py-1 rounded text-[11px] font-bold border bg-rose-500/10 text-rose-400 border-rose-500/20";
+            } else {
+                sentimentBadge.className = "px-2.5 py-1 rounded text-[11px] font-bold border bg-gray-800 text-gray-400 border-gray-700";
+            }
+
+            document.getElementById('detail-catalyst').innerText = ticker.news_catalyst;
+            document.getElementById('detail-threat').innerText = ticker.threat;
+            document.getElementById('detail-confidence').innerText = ticker.confidence + "%";
+            document.getElementById('detail-confidence-bar').style.width = ticker.confidence + "%";
+
+            // Smooth Scroll to Details Pane
+            document.getElementById('detail-pane').scrollIntoView({ behavior: 'smooth' });
+        }
+
         function getSectorsForRegime(regimeName) {
             const map = {
                 "🔥 ULTRA_MOMENTUM_LEADERS": ["TELECOMMUNICATION"],
@@ -1531,9 +2000,9 @@
 
         function copyToClipboard() {
             const orders = activeTickers.filter(t => t.label.includes("BREAKOUT"));
-            let text = "SYMBOL,SIGNAL,PRICE,RSI,EMA_DIST\n";
+            let text = "SYMBOL,SIGNAL,PRICE,RSI,EMA_DIST,SENTIMENT,CATALYST\n";
             orders.forEach(o => {
-                text += `${o.symbol},${o.label},${o.close},${o.rsi},${o.emaDist}%\n`;
+                text += `${o.symbol},${o.label},${o.close},${o.rsi},${o.emaDist}%,${o.sentiment},"${o.news_catalyst}"\n`;
             });
 
             const dummy = document.createElement("textarea");
@@ -1545,7 +2014,7 @@
 
             const toast = document.createElement("div");
             toast.className = "fixed bottom-5 right-5 bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-lg shadow-xl z-50 flex items-center gap-2 border border-emerald-400/20";
-            toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> Formatted Execution Manifest Copied! (${orders.length} orders)`;
+            toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> Formatted Dynamic Manifest Exported! (${orders.length} orders)`;
             document.body.appendChild(toast);
             
             setTimeout(() => {
