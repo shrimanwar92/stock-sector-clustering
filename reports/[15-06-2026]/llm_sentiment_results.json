@@ -1,0 +1,1148 @@
+{
+    "MRPL": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Insider buying activity detected in the Oil & Gas sector, indicating potential positive momentum for MRPL.",
+        "confidence_score": 85,
+        "strategic_threat": "Sectoral downturn or increased competition in the refining space could pose a threat."
+    },
+    "MMTC": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Insider breakout in the Services sector suggests positive sentiment for MMTC, possibly driven by trading activity.",
+        "confidence_score": 78,
+        "strategic_threat": "Government policy changes or fluctuations in commodity prices could impact MMTC's performance."
+    },
+    "TTML": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "An insider breakout in the Telecommunication sector indicates potential positive developments for TTML.",
+        "confidence_score": 82,
+        "strategic_threat": "Intense competition and evolving technology in the telecom industry present ongoing challenges."
+    },
+    "KALYANKJIL": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Insider breakout in Consumer Durables signals strong buying interest in KALYANKJIL.",
+        "confidence_score": 88,
+        "strategic_threat": "Changes in consumer spending patterns or supply chain disruptions could affect the company."
+    },
+    "PETRONET": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Insider breakout observed in the Oil & Gas sector, suggesting positive outlook for PETRONET.",
+        "confidence_score": 80,
+        "strategic_threat": "Volatile energy prices and geopolitical factors are key risks for the sector."
+    },
+    "CASTROLIND": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Insider breakout in the Oil & Gas sector points to positive momentum for CASTROLIND.",
+        "confidence_score": 79,
+        "strategic_threat": "The company faces threats from potential shifts towards electric vehicles and increased competition."
+    },
+    "KSB": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Insider breakout in Capital Goods sector indicates strong buying interest in KSB.",
+        "confidence_score": 86,
+        "strategic_threat": "Economic slowdowns and project execution risks can impact capital goods companies."
+    },
+    "KANSAINER": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Insider breakout in Consumer Durables sector suggests positive sentiment for KANSAINER.",
+        "confidence_score": 81,
+        "strategic_threat": "Consumer demand fluctuations and rising input costs pose risks."
+    },
+    "BLUEDART": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Insider breakout in the Services sector, likely related to logistics and delivery, indicates strong prospects for BLUEDART.",
+        "confidence_score": 89,
+        "strategic_threat": "E-commerce competition and rising operational costs are significant threats."
+    },
+    "SCHNEIDER": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Insider breakout in the Capital Goods sector suggests positive underlying momentum for SCHNEIDER.",
+        "confidence_score": 87,
+        "strategic_threat": "Global economic conditions and intense competition in the electrical and automation market."
+    },
+    "ELECON": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Active breakout in Capital Goods sector indicates strong upward trend for ELECON, potentially driven by industrial demand.",
+        "confidence_score": 90,
+        "strategic_threat": "Economic cycles and the pace of industrial expansion are key risks."
+    },
+    "JSWINFRA": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Active breakout in the Services sector, likely related to infrastructure, suggests positive outlook for JSWINFRA.",
+        "confidence_score": 88,
+        "strategic_threat": "Project delays, regulatory hurdles, and financing challenges are potential threats."
+    },
+    "HINDPETRO": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Active breakout in the Oil & Gas sector indicates positive momentum for HINDPETRO, possibly linked to refining margins.",
+        "confidence_score": 85,
+        "strategic_threat": "Crude oil price volatility and government regulations are significant risks."
+    },
+    "BPCL": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Active breakout in the Oil & Gas sector suggests bullish sentiment for BPCL, likely influenced by refining and marketing performance.",
+        "confidence_score": 87,
+        "strategic_threat": "Fluctuations in global crude prices and government policies on fuel pricing are key concerns."
+    },
+    "PIDILITIND": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Active breakout in Chemicals sector indicates strong market performance for PIDILITIND, possibly due to demand in adhesives and construction.",
+        "confidence_score": 91,
+        "strategic_threat": "Raw material price volatility and competition from unorganized sectors are potential threats."
+    },
+    "EPL": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Active breakout in Capital Goods sector suggests positive trend for EPL, possibly related to specialized manufacturing equipment.",
+        "confidence_score": 83,
+        "strategic_threat": "Technological obsolescence and demand cycles in end-user industries pose risks."
+    },
+    "ACE": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Active breakout in the Capital Goods sector indicates strong momentum for ACE, likely driven by construction equipment demand.",
+        "confidence_score": 89,
+        "strategic_threat": "Cyclical nature of construction industry and competition can impact ACE."
+    },
+    "ASHOKLEY": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Active breakout in Capital Goods sector suggests positive outlook for ASHOKLEY, possibly related to commercial vehicle demand.",
+        "confidence_score": 84,
+        "strategic_threat": "Economic slowdown affecting commercial vehicle sales and regulatory changes."
+    },
+    "MTARTECH": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Active breakout in Capital Goods sector indicates strong upward movement for MTARTECH, potentially due to its presence in niche engineering areas.",
+        "confidence_score": 92,
+        "strategic_threat": "Dependence on specific projects and technological advancements in its specialized fields."
+    },
+    "APLAPOLLO": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Active breakout in Capital Goods sector suggests robust demand for APLAPOLLO, likely from construction and infrastructure sectors.",
+        "confidence_score": 90,
+        "strategic_threat": "Real estate market cycles and competition from alternative materials."
+    },
+    "DELHIVERY": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Active breakout in the Services sector, specifically logistics, indicates strong growth prospects for DELHIVERY.",
+        "confidence_score": 88,
+        "strategic_threat": "Intense competition in the e-commerce logistics space and operational efficiency challenges."
+    },
+    "NHPC": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Institutional launchpad in the Power sector for NHPC suggests sustained interest, but specific catalysts are not immediately apparent.",
+        "confidence_score": 70,
+        "strategic_threat": "Regulatory changes in the power sector, project execution risks, and dependence on government policies."
+    },
+    "RHIM": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Institutional launchpad in the Capital Goods sector indicates positive institutional interest and potential for RHIM.",
+        "confidence_score": 85,
+        "strategic_threat": "Project execution, demand cycles in its end markets, and competition."
+    },
+    "ATGL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Launchpad in the Oil & Gas sector for ATGL suggests potential but requires further analysis of catalysts like expansion or regulatory support.",
+        "confidence_score": 75,
+        "strategic_threat": "Infrastructure development timelines, gas sourcing, and competition from alternative fuels."
+    },
+    "AIAENG": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Launchpad in the Capital Goods sector suggests strong potential and institutional backing for AIAENG.",
+        "confidence_score": 87,
+        "strategic_threat": "Demand from infrastructure and construction sectors, and competition in specialized engineering solutions."
+    },
+    "TATACOMM": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Infrastructure development and 5G rollout in India are likely to boost demand for telecommunication services. However, high competition and regulatory landscape may pose challenges.",
+        "confidence_score": 75,
+        "strategic_threat": "Intense competition from established players and potential delays in spectrum auctions could impact revenue growth. The company's ability to adapt to rapidly evolving technology is crucial."
+    },
+    "ADANIENSOL": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Government's focus on renewable energy and expansion of transmission infrastructure presents a significant opportunity for Adani Energy Solutions. Recent project wins and order book additions indicate strong growth prospects.",
+        "confidence_score": 85,
+        "strategic_threat": "While the sector is robust, project execution risks and delays in regulatory approvals can impact timelines. High capital expenditure requirements and debt levels need continuous monitoring."
+    },
+    "GSPL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Expansion of natural gas pipeline network in Gujarat and increasing consumption of natural gas as a cleaner fuel source are positive drivers. However, volatility in crude oil prices and geopolitical factors can influence demand and supply.",
+        "confidence_score": 70,
+        "strategic_threat": "Dependence on natural gas prices, which are linked to global benchmarks, poses a risk. Regulatory changes affecting gas transmission tariffs and competition from alternative energy sources are also factors to watch."
+    },
+    "SHYAMMETL": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Robust demand for steel and metal products driven by infrastructure development and the manufacturing sector, coupled with positive export outlook, supports the company's growth. Focus on capacity expansion and product diversification is a key strength.",
+        "confidence_score": 80,
+        "strategic_threat": "Cyclical nature of commodity prices, environmental regulations, and potential trade barriers can impact profitability. Managing input costs, particularly raw materials and energy, is critical."
+    },
+    "JSWENERGY": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong push towards renewable energy, particularly solar and wind power, positions JSW Energy for significant growth. Expansion into green hydrogen and energy storage solutions further strengthens its long-term prospects. Company's focus on increasing share of renewables in its portfolio is a key positive.",
+        "confidence_score": 85,
+        "strategic_threat": "Intermittency of renewable energy sources, grid integration challenges, and policy changes related to renewable energy tariffs could pose risks. High capital investment and securing long-term power purchase agreements are crucial for sustained growth."
+    },
+    "ADANIENT": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Diversified business model spanning commodities, logistics, and infrastructure provides resilience. Recent performance and strategic investments in high-growth sectors are encouraging. Continued expansion in its core businesses and new ventures are expected to drive growth.",
+        "confidence_score": 85,
+        "strategic_threat": "Regulatory scrutiny, geopolitical risks affecting commodity prices, and high debt levels across group entities remain potential concerns. Ability to successfully integrate new acquisitions and manage debt is key."
+    },
+    "TRITURBINE": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Increasing demand for wind turbine components and services, driven by India's renewable energy targets. Company's focus on manufacturing and servicing wind turbine components positions it well to capitalize on sector growth. Strong order book and focus on innovation are positive indicators.",
+        "confidence_score": 80,
+        "strategic_threat": "Dependence on a few key customers and suppliers, technological obsolescence, and fluctuations in wind energy project development can impact revenues. Managing supply chain disruptions and maintaining quality standards are essential."
+    },
+    "NSLNISP": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The company operates in the niche sector of specialty chemicals and construction chemicals. Growth is linked to the overall performance of the construction and infrastructure sectors. New product development and market penetration are key drivers.",
+        "confidence_score": 65,
+        "strategic_threat": "Intense competition from both domestic and international players, raw material price volatility, and dependence on project-based demand from the construction industry can pose challenges. Maintaining product quality and innovation is crucial."
+    },
+    "ABB": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong demand for electrification and automation solutions driven by industrial growth, smart grids, and digitalization initiatives in India. Company's diversified product portfolio and strong market presence across key sectors are significant advantages.",
+        "confidence_score": 85,
+        "strategic_threat": "Global supply chain disruptions, currency fluctuations, and intense competition from both global and local players can impact margins. Need for continuous innovation and adaptation to evolving technological trends."
+    },
+    "ADANIGREEN": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Government's aggressive push for renewable energy, particularly solar and wind power, provides a strong tailwind. Adani Green's large-scale project pipeline, access to capital, and operational efficiency position it for substantial growth in the renewable energy sector.",
+        "confidence_score": 90,
+        "strategic_threat": "Policy intermittency, land acquisition challenges, grid integration issues, and the company's high leverage are potential risks. Execution of large-scale projects within timelines and securing long-term PPAs are critical."
+    },
+    "GUJGASLTD": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Expansion of city gas distribution network, increasing penetration of natural gas in industrial and domestic segments, and favorable government policies supporting gas-based economy are key growth drivers. Company's strong presence in Gujarat is an advantage.",
+        "confidence_score": 80,
+        "strategic_threat": "Competition from other energy sources, volatility in natural gas prices, and regulatory changes related to tariffs can impact profitability. Execution of expansion projects and ensuring adequate supply of natural gas are important."
+    },
+    "VOLTAS": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Strong demand for air conditioners driven by rising disposable incomes and increasing urbanization. However, the company also faces competition from domestic and international players, and its performance is sensitive to seasonal demand and economic cycles.",
+        "confidence_score": 70,
+        "strategic_threat": "Intense competition, potential price wars, and dependence on import of certain components can affect margins. Unpredictable monsoon patterns and economic slowdowns can impact consumer spending on durables."
+    },
+    "CUMMINSIND": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Robust demand for diesel engines and power generation solutions from infrastructure, mining, and construction sectors. Government's focus on infrastructure development and increasing adoption of emission-compliant engines are positive factors.",
+        "confidence_score": 80,
+        "strategic_threat": "Economic slowdown affecting industrial capex, increasing competition from alternative power solutions, and stringent emission norms require continuous adaptation and investment in R&D. Fluctuations in raw material prices can impact costs."
+    },
+    "POWERINDIA": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Significant investments in power generation, transmission, and distribution infrastructure in India are driving demand for the company's products and services. Focus on digitalization and grid modernization further enhances growth prospects.",
+        "confidence_score": 85,
+        "strategic_threat": "Project execution risks, competition from global and domestic players, and dependence on government policies and regulatory approvals can pose challenges. Managing large-scale projects and technological advancements are key."
+    },
+    "VIPIND": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Growing demand for luggage and travel accessories driven by increasing disposable incomes and a revival in travel. However, the company faces intense competition from unorganized players and online retailers, and its performance is sensitive to consumer spending.",
+        "confidence_score": 65,
+        "strategic_threat": "Intense competition leading to price pressures, changing fashion trends, and dependence on discretionary consumer spending are major risks. Managing inventory and supply chain efficiently is crucial."
+    },
+    "WELCORP": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The company is involved in manufacturing steel pipes and related products. Demand is linked to the growth in infrastructure, oil and gas, and construction sectors. Diversification into new product segments and geographical expansion are key drivers.",
+        "confidence_score": 70,
+        "strategic_threat": "Volatility in steel prices, intense competition, and project execution risks in infrastructure projects can impact revenues and profitability. Need for continuous technological upgrades and focus on product quality."
+    },
+    "CHAMBLFERT": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Government's focus on enhancing agricultural productivity and promoting balanced fertilizer usage is a positive factor. However, dependence on monsoon, subsidy policies, and volatility in raw material prices (like natural gas and rock phosphate) pose challenges.",
+        "confidence_score": 75,
+        "strategic_threat": "Policy changes regarding fertilizer subsidies, adverse weather conditions affecting demand, and fluctuations in international prices of key raw materials can significantly impact profitability. Competition from other fertilizer producers is also a factor."
+    },
+    "ALKYLAMINE": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong demand for amines and their derivatives from various end-user industries such as pharmaceuticals, agrochemicals, and water treatment. Company's focus on capacity expansion, product innovation, and backward integration supports its growth trajectory.",
+        "confidence_score": 80,
+        "strategic_threat": "Volatility in raw material prices (especially methanol and ammonia), stringent environmental regulations, and competition from global players can pose challenges. Maintaining product quality and R&D capabilities are crucial."
+    },
+    "THERMAX": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Increasing demand for sustainable energy solutions, process equipment, and environmental engineering services driven by industrial growth and stricter environmental norms. Company's expertise in boilers, heating, cooling, and environmental solutions positions it well.",
+        "confidence_score": 85,
+        "strategic_threat": "Cyclical nature of capital expenditure in certain industries, project execution risks, and intense competition can impact margins. Technological obsolescence and need for continuous innovation are important factors."
+    },
+    "ITI": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Government's initiatives to boost domestic manufacturing in the telecom sector and the ongoing digital transformation are positive. However, the company faces strong competition and needs to improve its financial performance and operational efficiency.",
+        "confidence_score": 60,
+        "strategic_threat": "High competition from established private players, legacy issues related to debt and operational inefficiencies, and the need for significant technological upgrades pose substantial risks. Ability to secure large government contracts is crucial for its survival and growth."
+    },
+    "ASIANPAINT": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong brand equity, extensive distribution network, and increasing demand for decorative and industrial paints driven by housing sector growth and infrastructure development. Continuous product innovation and expansion into new product categories are positive.",
+        "confidence_score": 85,
+        "strategic_threat": "Volatility in raw material prices (like crude oil derivatives and titanium dioxide), intense competition, and dependence on discretionary consumer spending are potential risks. Managing input costs and maintaining market share are key."
+    },
+    "USHAMART": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The company operates in the consumer durables segment, primarily focusing on lighting and appliances. Growth is driven by increasing disposable incomes and demand for energy-efficient products. However, it faces intense competition and needs to strengthen its brand presence.",
+        "confidence_score": 65,
+        "strategic_threat": "Intense competition from both organized and unorganized players, price sensitivity of consumers, and challenges in supply chain management are significant risks. Need for product innovation and effective marketing strategies."
+    },
+    "ROUTE": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Growing demand for mobile accessories and consumer electronics, driven by increasing smartphone penetration and changing consumer preferences. Company's focus on expanding its product portfolio and strengthening its distribution network is positive.",
+        "confidence_score": 75,
+        "strategic_threat": "Intense competition from both domestic and international brands, rapid technological changes, and potential challenges in maintaining product quality and margins are risks. Dependence on imports for certain components can also be a concern."
+    },
+    "POLYCAB": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong demand for wires, cables, and fast-moving electrical goods (FMEG) driven by India's infrastructure development, housing sector growth, and increasing electrification. Company's strong brand presence, wide distribution network, and product diversification are key strengths.",
+        "confidence_score": 85,
+        "strategic_threat": "Volatility in raw material prices (like copper and aluminum), intense competition, and execution risks in expanding manufacturing capacity can impact profitability. Need for continuous innovation and adaptation to evolving industry standards."
+    },
+    "FINPIPE": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The company manufactures pipes and fittings for various applications, including plumbing, sanitation, and agriculture. Demand is linked to the growth in construction and infrastructure sectors. Focus on product quality and expanding distribution network are key drivers.",
+        "confidence_score": 70,
+        "strategic_threat": "Intense competition from established players, volatility in raw material prices, and dependence on project-based demand from the construction and infrastructure sectors can pose challenges. Maintaining product quality and expanding market reach are crucial."
+    },
+    "NAVINFLUOR": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Diversification of chemical suppliers globally and increasing competition within the specialty chemicals sector."
+    },
+    "KAJARIACER": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense competition from domestic and international players in the tile and sanitaryware market, and potential shifts in consumer preferences towards newer designs and materials."
+    },
+    "SUMICHEM": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Dependence on key raw material prices and supply chain disruptions, along with regulatory changes in environmental compliances."
+    },
+    "AETHER": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Volatile raw material costs and increasing competition from established players and new entrants in the agrochemical and specialty chemical segments."
+    },
+    "RCF": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Fluctuations in natural gas prices, which are a key feedstock, and potential for increased competition from imports."
+    },
+    "CLEAN": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense competition in the water treatment chemicals and solutions market, and potential for new environmental regulations impacting operational costs."
+    },
+    "SUZLON": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense competition in the renewable energy sector, policy changes affecting wind energy, and supply chain issues for components."
+    },
+    "GPPL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Competition from other logistics and port operators, changes in trade policies, and geopolitical risks affecting global shipping routes."
+    },
+    "JSWSTEEL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "High volatility in steel prices due to global demand-supply dynamics, rising input costs (iron ore, coal), and increasing competition from imports."
+    },
+    "TITAN": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Strong competition from both organized and unorganized players in jewelry and watches, changing consumer preferences, and gold price volatility."
+    },
+    "FACT": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Volatility in raw material prices (like rock phosphate and sulfur), dependence on government subsidies for fertilizers, and competition from imported fertilizers."
+    },
+    "LLOYDSME": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "High capital intensity, cyclical nature of the steel industry, and competition from larger, more established players."
+    },
+    "LXCHEM": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Dependence on specific chemical raw materials, competition from both domestic and international manufacturers, and evolving environmental regulations."
+    },
+    "SUPREMEIND": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Competition in the plastic piping and packaging segments, fluctuations in raw material prices (polymers), and potential for new material substitutes."
+    },
+    "SRF": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Exposure to fluctuating raw material costs, currency fluctuations impacting exports, and stringent environmental regulations in the chemical industry."
+    },
+    "ADANIPORTS": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Dependence on global trade volumes, competition from other ports, and regulatory changes or geopolitical events impacting shipping."
+    },
+    "SIEMENS": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Cyclicality in capital expenditure by industries, competition from global and domestic players, and technological obsolescence."
+    },
+    "ACI": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Volatile raw material prices and supply chain disruptions for specialty chemicals, alongside competition from established global players."
+    },
+    "JWL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense competition in the capital goods sector, dependency on government infrastructure spending, and potential delays in project execution."
+    },
+    "SOLARINDS": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense competition in the solar energy sector, dependence on government policies and subsidies, and supply chain issues for solar components."
+    },
+    "CAMPUS": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "High competition in the footwear market from both established brands and new entrants, changing fashion trends, and potential impact of raw material price volatility."
+    },
+    "TIMKEN": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Competition from global bearing manufacturers, cyclical demand from automotive and industrial sectors, and technological advancements requiring continuous R&D."
+    },
+    "ADANIPOWER": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Regulatory risks associated with power tariffs, dependence on fuel prices and availability, and competition from renewable energy sources."
+    },
+    "ASTRAL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Competition from established players in the pipes and fittings market, volatility in raw material prices (polymers), and potential for substitutes."
+    },
+    "RAILTEL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No significant news catalyst found.",
+        "confidence_score": 50,
+        "strategic_threat": "Competition from other telecom infrastructure providers, government policy changes affecting telecommunication sector, and cybersecurity threats."
+    },
+    "BEML": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Recent performance indicates stable but unexceptional growth, with no significant immediate news drivers. The stock is currently trading within its historical valuation range, suggesting a lack of strong catalysts for a major price movement in either direction. Sector-specific tailwinds are present but not strong enough to warrant a bullish stance without further confirmation.",
+        "confidence_score": 60,
+        "strategic_threat": "Competitors in the capital goods sector are also showing steady performance, and any significant technological disruption or policy change affecting the broader industry could pose a threat. Geopolitical factors impacting raw material costs are a persistent background risk."
+    },
+    "GRSE": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "The company has secured significant new orders and is benefiting from increased defense spending and government focus on 'Make in India' initiatives in the shipbuilding sector. Positive order book growth and potential for further contract wins provide a strong upside potential.",
+        "confidence_score": 85,
+        "strategic_threat": "While current order visibility is strong, delays in project execution or changes in government procurement policies could pose risks. Increased competition from both domestic and international players in the defense sector remains a long-term consideration."
+    },
+    "FINCABLES": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong demand in the power and telecommunications sectors for cables and conductors, coupled with the company's expansion plans and healthy financial performance, suggests continued growth. Recent price increases in key raw materials are being passed on, maintaining margins.",
+        "confidence_score": 75,
+        "strategic_threat": "Volatility in copper and aluminum prices could impact margins if not managed effectively. Increased competition from new entrants or established players expanding capacity could also pressure market share and pricing power."
+    },
+    "TATAPOWER": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "The company is undergoing significant transformation with a focus on renewable energy expansion and diversification of its business. Strong execution on renewable projects, favorable regulatory environment for power tariffs, and a robust balance sheet support a positive outlook.",
+        "confidence_score": 80,
+        "strategic_threat": "Regulatory changes, especially concerning tariff structures or renewable energy policies, pose a risk. Dependence on government policies for renewable energy adoption and competition in the power distribution and generation segments are also factors to watch."
+    },
+    "FLUOROCHEM": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong global demand for fluorochemicals, driven by their use in various high-growth industries like refrigeration, electronics, and pharmaceuticals. The company's specialized product portfolio and capacity expansion plans position it well to capitalize on these trends.",
+        "confidence_score": 85,
+        "strategic_threat": "Raw material price fluctuations and supply chain disruptions for critical inputs can impact profitability. Environmental regulations concerning the production and use of certain fluorochemicals could also pose long-term challenges, requiring continuous adaptation and investment in sustainable practices."
+    },
+    "GNFC": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The company's diversified product portfolio, including fertilizers and industrial chemicals, provides some resilience. However, performance is sensitive to agricultural cycles, government fertilizer subsidy policies, and global chemical price trends. Recent earnings have been stable but without strong upward momentum.",
+        "confidence_score": 65,
+        "strategic_threat": "Dependence on government subsidy policies for fertilizers creates uncertainty. Volatility in global commodity prices for feedstocks and finished products, as well as increasing competition, are ongoing strategic considerations."
+    },
+    "BAYERCROP": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The company operates in a cyclical agrochemical sector. While there is demand for crop protection solutions, performance is subject to monsoon patterns, pest outbreaks, and government regulations on pesticide usage. Recent performance shows resilience but lacks significant catalysts for a strong bullish run.",
+        "confidence_score": 60,
+        "strategic_threat": "Stringent environmental and health regulations regarding agrochemicals can lead to product bans or restrictions. Intense competition from domestic and international players, coupled with price pressures and the need for continuous R&D for new product development, are significant strategic challenges."
+    },
+    "MAZDOCK": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Benefits from strong government impetus in the defense sector and shipbuilding, with a robust order book for naval vessels and offshore platforms. Increased focus on indigenous manufacturing and modernization of the fleet provides sustained revenue visibility.",
+        "confidence_score": 80,
+        "strategic_threat": "Execution risks related to large, long-gestation projects and dependence on government defense spending cycles are inherent. Supply chain vulnerabilities for specialized components and potential cost overruns on complex projects are also concerns."
+    },
+    "TATACHEM": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The company's performance is linked to global chemical demand and commodity prices. While it has a diversified portfolio, recent results show moderate growth, reflecting a stable but not exceptional market environment. Strategic initiatives for specialty chemicals are underway but yet to significantly impact overall performance.",
+        "confidence_score": 65,
+        "strategic_threat": "Sensitivity to raw material price volatility and fluctuations in demand across various end-user industries are key threats. Increased competition, especially from Asian producers, and the need for ongoing investment in R&D to maintain a competitive edge in specialty chemicals are strategic considerations."
+    },
+    "BATAINDIA": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The company is a well-established player in the footwear market, but faces increasing competition from organized retail, online platforms, and smaller unorganized players. While it is focusing on brand rejuvenation and store upgrades, the pace of growth has been moderate.",
+        "confidence_score": 60,
+        "strategic_threat": "Intensifying competition, changing consumer preferences, and the rise of e-commerce pose significant threats. The company needs to continuously innovate its product offerings and distribution strategies to maintain market share and drive growth."
+    },
+    "CENTURYPLY": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The plywood and decorative panel industry is experiencing steady demand, driven by housing and construction activities. The company is a major player, but faces competition and is subject to raw material price fluctuations (like timber and chemicals). Growth has been consistent but not explosive.",
+        "confidence_score": 65,
+        "strategic_threat": "Volatility in raw material prices, especially timber, can impact margins. Increased competition from unorganized players and the threat of substitutes or alternative building materials require constant strategic adaptation and focus on product differentiation and cost efficiency."
+    },
+    "GPIL": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "The company is a key player in the steel pipe and related products sector, benefiting from infrastructure development and the oil & gas industry's needs. Recent order wins and capacity expansions, coupled with a favorable demand outlook for steel products, suggest strong growth prospects.",
+        "confidence_score": 75,
+        "strategic_threat": "Steel prices are cyclical and influenced by global demand-supply dynamics and raw material costs (iron ore, coking coal). Significant fluctuations in these prices can impact profitability. Competition from domestic and international manufacturers also remains a concern."
+    },
+    "RELIANCE": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "The company's diversified business across oil & gas, retail, telecom (Jio), and new energy presents multiple growth avenues. Recent investments and strategic partnerships in the new energy sector, along with continued strength in retail and telecom, point towards significant long-term value creation.",
+        "confidence_score": 90,
+        "strategic_threat": "Regulatory risks in the telecom and energy sectors, intense competition in all its business verticals, and the capital-intensive nature of its new energy ventures are potential threats. Execution risk on large-scale projects and geopolitical factors impacting energy prices are also considerations."
+    },
+    "MAHSEAMLES": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The company is a diversified conglomerate with interests in shipping, real estate, and engineering. While it has a significant presence in these sectors, recent performance indicates stable operations without a strong catalyst for significant upside. Growth is dependent on broader economic cycles and specific sector performance.",
+        "confidence_score": 60,
+        "strategic_threat": "Exposure to cyclical industries like shipping and real estate makes it vulnerable to economic downturns. Interest rate fluctuations can impact its real estate development business, and competition within its diverse business segments requires constant strategic focus and adaptation."
+    },
+    "HAL": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong government focus on indigenization of defense manufacturing, coupled with HAL's critical role in developing and maintaining military aircraft, provides a robust order book and sustained revenue visibility. New programs and modernization efforts further bolster growth prospects.",
+        "confidence_score": 85,
+        "strategic_threat": "Dependence on government defense budgets and procurement cycles introduces a degree of uncertainty. Long gestation periods for defense projects and potential cost overruns on complex programs are inherent risks. Competition from private players and international suppliers also needs to be monitored."
+    },
+    "HAPPYFORGE": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "The company is a key supplier of critical forged components to the automotive sector and is diversifying into other industrial applications. Strong demand from OEMs, capacity expansions, and a focus on exports provide a positive outlook, especially with the growth in the electric vehicle segment.",
+        "confidence_score": 75,
+        "strategic_threat": "The automotive industry is cyclical and sensitive to economic slowdowns. Fluctuations in raw material prices (steel) and intense competition from both domestic and international component manufacturers are significant threats. The transition to EVs may also require adaptation in product lines and manufacturing processes."
+    },
+    "SKFINDIA": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The company operates in the bearings and automotive components sector. While demand is linked to industrial and automotive production, growth has been steady rather than exceptional. Focus on new product development and export markets provides some upside, but overall market conditions are competitive.",
+        "confidence_score": 65,
+        "strategic_threat": "The bearings industry is highly competitive, with global players and price pressures. Dependence on the automotive sector makes it vulnerable to industry cycles. Technological shifts, such as the move towards EVs, may require significant R&D and product adaptation."
+    },
+    "UPL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "As a global player in agrochemicals, UPL benefits from demand for crop protection and enhancement solutions. However, performance is subject to agricultural cycles, regulatory changes, and price competition. Recent results have been stable, reflecting a balanced market environment.",
+        "confidence_score": 70,
+        "strategic_threat": "Stringent global regulations on agrochemical use and environmental standards pose a significant threat, potentially leading to product bans or restrictions. Intense competition, currency fluctuations, and the need for continuous innovation to develop sustainable and effective products are ongoing strategic challenges."
+    },
+    "METROBRAND": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The company is a leading footwear retailer. While it benefits from brand recognition and a wide distribution network, the retail sector is highly competitive and sensitive to consumer spending. Growth has been moderate, with ongoing efforts to expand its retail footprint and product portfolio.",
+        "confidence_score": 60,
+        "strategic_threat": "Intensifying competition from online retailers, value segment players, and direct-to-consumer brands poses a significant threat. Changes in consumer fashion trends and economic downturns affecting discretionary spending can impact sales and profitability."
+    },
+    "BERGEPAINT": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "The company is a dominant player in the decorative paints segment, benefiting from increased housing demand, urbanisation, and a shift towards organized brands. Expansion into new product categories and geographies, along with strong brand equity, supports continued growth.",
+        "confidence_score": 80,
+        "strategic_threat": "Raw material price volatility (titanium dioxide, crude oil derivatives) can impact margins. Intense competition from established players and smaller regional manufacturers, as well as potential slowdowns in the construction and real estate sectors, are key threats."
+    },
+    "BLUESTARCO": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "The company is a leader in air conditioning and refrigeration, benefiting from rising disposable incomes, increasing preference for branded products, and growth in commercial and residential real estate. Expansion of manufacturing capacity and a focus on energy-efficient products are positive drivers.",
+        "confidence_score": 75,
+        "strategic_threat": "Competition from domestic and international players, especially Chinese manufacturers, is intense. Fluctuations in raw material prices (copper, aluminum, refrigerants) and economic slowdowns affecting consumer spending can impact sales. Regulatory changes related to energy efficiency standards could also pose challenges."
+    },
+    "GSFC": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The company produces fertilizers and industrial chemicals. Its performance is influenced by agricultural cycles, government fertilizer policies, and demand for industrial chemicals. Recent performance is stable, but significant upside catalysts are not immediately apparent.",
+        "confidence_score": 65,
+        "strategic_threat": "Dependence on government fertilizer subsidy policies creates uncertainty. Volatility in global commodity prices for feedstocks and finished products, as well as increasing competition, are ongoing strategic considerations. Environmental regulations impacting chemical production are also a factor."
+    },
+    "HAVELLS": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "The company is a diversified electrical goods manufacturer with strong brands in consumer and industrial segments (wires, cables, switches, appliances). Growth is supported by increased spending on housing, infrastructure, and a focus on premiumization. Expansion into new product categories and distribution network enhancement are positive.",
+        "confidence_score": 80,
+        "strategic_threat": "Intense competition from domestic and international players in various product segments. Raw material price volatility (copper, aluminum, plastic) can impact margins. Economic slowdowns affecting consumer and industrial spending are also potential threats."
+    },
+    "NMDC": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "As a major iron ore producer, the company's performance is directly linked to global iron ore prices and demand from the steel industry. While it has a strong position, price volatility and dependence on commodity cycles make its outlook neutral in the absence of strong price catalysts or significant new demand drivers.",
+        "confidence_score": 60,
+        "strategic_threat": "Global iron ore price fluctuations are the primary threat. Government policies related to mining leases, environmental regulations, and export duties can also impact operations and profitability. Competition from other large iron ore producers globally is a constant factor."
+    },
+    "CARBORUNIV": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The company is a significant player in abrasives and carbon products. Demand is linked to industrial activity, manufacturing output, and automotive sector performance. While it holds a strong market position, recent growth has been steady but not extraordinary, reflecting a stable industrial environment.",
+        "confidence_score": 65,
+        "strategic_threat": "Sensitivity to industrial cycles and raw material cost fluctuations (graphite, petroleum coke). Competition from domestic and international players in the abrasives and carbon products market requires continuous focus on product quality, innovation, and cost management."
+    },
+    "BEL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Government defense orders and continued strong execution in capital goods, but valuation concerns persist given its recent run-up.",
+        "confidence_score": 70,
+        "strategic_threat": "No immediate strategic threat identified. Competition in the defense sector is a factor."
+    },
+    "BHARTIARTL": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong ARPU growth and sustained market share gains in India, coupled with expansion in Africa, indicate continued revenue momentum.",
+        "confidence_score": 85,
+        "strategic_threat": "Regulatory changes in telecom pricing or spectrum allocation could pose a threat. Competition from aggressive pricing models."
+    },
+    "BHEL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Increased order inflows in the power and industrial sectors offer positive prospects, but execution timelines and margin pressures remain key watchpoints.",
+        "confidence_score": 65,
+        "strategic_threat": "Intensifying competition from private players and challenges in timely project completion."
+    },
+    "RATNAMANI": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Robust demand from oil & gas and infrastructure sectors, along with capacity expansion, positions the company for sustained growth. Favorable pricing power.",
+        "confidence_score": 80,
+        "strategic_threat": "Fluctuations in raw material prices (steel) and dependence on capex cycles of key client industries."
+    },
+    "COALINDIA": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Government focus on increasing coal production to meet energy demands provides a floor, but the long-term shift towards renewable energy poses a strategic challenge.",
+        "confidence_score": 75,
+        "strategic_threat": "Transition to green energy and environmental regulations are long-term threats. Coal price volatility impacts margins."
+    },
+    "INDUSTOWER": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Securing long-term contracts with telecom operators and the ongoing rollout of 5G create a stable demand environment and revenue visibility.",
+        "confidence_score": 80,
+        "strategic_threat": "Any significant consolidation in the telecom sector or changes in tower sharing agreements could impact revenue."
+    },
+    "CELLO": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong brand recall, expanding product portfolio in housewares, and increasing consumer discretionary spending are driving sales growth.",
+        "confidence_score": 75,
+        "strategic_threat": "Intense competition from organized and unorganized players, and potential supply chain disruptions."
+    },
+    "ECLERX": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Growing demand for digital transformation and customer experience services, coupled with strong client relationships, are driving revenue expansion.",
+        "confidence_score": 85,
+        "strategic_threat": "Rapid technological advancements require continuous investment in skill development. Intense competition in the IT services space."
+    },
+    "VGUARD": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Diversified product offerings in consumer durables (fans, appliances) and a strong distribution network are benefiting from rural and urban demand.",
+        "confidence_score": 70,
+        "strategic_threat": "Seasonality in demand for certain products and vulnerability to inflationary pressures affecting consumer spending."
+    },
+    "SJVN": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Focus on renewable energy projects (solar, wind) provides growth opportunities, but reliance on government tenders and project execution risks are key factors.",
+        "confidence_score": 60,
+        "strategic_threat": "Policy changes related to renewable energy tariffs or PPAs, and delays in project commissioning."
+    },
+    "LINDEINDIA": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Robust demand from industrial sectors (refining, chemicals, metals) for industrial gases and expansion of manufacturing capacity support growth prospects.",
+        "confidence_score": 80,
+        "strategic_threat": "High capital intensity and dependence on large industrial projects. Fluctuations in global commodity prices affecting feedstock costs."
+    },
+    "INOXWIND": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Government push for renewable energy, particularly wind power, creates a favorable environment, but the company faces intense competition and margin pressures.",
+        "confidence_score": 65,
+        "strategic_threat": "Order book volatility, technological obsolescence in wind turbine technology, and pricing pressure from competitors."
+    },
+    "JSL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Expansion in stainless steel capacity and demand from key end-user industries (automotive, construction) offer upside, but cyclicality in steel prices is a risk.",
+        "confidence_score": 70,
+        "strategic_threat": "High volatility in raw material prices (nickel, chrome) and global steel market fluctuations. Intense competition."
+    },
+    "POWERGRID": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Consistent execution of transmission projects and increasing power demand driven by economic growth provide stable, predictable revenue streams.",
+        "confidence_score": 85,
+        "strategic_threat": "Delays in land acquisition for new projects and regulatory changes in transmission tariffs."
+    },
+    "ESCORTS": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong demand in the tractor segment, driven by farm mechanization and government support, coupled with growth in construction equipment, supports positive outlook.",
+        "confidence_score": 75,
+        "strategic_threat": "Monsoon dependency and rural income fluctuations can impact tractor sales. Competition in both segments."
+    },
+    "JINDALSTEL": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Increased domestic demand for steel pipes and tubes from infrastructure and energy sectors, along with capacity enhancements, drive growth.",
+        "confidence_score": 75,
+        "strategic_threat": "Volatility in raw material prices and global steel market dynamics. Import threats in certain product segments."
+    },
+    "WHIRLPOOL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Focus on premium product segments and brand positioning are positives, but competition and subdued consumer demand in certain categories pose challenges.",
+        "confidence_score": 60,
+        "strategic_threat": "Intense competition from domestic and international brands, and the impact of supply chain disruptions on component availability."
+    },
+    "ANURAS": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong growth in specialty chemicals driven by import substitution and increasing demand from various industries (agro, pharma). Capex expansion plans are positive.",
+        "confidence_score": 80,
+        "strategic_threat": "Environmental regulations and compliance costs. Dependence on key raw materials and their price volatility."
+    },
+    "BDL": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Significant order book from defense ministry and export opportunities in missiles and defense systems provide strong revenue visibility and growth.",
+        "confidence_score": 90,
+        "strategic_threat": "Geopolitical risks affecting global defense spending and competition from international defense manufacturers."
+    },
+    "DEEPAKNTR": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Leading position in certain specialty chemicals and expanding product portfolio driven by R&D. Growth in end-user industries like pharma and agrochemicals.",
+        "confidence_score": 85,
+        "strategic_threat": "Stringent environmental regulations and potential for disruptions in global supply chains for key raw materials."
+    },
+    "PIIND": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong market position in agrochemicals and specialty chemicals, with a focus on contract manufacturing and R&D, driving consistent growth and margin expansion.",
+        "confidence_score": 85,
+        "strategic_threat": "Regulatory hurdles for new product approvals and competition from global agrochemical players. Dependence on key agrochem cycles."
+    },
+    "HINDCOPPER": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Government's focus on increasing domestic copper production could boost demand, but operational challenges and high production costs remain significant hurdles.",
+        "confidence_score": 60,
+        "strategic_threat": "Low recovery rates, high operational costs, and dependence on international copper prices. Competition from imports."
+    },
+    "AMBER": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong growth in the air cooler segment and expansion in the overall consumer durables market, driven by brand strength and distribution network.",
+        "confidence_score": 75,
+        "strategic_threat": "Intense competition from other appliance manufacturers and seasonality in sales of certain products."
+    },
+    "JAIBALAJI": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Expansion in steel pipe manufacturing capacity is positive, but dependence on construction and infrastructure projects makes it susceptible to cyclical demand and price fluctuations.",
+        "confidence_score": 60,
+        "strategic_threat": "Volatility in steel prices and competition from larger players and imports."
+    },
+    "CONCOR": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Growing demand for logistics and container handling services, driven by increasing trade volumes and government initiatives to improve logistics infrastructure.",
+        "confidence_score": 75,
+        "strategic_threat": "Regulatory changes affecting terminal handling charges and competition from private port operators and new logistics players."
+    },
+    "CROMPTON": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "N/A",
+        "confidence_score": 1,
+        "strategic_threat": "None"
+    },
+    "HEG": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "N/A",
+        "confidence_score": 1,
+        "strategic_threat": "None"
+    },
+    "GMMPFAUDLR": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "N/A",
+        "confidence_score": 1,
+        "strategic_threat": "None"
+    },
+    "HONAUT": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "HFCL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "CHENNPETRO": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "ELGIEQUIP": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "DEEPAKFERT": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "DATAPATTNS": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "VAIBHAVGBL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "TITAGARH": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "HSCL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "SAFARI": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "RRKABEL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "CGPOWER": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "IGL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "PRINCEPIPE": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "PCBL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "REDINGTON": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "BORORENEW": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "DIXON": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "GRINDWELL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "GAIL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "JINDALSAW": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "IOC": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "UNCONFIRMED CHOP",
+        "confidence_score": 2,
+        "strategic_threat": "Low"
+    },
+    "KEI": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "COROMANDEL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "FINEORG": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "MGL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "INDIGOPNTS": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "HINDALCO": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "SAIL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "TORNTPOWER": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "NATIONALUM": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "KAYNES": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "GMDCLTD": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "EIDPARRY": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "TATASTEEL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "PRAJIND": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "GESHIP": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "NLCINDIA": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "COCHINSHIP": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "HINDZINC": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "GRAPHITE": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Technical indicator suggests unconfirmed chop, indicating a lack of clear directional momentum. Further price action needed to confirm a trend.",
+        "confidence_score": 55,
+        "strategic_threat": "Low. The stock is in a consolidation phase, offering no immediate strategic threat or opportunity based on current technicals."
+    },
+    "AEGISLOG": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'OVEREXTENDED' label suggests the stock price may have moved too far, too fast, indicating a potential for a pullback or reversal.",
+        "confidence_score": 70,
+        "strategic_threat": "Moderate. An overextended stock can lead to sharp declines if the market sentiment shifts, posing a risk to current holders."
+    },
+    "STLTECH": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'OVEREXTENDED' label suggests the stock price may have moved too far, too fast, indicating a potential for a pullback or reversal.",
+        "confidence_score": 70,
+        "strategic_threat": "Moderate. An overextended stock can lead to sharp declines if the market sentiment shifts, posing a risk to current holders."
+    },
+    "TEJASNET": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'OVEREXTENDED' label suggests the stock price may have moved too far, too fast, indicating a potential for a pullback or reversal.",
+        "confidence_score": 70,
+        "strategic_threat": "Moderate. An overextended stock can lead to sharp declines if the market sentiment shifts, posing a risk to current holders."
+    },
+    "SYRMA": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'OVEREXTENDED' label suggests the stock price may have moved too far, too fast, indicating a potential for a pullback or reversal.",
+        "confidence_score": 70,
+        "strategic_threat": "Moderate. An overextended stock can lead to sharp declines if the market sentiment shifts, posing a risk to current holders."
+    },
+    "APARINDS": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'OVEREXTENDED' label suggests the stock price may have moved too far, too fast, indicating a potential for a pullback or reversal.",
+        "confidence_score": 70,
+        "strategic_threat": "Moderate. An overextended stock can lead to sharp declines if the market sentiment shifts, posing a risk to current holders."
+    },
+    "BALAMINES": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'OVEREXTENDED' label suggests the stock price may have moved too far, too fast, indicating a potential for a pullback or reversal.",
+        "confidence_score": 70,
+        "strategic_threat": "Moderate. An overextended stock can lead to sharp declines if the market sentiment shifts, posing a risk to current holders."
+    },
+    "QUESS": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The stock's 'OVEREXTENDED' label suggests a potential downturn after a significant run-up. This could be driven by profit-taking or a re-evaluation of fundamentals.",
+        "confidence_score": 75,
+        "strategic_threat": "No immediate strategic threat to the company's long-term prospects, but short-term volatility is expected."
+    },
+    "TVSSCS": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "Similar to QUESS, the 'OVEREXTENDED' label indicates a possible correction phase. Market participants may be booking profits or anticipating a slowdown.",
+        "confidence_score": 70,
+        "strategic_threat": "The company needs to sustain its growth momentum to counter potential market skepticism arising from the overextended price action."
+    },
+    "INDIGO": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'OVEREXTENDED' technical signal points to a potential pullback. Factors like rising fuel costs, increased competition, or regulatory concerns could contribute.",
+        "confidence_score": 80,
+        "strategic_threat": "Maintaining market share and operational efficiency will be crucial as the aviation sector faces cyclical headwinds and potential cost pressures."
+    },
+    "CERA": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'OVEREXTENDED' status suggests that the stock price may have outpaced its fundamental value, leading to a probable correction. Consumer spending slowdown could be a factor.",
+        "confidence_score": 78,
+        "strategic_threat": "The company must monitor evolving consumer preferences and competitive landscape in the durable goods sector to sustain its market position."
+    },
+    "AARTIIND": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "An 'OVEREXTENDED' label often precedes a price correction. This could be due to market sentiment shifting away from chemical stocks or sector-specific headwinds.",
+        "confidence_score": 72,
+        "strategic_threat": "Diversification of product portfolio and expansion into new geographies can mitigate risks associated with market cyclicality in the chemical industry."
+    },
+    "FSL": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'DEEP FLUSH' indicates a sharp, rapid decline, suggesting strong selling pressure. This could be triggered by negative news, weak earnings, or broader market sentiment.",
+        "confidence_score": 85,
+        "strategic_threat": "The company needs to address the underlying issues causing the sharp sell-off to restore investor confidence and stabilize its stock price."
+    },
+    "CESC": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "A 'DEEP FLUSH' suggests a significant downward price movement, potentially driven by regulatory changes, rising operational costs, or market overvaluation concerns.",
+        "confidence_score": 82,
+        "strategic_threat": "The company faces the challenge of balancing regulated tariff increases with maintaining service quality and investor returns in a dynamic power sector."
+    },
+    "ATUL": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'DEEP FLUSH' implies a substantial price drop, possibly due to adverse market conditions for specialty chemicals, inventory adjustments, or disappointing financial results.",
+        "confidence_score": 80,
+        "strategic_threat": "Innovation in product development and sustainable manufacturing practices are key to navigating competitive pressures and regulatory scrutiny in the chemicals industry."
+    },
+    "VEDL": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "A 'DEEP FLUSH' in a commodity-linked stock like VEDL could be due to falling metal prices, geopolitical tensions impacting supply chains, or company-specific operational issues.",
+        "confidence_score": 88,
+        "strategic_threat": "The company must manage commodity price volatility and operational risks effectively to sustain profitability in the cyclical metals and mining sector."
+    },
+    "NTPC": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'DEEP FLUSH' suggests a sharp price decline, possibly influenced by concerns over renewable energy transition costs, policy changes, or a general risk-off sentiment in the power sector.",
+        "confidence_score": 83,
+        "strategic_threat": "NTPC's strategic imperative is to successfully transition towards cleaner energy sources while ensuring energy security and cost-effectiveness for consumers."
+    },
+    "CHEMPLASTS": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "A 'DEEP FLUSH' indicates a significant downturn, possibly stemming from increased competition, lower demand for its chemical products, or adverse raw material price movements.",
+        "confidence_score": 78,
+        "strategic_threat": "Adapting to evolving environmental regulations and investing in R&D for sustainable chemical solutions are critical for long-term competitiveness."
+    },
+    "JUBLINGREA": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'DEEP FLUSH' signals a sharp sell-off, potentially due to concerns about input costs, supply chain disruptions, or a slowdown in demand for its products in the chemical sector.",
+        "confidence_score": 75,
+        "strategic_threat": "Maintaining supply chain resilience and managing price volatility of key raw materials are essential for stable operations in the chemical industry."
+    },
+    "ONGC": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'DEEP FLUSH' suggests a steep price drop, likely influenced by falling crude oil prices, geopolitical instability impacting energy markets, or concerns about future production levels.",
+        "confidence_score": 87,
+        "strategic_threat": "ONGC needs to navigate global energy price fluctuations and adapt to the energy transition while ensuring domestic energy security and cost-competitiveness."
+    },
+    "OIL": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "A 'DEEP FLUSH' points to a significant price decline, possibly linked to global oil market dynamics, changes in government policies, or challenges in exploration and production activities.",
+        "confidence_score": 86,
+        "strategic_threat": "The company must balance exploration risks with efficient production and adapt to the long-term shift towards renewable energy sources."
+    },
+    "RAJESHEXPO": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The 'DEEP FLUSH' suggests a sharp decline, possibly due to factors like weaker consumer demand for durables, increased competition, or an overvaluation correction.",
+        "confidence_score": 73,
+        "strategic_threat": "Diversifying product offerings and adapting to evolving consumer spending patterns are key to sustaining growth in the consumer durables market."
+    },
+    "ALLCARGO": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "A 'DEEP FLUSH' indicates a rapid price fall, potentially driven by concerns about global trade slowdowns, rising logistics costs, or competitive pressures in the logistics sector.",
+        "confidence_score": 77,
+        "strategic_threat": "The company's strategic focus should be on enhancing efficiency, adopting digital solutions, and expanding its network to navigate global supply chain complexities."
+    }
+}

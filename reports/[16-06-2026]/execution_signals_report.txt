@@ -1,0 +1,62 @@
+======================================================================================================================================================
+ PRODUCTION QUANT DATA LOGS: FILTERED SWING EXECUTION FIREWALL
+ Generated on: 2026-06-16 23:36:37
+======================================================================================================================================================
+
+    Symbol           Strategic_Label   Close  Stop_Loss  Profit_Target
+    360ONE         🚀 ACTIVE BREAKOUT 1133.60    1065.29        1270.21
+    AUBANK         🚀 ACTIVE BREAKOUT 1023.10     969.04        1131.23
+AVANTIFEED              📉 DEEP FLUSH 1000.90       0.00           0.00
+BANDHANBNK        🚀 INSIDER BREAKOUT  216.74     201.85         246.52
+BHARATFORG               🏢 LAUNCHPAD 2012.30    1816.99        2402.91
+      CGCL         🚀 ACTIVE BREAKOUT  217.88     203.49         246.65
+EQUITASBNK         🚀 ACTIVE BREAKOUT   78.75      73.11          90.03
+      GAEL               🏢 LAUNCHPAD  158.19     147.65         179.26
+HAPPYFORGE               🏢 LAUNCHPAD 1336.70    1284.23        1441.64
+ HBLENGINE               🏢 LAUNCHPAD  799.65     740.49         917.97
+      IFCI            🛑 OVEREXTENDED   88.80       0.00           0.00
+   KPRMILL               🏢 LAUNCHPAD 1054.60     995.51        1172.78
+      KRBL  ⏳ COUNTER_TREND_MOMENTUM  379.75       0.00           0.00
+       KSB  ⏳ COUNTER_TREND_MOMENTUM  865.45       0.00           0.00
+       LTF  ⏳ COUNTER_TREND_MOMENTUM  294.25       0.00           0.00
+  MAHABANK         🚀 ACTIVE BREAKOUT   88.19      82.93          98.71
+MOTILALOFS        🚀 INSIDER BREAKOUT  944.25     881.95        1068.86
+   OLECTRA               🏢 LAUNCHPAD 1270.40    1173.29        1464.62
+SHRIRAMFIN  ⏳ COUNTER_TREND_MOMENTUM 1005.75       0.00           0.00
+ SHYAMMETL 🏢 INSTITUTIONAL LAUNCHPAD  965.10     912.64        1070.02
+  SONACOMS               🏢 LAUNCHPAD  598.65     565.36         665.22
+STARHEALTH               🏢 LAUNCHPAD  521.75     493.83         577.58
+   STLTECH            🛑 OVEREXTENDED  405.15       0.00           0.00
+    VARROC        🚀 INSIDER BREAKOUT  623.00     580.03         708.94
+       VTL        🚀 INSIDER BREAKOUT  631.85     584.93         725.68
+WELSPUNLIV               🏢 LAUNCHPAD  145.78     136.42         164.50
+   YESBANK         🚀 ACTIVE BREAKOUT   23.89      22.46          26.75
+
+---
+360ONE: 🚀 ACTIVE BREAKOUT -> SL: ₹1065.29 | PT: ₹1270.21 | Reason: Momentum Entry: Vol + Macro structure confirmed with Sector support.
+AUBANK: 🚀 ACTIVE BREAKOUT -> SL: ₹969.04 | PT: ₹1131.23 | Reason: Momentum Entry: Vol + Macro structure confirmed with Sector support.
+AVANTIFEED: 📉 DEEP FLUSH -> SL: ₹0.0 | PT: ₹0.0 | Reason: Avoid: Capitulation structural drop.
+BANDHANBNK: 🚀 INSIDER BREAKOUT -> SL: ₹201.85 | PT: ₹246.52 | Reason: Confirmed Entry: Vol + Alpha + Delivery + Sector Confirmation.
+BHARATFORG: 🏢 LAUNCHPAD -> SL: ₹1816.99 | PT: ₹2402.91 | Reason: Standard Compression base consolidation.
+CGCL: 🚀 ACTIVE BREAKOUT -> SL: ₹203.49 | PT: ₹246.65 | Reason: Momentum Entry: Vol + Macro structure confirmed with Sector support.
+EQUITASBNK: 🚀 ACTIVE BREAKOUT -> SL: ₹73.11 | PT: ₹90.03 | Reason: Momentum Entry: Vol + Macro structure confirmed with Sector support.
+GAEL: 🏢 LAUNCHPAD -> SL: ₹147.65 | PT: ₹179.26 | Reason: Standard Compression base consolidation.
+HAPPYFORGE: 🏢 LAUNCHPAD -> SL: ₹1284.23 | PT: ₹1441.64 | Reason: Standard Compression base consolidation.
+HBLENGINE: 🏢 LAUNCHPAD -> SL: ₹740.49 | PT: ₹917.97 | Reason: Standard Compression base consolidation.
+IFCI: 🛑 OVEREXTENDED -> SL: ₹0.0 | PT: ₹0.0 | Reason: Buy Veto: Overextended RSI (69.6).
+KPRMILL: 🏢 LAUNCHPAD -> SL: ₹995.51 | PT: ₹1172.78 | Reason: Standard Compression base consolidation.
+KRBL: ⏳ COUNTER_TREND_MOMENTUM -> SL: ₹0.0 | PT: ₹0.0 | Reason: Halted: Disaligned moving average structure.
+KSB: ⏳ COUNTER_TREND_MOMENTUM -> SL: ₹0.0 | PT: ₹0.0 | Reason: Halted: Disaligned moving average structure.
+LTF: ⏳ COUNTER_TREND_MOMENTUM -> SL: ₹0.0 | PT: ₹0.0 | Reason: Halted: Disaligned moving average structure.
+MAHABANK: 🚀 ACTIVE BREAKOUT -> SL: ₹82.93 | PT: ₹98.71 | Reason: Momentum Entry: Vol + Macro structure confirmed with Sector support.
+MOTILALOFS: 🚀 INSIDER BREAKOUT -> SL: ₹881.95 | PT: ₹1068.86 | Reason: Confirmed Entry: Vol + Alpha + Delivery + Sector Confirmation.
+OLECTRA: 🏢 LAUNCHPAD -> SL: ₹1173.29 | PT: ₹1464.62 | Reason: Standard Compression base consolidation.
+SHRIRAMFIN: ⏳ COUNTER_TREND_MOMENTUM -> SL: ₹0.0 | PT: ₹0.0 | Reason: Halted: Disaligned moving average structure.
+SHYAMMETL: 🏢 INSTITUTIONAL LAUNCHPAD -> SL: ₹912.64 | PT: ₹1070.02 | Reason: High Priority: Coiling base compression with institutional footprints.
+SONACOMS: 🏢 LAUNCHPAD -> SL: ₹565.36 | PT: ₹665.22 | Reason: Standard Compression base consolidation.
+STARHEALTH: 🏢 LAUNCHPAD -> SL: ₹493.83 | PT: ₹577.58 | Reason: Standard Compression base consolidation.
+STLTECH: 🛑 OVEREXTENDED -> SL: ₹0.0 | PT: ₹0.0 | Reason: Buy Veto: Overextended RSI (87.6).
+VARROC: 🚀 INSIDER BREAKOUT -> SL: ₹580.03 | PT: ₹708.94 | Reason: Confirmed Entry: Vol + Alpha + Delivery + Sector Confirmation.
+VTL: 🚀 INSIDER BREAKOUT -> SL: ₹584.93 | PT: ₹725.68 | Reason: Confirmed Entry: Vol + Alpha + Delivery + Sector Confirmation.
+WELSPUNLIV: 🏢 LAUNCHPAD -> SL: ₹136.42 | PT: ₹164.5 | Reason: Standard Compression base consolidation.
+YESBANK: 🚀 ACTIVE BREAKOUT -> SL: ₹22.46 | PT: ₹26.75 | Reason: Momentum Entry: Vol + Macro structure confirmed with Sector support.

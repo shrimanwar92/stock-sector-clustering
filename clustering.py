@@ -8,6 +8,9 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
 import json
+from constants import (
+    CACHE_FILE
+)
 
 warnings.filterwarnings("ignore")
 
@@ -22,7 +25,7 @@ class AuditedSectorClusterEngine:
         self.model = KMeans(n_clusters=5, random_state=42, n_init=10)
         self.sector_features = ["Sector_Rolling_Return", "Sector_Delivery_Avg", "Sector_Volume_Expansion"]
         self.sector_mapping = {}
-        self.cache_filename = ".sector_cache.json"  # Hidden disk cache file
+        self.cache_filename =  CACHE_FILE # Hidden disk cache file
 
     def load_cached_sectors(self) -> pd.DataFrame:
         """Checks the local hidden JSON cache file for valid, same-day sector tracking frames."""
@@ -85,7 +88,7 @@ class AuditedSectorClusterEngine:
         
         all_data = []
         sample_df = pd.DataFrame(list(self.sector_mapping.items()), columns=["Symbol", "Sector"])
-        sampled_symbols = sample_df.groupby("Sector").head(2)["Symbol"].tolist()
+        sampled_symbols = sample_df.groupby("Sector").head(15)["Symbol"].tolist()
         
         print(f"[INGEST] Gathering performance footprints for {len(sampled_symbols)} assets...")
         for symbol in sampled_symbols:
