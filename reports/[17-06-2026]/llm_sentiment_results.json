@@ -1,0 +1,152 @@
+{
+    "360ONE": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Strong AUM growth and focus on wealth management services, potentially benefiting from rising disposable incomes and a growing investor base in India.",
+        "confidence_score": 75,
+        "strategic_threat": "Increased competition from other wealth management firms and potential regulatory changes impacting fee structures."
+    },
+    "AARTIIND": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Expansion in specialty chemicals and APIs, driven by global demand and import substitution trends. Potential for margin expansion due to product mix shift.",
+        "confidence_score": 80,
+        "strategic_threat": "Raw material price volatility and geopolitical risks impacting global supply chains."
+    },
+    "AEGISLOG": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Focus on logistics infrastructure development, including warehousing and port-based services. Government's push for infrastructure may provide tailwinds.",
+        "confidence_score": 60,
+        "strategic_threat": "Execution risks in large infrastructure projects and potential delays in regulatory approvals."
+    },
+    "APOLLOTYRE": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Improving demand in both OEM and replacement segments, aided by economic recovery and increased vehicle sales. Potential for market share gains.",
+        "confidence_score": 70,
+        "strategic_threat": "Intensifying competition, particularly from global players, and fluctuating rubber prices."
+    },
+    "BANDHANBNK": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Continued focus on microfinance and rural banking, catering to an underbanked segment. Potential for strong loan growth and stable asset quality.",
+        "confidence_score": 75,
+        "strategic_threat": "Rising interest rates impacting borrowing costs for customers and increased competition in the microfinance space."
+    },
+    "BPCL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Focus on refining and petrochemical expansion, coupled with an increased retail presence. Potential benefits from stable crude oil prices and rising fuel demand.",
+        "confidence_score": 65,
+        "strategic_threat": "Transition to EVs and renewable energy posing long-term threats to fossil fuel demand. Government policy changes related to fuel pricing."
+    },
+    "CGCL": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Growth in the biscuit and confectionery segment, benefiting from strong brand recall and distribution network. Potential for premiumization strategies.",
+        "confidence_score": 70,
+        "strategic_threat": "Rising input costs (flour, sugar, packaging) and intense competition from organized and unorganized players."
+    },
+    "EPL": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Expansion in pharmaceutical packaging, particularly aluminium tubes, driven by growing healthcare and cosmetic industries. Innovation in sustainable packaging solutions.",
+        "confidence_score": 75,
+        "strategic_threat": "Dependence on key raw materials and potential for substitute packaging materials."
+    },
+    "GNFC": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Diversified product portfolio including fertilizers and industrial chemicals. Benefits from government support for agriculture and strong demand in industrial segments.",
+        "confidence_score": 70,
+        "strategic_threat": "Volatility in raw material prices (e.g., natural gas) and potential disruptions in the fertilizer subsidy regime."
+    },
+    "HBLENGINE": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Strong order book in engineering and infrastructure projects. Participation in government-driven capex cycles.",
+        "confidence_score": 75,
+        "strategic_threat": "Execution challenges, potential cost overruns, and competitive bidding processes."
+    },
+    "IDBI": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Privatization efforts and focus on retail banking and corporate lending. Potential for improved operational efficiency and profitability.",
+        "confidence_score": 55,
+        "strategic_threat": "Integration challenges post-privatization and continued competition from public and private sector banks."
+    },
+    "IFCI": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Focus on infrastructure financing and long-term project lending. Potential to benefit from increased government spending on infrastructure.",
+        "confidence_score": 50,
+        "strategic_threat": "Asset quality concerns and potential for non-performing assets in a challenging economic environment."
+    },
+    "JSWINFRA": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Expansion in ports, roads, and other infrastructure assets. Benefiting from government's push for logistics and connectivity.",
+        "confidence_score": 80,
+        "strategic_threat": "Long gestation periods for projects, regulatory hurdles, and competition from other infrastructure developers."
+    },
+    "JSWSTEEL": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Expansion in steel production capacity and focus on value-added products. Benefiting from robust demand in construction and automotive sectors.",
+        "confidence_score": 75,
+        "strategic_threat": "Global steel price volatility, import threats, and rising input costs (e.g., iron ore, coal)."
+    },
+    "KAJARIACER": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Strong brand presence in the tile and sanitaryware segment. Growth driven by housing demand and renovation activities, with potential for premiumization.",
+        "confidence_score": 70,
+        "strategic_threat": "Intensifying competition, particularly from unorganized players, and rising raw material and energy costs."
+    },
+    "KPIL": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Diversified infrastructure company with presence in roads, railways, and water. Strong order book and participation in government infrastructure development.",
+        "confidence_score": 75,
+        "strategic_threat": "Execution risks, project delays, and challenges in land acquisition."
+    },
+    "LTF": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Focus on retail lending, particularly housing finance. Benefiting from a growing housing market and government initiatives promoting home ownership.",
+        "confidence_score": 70,
+        "strategic_threat": "Rising interest rates impacting affordability and increasing competition from banks and NBFCs."
+    },
+    "MAHABANK": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Focus on retail and MSME lending. Potential for improved asset quality and profitability under strategic initiatives.",
+        "confidence_score": 55,
+        "strategic_threat": "Competition from private banks and continued overhang of legacy NPAs."
+    },
+    "MMTC": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Diversified trading business with focus on commodities like gold and silver. Potential benefits from increased consumer spending on precious metals.",
+        "confidence_score": 50,
+        "strategic_threat": "Volatility in commodity prices and challenges in the retail and wholesale trading segments."
+    },
+    "MOTILALOFS": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Strong growth in wealth management and broking services, benefiting from increasing retail participation in capital markets.",
+        "confidence_score": 75,
+        "strategic_threat": "Market volatility impacting trading volumes and regulatory changes affecting the financial services industry."
+    },
+    "PETRONET": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Expansion of LNG regasification capacity, catering to India's growing energy demand. Long-term contracts providing revenue visibility.",
+        "confidence_score": 75,
+        "strategic_threat": "Volatility in global LNG prices and geopolitical risks affecting supply chains."
+    },
+    "SHYAMMETL": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Expansion in ferroalloy production, driven by demand from the steel and specialty steel sectors. Potential for capacity augmentation.",
+        "confidence_score": 70,
+        "strategic_threat": "Fluctuations in raw material prices (e.g., manganese ore, coal) and global competition."
+    },
+    "SONACOMS": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Growth in automotive components, particularly in EV-related segments. Diversification into new product lines and geographies.",
+        "confidence_score": 80,
+        "strategic_threat": "Disruption from EV transition impacting traditional auto component demand and intense competition."
+    },
+    "SPARC": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Focus on niche pharmaceutical products and R&D initiatives. Potential for drug discoveries to drive future growth.",
+        "confidence_score": 50,
+        "strategic_threat": "High R&D costs, long development cycles, and regulatory approvals for new drugs."
+    },
+    "STLTECH": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Expansion in telecom infrastructure, particularly 5G rollout and associated network deployment. Potential for global expansion in tower infrastructure.",
+        "confidence_score": 80,
+        "strategic_threat": "Technological obsolescence, regulatory changes affecting telecom licenses, and competition in infrastructure deployment."
+    }
+}
