@@ -11,41 +11,41 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .mono-font { font-family: 'JetBrains Mono', monospace; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #111827; }
-        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+        ::-webkit-scrollbar-track { background: #f3f4f6; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
     </style>
 </head>
-<body class="bg-[#0b0f19] text-gray-100 min-h-screen flex flex-col antialiased">
+<body class="bg-[#f8fafc] text-[#1e293b] min-h-screen flex flex-col antialiased">
 
-    <header class="border-b border-gray-800 bg-[#111827]/80 backdrop-blur-md sticky top-0 z-50 px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+    <header class="border-b border-[#e2e8f0] bg-white/90 backdrop-blur-md sticky top-0 z-50 px-4 sm:px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shadow-sm">
         <div class="flex items-center gap-3">
-            <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-emerald-500/10">
+            <div class="h-10 w-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/10">
                 <i class="fa-solid fa-layer-group text-xl"></i>
             </div>
             <div>
-                <h1 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
-                    QUANT WAVE <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-mono">SWING INSTITUTIONAL</span>
+                <h1 class="text-base sm:text-lg font-bold tracking-tight text-[#0f172a] flex flex-wrap items-center gap-2">
+                    QUANT WAVE <span class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-mono font-bold">SWING INSTITUTIONAL</span>
                 </h1>
-                <p class="text-xs text-gray-400">Wilder-Smoothed Volatility Tracking | Top-Down Sector Alignment and Mathematical Risk Firewalls</p>
+                <p class="text-xs text-[#64748b] mt-0.5 hidden md:block">Wilder-Smoothed Volatility Tracking | Top-Down Sector Alignment and Mathematical Risk Firewalls</p>
             </div>
         </div>
         
-        <div class="flex items-center gap-4">
-            <div class="bg-[#1f2937] border border-gray-800 px-3 py-1.5 rounded-lg flex items-center gap-2 text-xs text-gray-300">
-                <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 border-t sm:border-t-0 pt-3 sm:pt-0 border-[#e2e8f0]">
+            <div class="bg-[#f1f5f9] border border-[#e2e8f0] px-3 py-1.5 rounded-lg flex items-center gap-2 text-xs text-[#334155] font-medium">
+                <span class="h-2 w-2 rounded-full bg-emerald-600 animate-pulse"></span>
                 <span>Workspace: VCP Production Engine</span>
             </div>
-            <div class="text-xs text-gray-400 text-right hidden sm:block">
-                <p class="font-semibold text-gray-200">System State Published</p>
-                <p class="font-mono">2026-06-16 23:36:52</p>
+            <div class="text-xs text-[#64748b] text-right">
+                <p class="font-semibold text-[#334155]">System State Published</p>
+                <p class="font-mono mt-0.5 text-[11px]">2026-06-16 23:36:37</p>
             </div>
         </div>
     </header>
 
-    <main class="flex-1 p-6 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <section class="lg:col-span-12 flex flex-col gap-6">
-            <div class="bg-[#111827] border border-gray-800 rounded-2xl p-5 shadow-xl">
+    <main class="flex-1 p-4 sm:p-6 max-w-7xl w-full mx-auto">
+        <section class="w-full">
+            <div class="bg-white border border-[#e2e8f0] rounded-2xl p-4 sm:p-6 shadow-sm">
                 <div id="ticker-rows" class="grid gap-4"></div>
             </div>
         </section>
@@ -654,28 +654,38 @@
             const container = document.getElementById("ticker-rows");
             if (!container) return;
             if (initialTickers.length === 0) {
-                container.innerHTML = `<div class="p-8 text-center text-gray-500 font-mono text-sm">No actionable setups verified within the active technical market framework.</div>`;
+                container.innerHTML = `<div class="p-12 text-center text-[#64748b] font-mono text-sm border-2 border-dashed border-[#e2e8f0] rounded-xl bg-[#f8fafc]">No actionable setups verified within the active technical market framework.</div>`;
                 return;
             }
             container.innerHTML = initialTickers.map(t => `
-                <div class="p-5 bg-gray-900/50 rounded-xl border border-gray-800 flex flex-wrap justify-between items-center gap-4 hover:border-gray-700 transition">
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <h4 class="font-bold text-white font-mono text-base">${t.symbol}</h4>
-                            <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-blue-900/30 text-blue-400 border border-blue-500/20 font-mono">${t.sector}</span>
-                            <span class="text-[10px] px-2 py-0.5 rounded font-bold ${t.label.includes('BREAKOUT') ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-400 border border-amber-500/20' }">${t.label}</span>
+                <div class="p-5 bg-white rounded-xl border border-[#e2e8f0] flex flex-col lg:flex-row justify-between items-start lg:items-center gap-5 hover:border-slate-400 hover:shadow-md transition-all duration-200">
+                    <div class="w-full lg:max-w-xl">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <h4 class="font-bold text-[#0f172a] font-mono text-base tracking-tight">${t.symbol}</h4>
+                            <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-[#f1f5f9] text-[#475569] border border-[#e2e8f0] font-mono">${t.sector}</span>
+                            <span class="text-[10px] px-2 py-0.5 rounded font-bold ${t.label.includes('BREAKOUT') ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200' }">${t.label}</span>
                         </div>
-                        <p class="text-xs text-gray-400 mt-1">
-                            Close: <span class="text-gray-200 font-mono">₹${t.close}</span> | 
-                            Stop-Loss (2-ATR): <span class="text-red-400 font-mono">₹${t.stopLoss}</span> | 
-                            Target (1:2 RR): <span class="text-emerald-400 font-mono">₹${t.profitTarget}</span>
-                        </p>
-                        <p class="text-xs text-gray-500 mt-2 font-mono">Wilder RSI: ${t.rsi.toFixed(1)} | 3/20 Vol Ratio: ${t.volRatio.toFixed(2)} | ATR Ratio: ${t.atrRatio.toFixed(2)} | Close Location: ${t.closeStrength.toFixed(2)}</p>
+                        <div class="text-xs text-[#334155] mt-2.5 bg-[#f8fafc] p-3 rounded-lg border border-[#f1f5f9] flex flex-wrap gap-x-4 gap-y-1.5 font-medium">
+                            <div>Close: <span class="text-[#0f172a] font-mono font-bold">₹${t.close.toLocaleString('en-IN')}</span></div>
+                            <div class="border-l border-[#e2e8f0] pl-4">Stop-Loss: <span class="text-rose-600 font-mono font-bold">₹${t.stopLoss.toLocaleString('en-IN')}</span></div>
+                            <div class="border-l border-[#e2e8f0] pl-4">Target: <span class="text-emerald-600 font-mono font-bold">₹${t.profitTarget.toLocaleString('en-IN')}</span></div>
+                        </div>
+                        <div class="text-[11px] text-[#64748b] mt-3 font-mono flex flex-wrap gap-x-3 gap-y-1 bg-[#f1f5f9]/40 px-2.5 py-1.5 rounded border border-dashed border-[#e2e8f0]">
+                            <span>RSI: <strong class="text-[#334155]">${t.rsi.toFixed(1)}</strong></span>
+                            <span>•</span>
+                            <span>Vol Ratio: <strong class="text-[#334155]">${t.volRatio.toFixed(2)}</strong></span>
+                            <span>•</span>
+                            <span>ATR Ratio: <strong class="text-[#334155]">${t.atrRatio.toFixed(2)}</strong></span>
+                            <span>•</span>
+                            <span>Close Strength: <strong class="text-[#334155]">${t.closeStrength.toFixed(2)}</strong></span>
+                        </div>
                     </div>
-                    <div class="text-right max-w-md">
-                        <span class="text-xs px-2 py-1 rounded font-mono ${t.sentiment === 'BULLISH' ? 'bg-emerald-500/20 text-emerald-300' : 'bg-gray-800 text-gray-400'}">${t.sentiment}</span>
-                        <p class="text-xs text-gray-300 mt-1 italic">"${t.news_catalyst}"</p>
-                        <p class="text-[10px] text-gray-500 mt-1">Confidence Layer Score: ${t.confidence}%</p>
+                    <div class="w-full lg:text-right lg:max-w-md border-t lg:border-t-0 pt-4 lg:pt-0 border-[#f1f5f9] flex flex-col lg:items-end gap-1.5">
+                        <div>
+                            <span class="text-[10px] px-2.5 py-1 rounded-full font-mono font-bold tracking-wide ${t.sentiment === 'BULLISH' ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-600 border border-slate-200'}"><i class="fa-solid fa-circle text-[6px] mr-1.5 align-middle"></i>${t.sentiment}</span>
+                        </div>
+                        <p class="text-xs font-semibold text-[#334155] mt-1 italic leading-relaxed">"${t.news_catalyst}"</p>
+                        <p class="text-[10px] text-[#94a3b8] font-medium mt-0.5">Confidence Layer Score: <span class="font-mono text-[#475569] font-bold">${t.confidence}%</span></p>
                     </div>
                 </div>
             `).join("");
