@@ -102,7 +102,58 @@ class ProgrammaticDashboardDeployer:
         </div>
     </header>
 
-    <main class="flex-1 p-4 sm:p-6 max-w-7xl w-full mx-auto">
+    <main class="flex-1 p-4 sm:p-6 max-w-7xl w-full mx-auto space-y-6">
+        
+        <section class="bg-white border border-[#e2e8f0] rounded-2xl p-5 shadow-sm">
+            <h3 class="text-xs font-bold text-[#475569] uppercase tracking-wider mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-circle-info text-emerald-600 text-sm"></i> Strategic Label Explanatory Guide
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-3.5 bg-emerald-50/50 border border-emerald-100 rounded-xl">
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono">🚀 ACTIVE BREAKOUT</span>
+                    </div>
+                    <p class="text-xs text-[#475569] leading-relaxed"><strong class="text-[#0f172a]">Plain Meaning:</strong> The stock is showing powerful upward trend momentum right now and has broken out of its short-term price ceiling.</p>
+                    <p class="text-[11px] font-mono text-[#64748b] mt-2 bg-white/80 p-1.5 rounded border border-emerald-200/60"><strong>Quant Logic:</strong> Vol Ratio &ge; 1.25, Trend Aligned (20 > 50 > 200 EMA), ROC_20 > 2.0, & MACD Accel > 0.</p>
+                </div>
+                
+                <div class="p-3.5 bg-cyan-50/40 border border-cyan-100 rounded-xl">
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span class="text-xs font-bold bg-cyan-50 text-cyan-800 border border-cyan-200 px-2 py-0.5 rounded font-mono">🚀 INSIDER BREAKOUT</span>
+                    </div>
+                    <p class="text-xs text-[#475569] leading-relaxed"><strong class="text-[#0f172a]">Plain Meaning:</strong> A breakout backed by high delivery conversion, indicating institutions are absorbing outstanding float supply.</p>
+                    <p class="text-[11px] font-mono text-[#64748b] mt-2 bg-white/80 p-1.5 rounded border border-cyan-200/60"><strong>Quant Logic:</strong> Active Breakout parameters met + Delivery Ratio &ge; 1.15 OR Intraday Close Location &ge; 0.65.</p>
+                </div>
+
+                <div class="p-3.5 bg-amber-50/50 border border-amber-100 rounded-xl">
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span class="text-xs font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-mono">🏢 LAUNCHPAD / INST.</span>
+                    </div>
+                    <p class="text-xs text-[#475569] leading-relaxed"><strong class="text-[#0f172a]">Plain Meaning:</strong> The stock is tightly consolidating inside a quiet compression base, hiding coiled springs before a macro expansion.</p>
+                    <p class="text-[11px] font-mono text-[#64748b] mt-2 bg-white/80 p-1.5 rounded border border-amber-200/60"><strong>Quant Logic:</strong> Close within &plusmn;4.5% of 20 EMA, Trend Aligned, Volatility contracting (ATR Ratio < 0.98).</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="flex flex-wrap items-center gap-2 bg-white border border-[#e2e8f0] p-3 rounded-xl shadow-sm">
+            <span class="text-xs font-bold uppercase tracking-wider text-[#64748b] ml-1 mr-2"><i class="fa-solid fa-filter text-slate-500 mr-1.5"></i> Filter Setups:</span>
+            <button onclick="filterTable('ALL')" id="btn-ALL" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-[#0f172a] text-white border-[#0f172a]">
+                All Verified Setups (<span id="count-ALL">0</span>)
+            </button>
+            <button onclick="filterTable('ACTIVE BREAKOUT')" id="btn-ACTIVE" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
+                🚀 Active Breakout (<span id="count-ACTIVE">0</span>)
+            </button>
+            <button onclick="filterTable('INSIDER BREAKOUT')" id="btn-INSIDER" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
+                💎 Insider Breakout (<span id="count-INSIDER">0</span>)
+            </button>
+            <button onclick="filterTable('LAUNCHPAD')" id="btn-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
+                🏢 Launchpad (<span id="count-LAUNCHPAD">0</span>)
+            </button>
+            <button onclick="filterTable('INSTITUTIONAL LAUNCHPAD')" id="btn-INST-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
+                🏛️ Institutional Launchpad (<span id="count-INST-LAUNCHPAD">0</span>)
+            </button>
+        </section>
+
         <section class="w-full">
             <div class="bg-white border border-[#e2e8f0] rounded-2xl p-4 sm:p-6 shadow-sm">
                 <div id="ticker-rows" class="grid gap-4"></div>
@@ -112,16 +163,66 @@ class ProgrammaticDashboardDeployer:
 
     <script>
         const initialTickers = {json_tickers_data};
+        let currentFilter = 'ALL';
         console.log("Ingested qualified strategic tickers:", initialTickers);
         
+        function updateFilterBadges() {{
+            const counts = {{
+                ALL: initialTickers.length,
+                ACTIVE: initialTickers.filter(t => t.label === '🚀 ACTIVE BREAKOUT').length,
+                INSIDER: initialTickers.filter(t => t.label === '🚀 INSIDER BREAKOUT').length,
+                LAUNCHPAD: initialTickers.filter(t => t.label === '🏢 LAUNCHPAD').length,
+                INST_LAUNCHPAD: initialTickers.filter(t => t.label === '🏢 INSTITUTIONAL LAUNCHPAD').length
+            }};
+
+            document.getElementById("count-ALL").innerText = counts.ALL;
+            document.getElementById("count-ACTIVE").innerText = counts.ACTIVE;
+            document.getElementById("count-INSIDER").innerText = counts.INSIDER;
+            document.getElementById("count-LAUNCHPAD").innerText = counts.LAUNCHPAD;
+            document.getElementById("count-INST-LAUNCHPAD").innerText = counts.INST_LAUNCHPAD;
+
+            // Manage dynamic highlighting css toggles
+            const buttons = {{
+                'ALL': 'btn-ALL',
+                'ACTIVE BREAKOUT': 'btn-ACTIVE',
+                'INSIDER BREAKOUT': 'btn-INSIDER',
+                'LAUNCHPAD': 'btn-LAUNCHPAD',
+                'INSTITUTIONAL LAUNCHPAD': 'btn-INST-LAUNCHPAD'
+            }};
+
+            Object.keys(buttons).forEach(key => {{
+                const btn = document.getElementById(buttons[key]);
+                if (!btn) return;
+                if (key === currentFilter) {{
+                    btn.className = "text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-[#0f172a] text-white border-[#0f172a]";
+                }} else {{
+                    btn.className = "text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50";
+                }}
+            }});
+        }}
+
+        function filterTable(labelKey) {{
+            currentFilter = labelKey;
+            renderRows();
+        }}
+
         function renderRows() {{
             const container = document.getElementById("ticker-rows");
             if (!container) return;
-            if (initialTickers.length === 0) {{
-                container.innerHTML = `<div class="p-12 text-center text-[#64748b] font-mono text-sm border-2 border-dashed border-[#e2e8f0] rounded-xl bg-[#f8fafc]">No actionable setups verified within the active technical market framework.</div>`;
+            
+            // Apply filtering layer array manipulation
+            const filteredData = currentFilter === 'ALL' 
+                ? initialTickers 
+                : initialTickers.filter(t => t.label === t.label.includes('BREAKOUT') ? t.label : t.label.toUpperCase().includes(currentFilter) || t.label === currentFilter);
+            
+            updateFilterBadges();
+
+            if (filteredData.length === 0) {{
+                container.innerHTML = `<div class="p-12 text-center text-[#64748b] font-mono text-sm border-2 border-dashed border-[#e2e8f0] rounded-xl bg-[#f8fafc]">No active trading candidates matched the selected filter configuration.</div>`;
                 return;
             }}
-            container.innerHTML = initialTickers.map(t => `
+            
+            container.innerHTML = filteredData.map(t => `
                 <div class="p-5 bg-white rounded-xl border border-[#e2e8f0] flex flex-col lg:flex-row justify-between items-start lg:items-center gap-5 hover:border-slate-400 hover:shadow-md transition-all duration-200">
                     <div class="w-full lg:max-w-xl">
                         <div class="flex flex-wrap items-center gap-2">

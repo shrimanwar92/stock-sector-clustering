@@ -1,0 +1,44 @@
+{
+    "MANAPPURAM": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Focus on operational efficiency and managing gold loan portfolio amidst evolving economic conditions. Recent performance indicates stabilization after a period of adjustments.",
+        "confidence_score": 60,
+        "strategic_threat": "Increased competition in the gold loan sector and potential regulatory changes impacting gold financing operations."
+    },
+    "ADANIGREEN": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Expansion of renewable energy capacity and securing new long-term power purchase agreements (PPAs). Strong government support for renewable energy targets fuels growth expectations.",
+        "confidence_score": 85,
+        "strategic_threat": "Regulatory hurdles in land acquisition for new projects, currency fluctuations impacting import costs of solar equipment, and competition from other domestic and international players."
+    },
+    "BORORENEW": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Growth in order book for renewable energy projects, particularly solar and wind. Diversification into new energy solutions and geographical expansion are key drivers.",
+        "confidence_score": 75,
+        "strategic_threat": "Supply chain disruptions for critical components, potential delays in project execution due to environmental clearances, and intense pricing pressure from competitors."
+    },
+    "RAYMOND": {
+        "sentiment": "MIXED",
+        "news_catalyst": "Focus on strengthening branded apparel business and real estate ventures. Recent performance shows a turnaround in core textile operations, but debt levels remain a concern.",
+        "confidence_score": 55,
+        "strategic_threat": "Intense competition in the apparel retail sector, reliance on consumer discretionary spending which can be volatile, and challenges in monetizing real estate assets effectively."
+    },
+    "TEJASNET": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Increasing demand for optical networking products driven by 5G deployment, data center expansion, and broadband penetration. Focus on R&D and expanding product portfolio for next-generation networks.",
+        "confidence_score": 80,
+        "strategic_threat": "Rapid technological obsolescence in the networking sector, dependence on key component suppliers, and aggressive pricing strategies from global competitors."
+    },
+    "IOC": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Focus on refinery upgrades and expansion, diversification into petrochemicals, and expanding retail network. Performance is tied to crude oil price volatility and refining margins.",
+        "confidence_score": 65,
+        "strategic_threat": "Geopolitical risks impacting crude oil supply and prices, increasing competition from private players in fuel retailing, and regulatory pressures related to environmental compliance."
+    },
+    "WELCORP": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Diversified business segments including lifestyle, healthcare, and retail. Performance is influenced by economic cycles and consumer spending across various sectors. Recent focus on deleveraging and optimizing operations.",
+        "confidence_score": 50,
+        "strategic_threat": "Vulnerability to economic downturns affecting consumer discretionary spending, operational complexities of managing diverse businesses, and potential integration risks from acquisitions."
+    }
+}

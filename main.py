@@ -1,20 +1,27 @@
 import os
 import pandas as pd
-from clustering import AuditedSectorClusterEngine
-from handler import AuditableMomentumPipeline
 from datetime import datetime
-from deployment_engine import ProgrammaticDashboardDeployer
 from dotenv import load_dotenv
+
+# Import updated modular entities
+from clustering import AuditedSectorClusterEngine
+from rule_engine import AuditableMomentumPipeline
+from ml_feature_engg_train_params import run_offline_model_training
+
+from deployment_engine import ProgrammaticDashboardDeployer
 from llm_sentiment_engine import GeminiSentimentEngine
-from constants import (
-    SECTOR_REPORTS_PATH, STOCK_ANALYSIS, EXECUTION_SIGNALS
-)
+from constants import SECTOR_REPORTS_PATH, STOCK_ANALYSIS, FEATURE_COLUMNS
+from xgboost import XGBClassifier
+from constants import MODEL_PATH
 
 load_dotenv()
 
+# Operational Configuration Flag
+TRAIN_MODE = True  # Set to True when updating XGBoost patterns historically
+
 def run_production_pipeline():
     print("=" * 110)
-    print(" PRODUCTION CONTROL ENGINE: EXECUTING TOP-DOWN QUANT TRADING LAYERS")
+    print(" PRODUCTION CONTROL ENGINE: EXECUTING TOP-DOWN HYBRID ML QUANT TRADING SYSTEM")
     print("=" * 110)
 
     csv_file = "dataset/nse_companies.csv"
@@ -22,11 +29,11 @@ def run_production_pipeline():
         print(f"[CRITICAL ERROR] File '{csv_file}' not found. Halting pipeline.")
         return
 
-   # -------------------------------------------------------------------------
+    # -------------------------------------------------------------------------
     # STAGE 1: Execute Macro Sector Rotation Pass
     # -------------------------------------------------------------------------
     print("\n[STAGE 1] Querying Unsupervised Macro Segmentation Engines...")
-    macro_engine = AuditedSectorClusterEngine(csv_filename=csv_file, lookback_years=1.2)
+    macro_engine = AuditedSectorClusterEngine(csv_filename=csv_file, lookback_years=2.0)
     macro_engine.load_mappings_from_csv()
     sector_report = macro_engine.discover_and_export_sectors(output_filename=SECTOR_REPORTS_PATH)
 
@@ -34,96 +41,95 @@ def run_production_pipeline():
         print("[CRITICAL ERROR] Macro Engine failed to return valid data. Halting.")
         return
 
-    # Define our approved high-performing cluster regimes
     approved_regimes = [
         "🔥 ULTRA_MOMENTUM_LEADERS", 
         "🚀 ACTIVE_BREAKOUT_FIELDS", 
         "📈 STABLE_UPWARD_ACCUMULATION"
     ]
 
-    # Filter the sector report to isolate approved sectors only
     bullish_sectors = set(
         sector_report[sector_report["Macro_Regime"].isin(approved_regimes)]["Sector"].unique()
     )
-    print(f"[STAGE 2] Bullish Clusters Identified: {list(bullish_sectors)}")
+    print(f"[STAGE 1] Bullish Clusters Identified: {list(bullish_sectors)}")
 
     # -------------------------------------------------------------------------
-    # STAGE 2: Restrict Universe BEFORE Technical Download Stream
+    # STAGE 2: Restrict Universe Stream
     # -------------------------------------------------------------------------
-    master_universe_map = macro_engine.sector_mapping  # Map of Ticker -> Sector
-    
-    # 🟢 CRITICAL CHANGE: Only keep tickers if their mapped sector is in our bullish whitelist
+    master_universe_map = macro_engine.sector_mapping 
+    mcap_map = macro_engine.company_caps if hasattr(macro_engine, 'company_caps') else {}
+    sector_regime_map = dict(zip(sector_report["Sector"], sector_report["Macro_Regime"]))
+
     actionable_symbols = [
-        symbol for symbol, sector in master_universe_map.items()
-        if sector in bullish_sectors
+        symbol for symbol, sector in master_universe_map.items() if sector in bullish_sectors
     ]
-    
     print(f"[STAGE 2 GATEKEEPER] Universe restricted from {len(master_universe_map)} to {len(actionable_symbols)} stocks.")
 
     # -------------------------------------------------------------------------
-    # STAGE 3: Run Micro Technical Rules Firewall Pass
+    # STAGE 3: Core Pipeline Initialization
     # -------------------------------------------------------------------------
-    print(f"\n[STAGE 3] Loading {len(actionable_symbols)} Actionable Assets into Technical Firewall...")
-    
-    mcap_map = macro_engine.company_caps if hasattr(macro_engine, 'company_caps') else {}
-    
-    # Create sector regime lookup map for downstream verification checks
-    sector_regime_map = dict(zip(sector_report["Sector"], sector_report["Macro_Regime"]))
-
-    # Pass ONLY the actionable_symbols list instead of all_symbols
     micro_pipeline = AuditableMomentumPipeline(
-        symbols=actionable_symbols,  # 🟢 Only download what we care about!
+        symbols=actionable_symbols,
         market_cap_map=mcap_map,
         symbol_to_sector_map=master_universe_map,
         sector_regime_map=sector_regime_map,
-        lookback_years=1.2
+        lookback_years=2.0  # Kept at 2.0+ to guarantee warm features data blocks
     )
     
     raw_micro_df = micro_pipeline.fetch_universe_data()
-    
     if raw_micro_df.empty:
         print("[WARN] Technical streams returned zero records. Halting.")
         return
 
+    # -------------------------------------------------------------------------
+    # OPTIONAL STAGE: Machine Learning Training Router Hook
+    # -------------------------------------------------------------------------
+    if TRAIN_MODE:
+        print("\n[HOOK] Train configuration active. Commencing XGBoost parameter updates...")
+        run_offline_model_training(raw_micro_df, micro_pipeline)
+
+    # -------------------------------------------------------------------------
+    # STAGE 4: Feature Store Generation and ML Scorer Execution
+    # -------------------------------------------------------------------------
     gold_features_df = micro_pipeline.engineer_gold_features(raw_micro_df)
     gold_features_df = gold_features_df[gold_features_df["Close"] >= 15.0]
 
-    print(gold_features_df.head(5))
-    #import sys
-    #sys.exit(0)
+    if gold_features_df.empty:
+        print("[WARN] Feature matrix empty after minimum asset price sorting. Halting.")
+        return
 
-    # Process firewall logic and write output to disk[cite: 11]
+    live_model = XGBClassifier()
+    live_model.load_model(MODEL_PATH)
+
+    # Pass everything cleanly to the execution engine
     execution_signals = micro_pipeline.export_execution_signals(
-        gold_df=gold_features_df, output_filename=EXECUTION_SIGNALS
+        gold_df=gold_features_df,
+        model_classifier=live_model,
+        feature_columns=FEATURE_COLUMNS
     )
 
     if execution_signals is None or execution_signals.empty:
-        print("[WARN execution_signals] Micro technical rules engine returned zero active signals. Halting.")
+        print("[WARN] Hybrid tree scorer returned zero active trade signals. Halting.")
         return
 
-    # 🟢 NEW: Create a clean routing trail tracking document for Stage 2 auditing[cite: 11]
+    # Generate Audit Logging trace
     with open(STOCK_ANALYSIS, "w", encoding="utf-8") as f:
         f.write("=" * 120 + "\n")
-        f.write(" PRODUCTION QUANT DATA LOGS: STAGE 2 CLUSTER FILTER TRACE\n")
+        f.write(" PRODUCTION QUANT DATA LOGS: STAGE 2 HYBRID TRACE\n")
         f.write(f" Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write("=" * 120 + "\n\n")
         for _, row in sector_report.iterrows():
             f.write(f"📍 SECTOR: {row['Sector']:<35} | REGIME: {row['Macro_Regime']}\n")
 
     # -------------------------------------------------------------------------
-    # STAGE 5: Autonomous LLM Semantic Overlay (Batch Optimized)[cite: 11]
+    # STAGE 5: Autonomous LLM Semantic Overlay
     # -------------------------------------------------------------------------
     print("\n[STAGE 5] Querying Autonomous LLM Narrative Analyst (Batch Mode)...")
     llm_engine = GeminiSentimentEngine()
     
-    tickers_payload = []
-    for idx, row in execution_signals.iterrows():
-        tickers_payload.append({
-            "symbol": row["Symbol"],
-            "sector": row["Sector"],
-            "close": row["Close"],
-            "label": row["Strategic_Label"]
-        })
+    tickers_payload = [
+        {"symbol": row["Symbol"], "sector": row["Sector"], "close": row["Close"], "label": row["Strategic_Label"]}
+        for idx, row in execution_signals.iterrows()
+    ]
 
     batch_analysis = llm_engine.analyze_batch_narratives(tickers_payload)
     
@@ -142,7 +148,7 @@ def run_production_pipeline():
     execution_signals["Strategic_Threat"] = threats
 
     # -------------------------------------------------------------------------
-    # STAGE 6: Programmatic HTML Generation & Live GitHub Actions Deployment[cite: 11]
+    # STAGE 6: Programmatic HTML Generation & Deployment
     # -------------------------------------------------------------------------
     print("\n[STAGE 6] Triggering Automated GitHub Deployment Pipelines...")
     GITHUB_PAT = os.getenv("GITHUB_PAT")
@@ -156,6 +162,8 @@ def run_production_pipeline():
         branch="main"
     )
 
+    # Sort final candidates by raw statistical probability before dashboard generation
+    execution_signals = execution_signals.sort_values(by="Alpha_ML_Score", ascending=False)
     dashboard_html = deployer_engine.generate_html_string(execution_signals)
 
     if not GITHUB_PAT:
