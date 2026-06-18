@@ -25,25 +25,72 @@
             </div>
             <div>
                 <h1 class="text-base sm:text-lg font-bold tracking-tight text-[#0f172a] flex flex-wrap items-center gap-2">
-                    QUANT WAVE <span class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-mono font-bold">SWING INSTITUTIONAL</span>
+                    QUANT WAVE <span class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-mono font-bold">SWING TRADE ANALYSIS</span>
                 </h1>
-                <p class="text-xs text-[#64748b] mt-0.5 hidden md:block">Wilder-Smoothed Volatility Tracking | Top-Down Sector Alignment and Mathematical Risk Firewalls</p>
+                <p class="text-xs text-[#64748b] mt-0.5 hidden md:block">Swing trading analysis 2-12 weeks timeframe</p>
             </div>
         </div>
         
         <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 border-t sm:border-t-0 pt-3 sm:pt-0 border-[#e2e8f0]">
-            <div class="bg-[#f1f5f9] border border-[#e2e8f0] px-3 py-1.5 rounded-lg flex items-center gap-2 text-xs text-[#334155] font-medium">
-                <span class="h-2 w-2 rounded-full bg-emerald-600 animate-pulse"></span>
-                <span>Workspace: VCP Production Engine</span>
-            </div>
             <div class="text-xs text-[#64748b] text-right">
-                <p class="font-semibold text-[#334155]">System State Published</p>
-                <p class="font-mono mt-0.5 text-[11px]">2026-06-17 20:19:40</p>
+                <p class="font-semibold text-[#334155]">Data Published on</p>
+                <p class="font-mono mt-0.5 text-[11px]">2026-06-18 17:14:48</p>
             </div>
         </div>
     </header>
 
-    <main class="flex-1 p-4 sm:p-6 max-w-7xl w-full mx-auto">
+    <main class="flex-1 p-4 sm:p-6 max-w-7xl w-full mx-auto space-y-6">
+        
+        <section class="bg-white border border-[#e2e8f0] rounded-2xl p-5 shadow-sm">
+            <h3 class="text-xs font-bold text-[#475569] uppercase tracking-wider mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-circle-info text-emerald-600 text-sm"></i> Strategic Label Explanatory Guide
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-3.5 bg-emerald-50/50 border border-emerald-100 rounded-xl">
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono">🚀 ACTIVE BREAKOUT</span>
+                    </div>
+                    <p class="text-xs text-[#475569] leading-relaxed"><strong class="text-[#0f172a]">Plain Meaning:</strong> The stock is showing powerful upward trend momentum right now and has broken out of its short-term price ceiling.</p>
+                    <p class="text-[11px] font-mono text-[#64748b] mt-2 bg-white/80 p-1.5 rounded border border-emerald-200/60"><strong>Quant Logic:</strong> Vol Ratio &ge; 1.25, Trend Aligned (20 > 50 > 200 EMA), ROC_20 > 2.0, & MACD Accel > 0.</p>
+                </div>
+                
+                <div class="p-3.5 bg-cyan-50/40 border border-cyan-100 rounded-xl">
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span class="text-xs font-bold bg-cyan-50 text-cyan-800 border border-cyan-200 px-2 py-0.5 rounded font-mono">🚀 INSIDER BREAKOUT</span>
+                    </div>
+                    <p class="text-xs text-[#475569] leading-relaxed"><strong class="text-[#0f172a]">Plain Meaning:</strong> A breakout backed by high delivery conversion, indicating institutions are absorbing outstanding float supply.</p>
+                    <p class="text-[11px] font-mono text-[#64748b] mt-2 bg-white/80 p-1.5 rounded border border-cyan-200/60"><strong>Quant Logic:</strong> Active Breakout parameters met + Delivery Ratio &ge; 1.15 OR Intraday Close Location &ge; 0.65.</p>
+                </div>
+
+                <div class="p-3.5 bg-amber-50/50 border border-amber-100 rounded-xl">
+                    <div class="flex items-center gap-2 mb-1.5">
+                        <span class="text-xs font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-mono">🏢 LAUNCHPAD / INST.</span>
+                    </div>
+                    <p class="text-xs text-[#475569] leading-relaxed"><strong class="text-[#0f172a]">Plain Meaning:</strong> The stock is tightly consolidating inside a quiet compression base, hiding coiled springs before a macro expansion.</p>
+                    <p class="text-[11px] font-mono text-[#64748b] mt-2 bg-white/80 p-1.5 rounded border border-amber-200/60"><strong>Quant Logic:</strong> Close within &plusmn;4.5% of 20 EMA, Trend Aligned, Volatility contracting (ATR Ratio < 0.98).</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="flex flex-wrap items-center gap-2 bg-white border border-[#e2e8f0] p-3 rounded-xl shadow-sm">
+            <span class="text-xs font-bold uppercase tracking-wider text-[#64748b] ml-1 mr-2"><i class="fa-solid fa-filter text-slate-500 mr-1.5"></i> Filter Setups:</span>
+            <button onclick="filterTable('ALL')" id="btn-ALL" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-[#0f172a] text-white border-[#0f172a]">
+                All Verified Setups (<span id="count-ALL">0</span>)
+            </button>
+            <button onclick="filterTable('ACTIVE BREAKOUT')" id="btn-ACTIVE" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
+                🚀 Active Breakout (<span id="count-ACTIVE">0</span>)
+            </button>
+            <button onclick="filterTable('INSIDER BREAKOUT')" id="btn-INSIDER" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
+                💎 Insider Breakout (<span id="count-INSIDER">0</span>)
+            </button>
+            <button onclick="filterTable('LAUNCHPAD')" id="btn-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
+                🏢 Launchpad (<span id="count-LAUNCHPAD">0</span>)
+            </button>
+            <button onclick="filterTable('INSTITUTIONAL LAUNCHPAD')" id="btn-INST-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
+                🏛️ Institutional Launchpad (<span id="count-INST-LAUNCHPAD">0</span>)
+            </button>
+        </section>
+
         <section class="w-full">
             <div class="bg-white border border-[#e2e8f0] rounded-2xl p-4 sm:p-6 shadow-sm">
                 <div id="ticker-rows" class="grid gap-4"></div>
@@ -54,412 +101,88 @@
     <script>
         const initialTickers = [
             {
-                        "symbol": "360ONE",
-                        "label": "\ud83d\ude80 ACTIVE BREAKOUT",
-                        "close": 1136.9,
-                        "stopLoss": 1068.59,
-                        "profitTarget": 1273.51,
-                        "rsi": 61.7695306008429,
-                        "emaDist": 3.792854326445178,
-                        "volRatio": 1.2749488344172404,
-                        "macdAccel": 1.7568908035382895,
-                        "closeStrength": NaN,
-                        "sector": "FINANCIAL_SERVICES",
-                        "trendAligned": 1,
-                        "relativeStrength": 4.150636515106019,
-                        "deliveryRatio": 0.6366245109614351,
-                        "atrRatio": 0.9098606938578085,
-                        "sectorAligned": 1,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Strong AUM growth and focus on wealth management services, potentially benefiting from rising disposable incomes and a growing investor base in India.",
-                        "confidence": 75,
-                        "threat": "Increased competition from other wealth management firms and potential regulatory changes impacting fee structures."
-            },
-            {
-                        "symbol": "AARTIIND",
-                        "label": "\ud83d\ude80 ACTIVE BREAKOUT",
-                        "close": 479.2,
-                        "stopLoss": 441.62,
-                        "profitTarget": 554.36,
-                        "rsi": 54.40292147054277,
-                        "emaDist": 2.8395570785945994,
-                        "volRatio": 4.664527151958004,
-                        "macdAccel": 0.5937476691963943,
-                        "closeStrength": 0.09429280396554277,
-                        "sector": "CHEMICALS",
-                        "trendAligned": 1,
-                        "relativeStrength": 0.5119926308389267,
-                        "deliveryRatio": 0.7197046359048568,
-                        "atrRatio": 1.141904574418811,
-                        "sectorAligned": 1,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Expansion in specialty chemicals and APIs, driven by global demand and import substitution trends. Potential for margin expansion due to product mix shift.",
-                        "confidence": 80,
-                        "threat": "Raw material price volatility and geopolitical risks impacting global supply chains."
-            },
-            {
-                        "symbol": "BANDHANBNK",
-                        "label": "\ud83d\ude80 ACTIVE BREAKOUT",
-                        "close": 213.76,
-                        "stopLoss": 199.24,
-                        "profitTarget": 242.8,
-                        "rsi": 61.70609282357959,
-                        "emaDist": 4.8087439587086465,
-                        "volRatio": 1.2573658024399914,
-                        "macdAccel": 0.2321111221008545,
-                        "closeStrength": 0.13524590161162936,
-                        "sector": "FINANCIAL_SERVICES",
-                        "trendAligned": 1,
-                        "relativeStrength": 15.541778429639622,
-                        "deliveryRatio": 0.8836361876335957,
-                        "atrRatio": 1.1177199789453487,
-                        "sectorAligned": 1,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Continued focus on microfinance and rural banking, catering to an underbanked segment. Potential for strong loan growth and stable asset quality.",
-                        "confidence": 75,
-                        "threat": "Rising interest rates impacting borrowing costs for customers and increased competition in the microfinance space."
-            },
-            {
-                        "symbol": "CGCL",
-                        "label": "\ud83d\ude80 ACTIVE BREAKOUT",
-                        "close": 217.28,
-                        "stopLoss": 203.27,
-                        "profitTarget": 245.3,
-                        "rsi": 70.56206449613228,
-                        "emaDist": 7.44608648074774,
-                        "volRatio": 1.5020655823633693,
-                        "macdAccel": 0.12223647237039081,
-                        "closeStrength": 0.26122448974260715,
-                        "sector": "FINANCIAL_SERVICES",
-                        "trendAligned": 1,
-                        "relativeStrength": 22.82734504269117,
-                        "deliveryRatio": 0.7210275903625174,
-                        "atrRatio": 1.0501753336377824,
-                        "sectorAligned": 1,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Growth in the biscuit and confectionery segment, benefiting from strong brand recall and distribution network. Potential for premiumization strategies.",
-                        "confidence": 70,
-                        "threat": "Rising input costs (flour, sugar, packaging) and intense competition from organized and unorganized players."
-            },
-            {
-                        "symbol": "EPL",
-                        "label": "\ud83d\ude80 ACTIVE BREAKOUT",
-                        "close": 233.01,
-                        "stopLoss": 217.22,
-                        "profitTarget": 264.58,
-                        "rsi": 63.16606837666098,
-                        "emaDist": 5.630405685310768,
-                        "volRatio": 1.4408012793936358,
-                        "macdAccel": 0.4546667884513367,
-                        "closeStrength": 0.4275862068474029,
-                        "sector": "CAPITAL_GOODS",
-                        "trendAligned": 1,
-                        "relativeStrength": 1.0346519377575203,
-                        "deliveryRatio": 0.9448030046587942,
-                        "atrRatio": 1.0271464730131408,
-                        "sectorAligned": 1,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Expansion in pharmaceutical packaging, particularly aluminium tubes, driven by growing healthcare and cosmetic industries. Innovation in sustainable packaging solutions.",
-                        "confidence": 75,
-                        "threat": "Dependence on key raw materials and potential for substitute packaging materials."
-            },
-            {
-                        "symbol": "GNFC",
-                        "label": "\ud83d\ude80 INSIDER BREAKOUT",
-                        "close": 559.25,
-                        "stopLoss": 522.47,
-                        "profitTarget": 632.81,
-                        "rsi": 69.80997581679748,
-                        "emaDist": 9.81823994760643,
-                        "volRatio": 2.354386217354263,
-                        "macdAccel": 2.9528711099535556,
-                        "closeStrength": 0.8565815323828461,
-                        "sector": "CHEMICALS",
-                        "trendAligned": 1,
-                        "relativeStrength": 1.7514813557121656,
-                        "deliveryRatio": 1.0004409765850115,
-                        "atrRatio": 1.173484395754669,
-                        "sectorAligned": 1,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Diversified product portfolio including fertilizers and industrial chemicals. Benefits from government support for agriculture and strong demand in industrial segments.",
-                        "confidence": 70,
-                        "threat": "Volatility in raw material prices (e.g., natural gas) and potential disruptions in the fertilizer subsidy regime."
-            },
-            {
-                        "symbol": "HBLENGINE",
+                        "symbol": "MANAPPURAM",
                         "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 795.95,
-                        "stopLoss": 738.92,
-                        "profitTarget": 910.01,
-                        "rsi": 53.268381294866316,
-                        "emaDist": 1.4521374546709767,
-                        "volRatio": 0.5397452927716863,
-                        "macdAccel": 1.017487311280521,
-                        "closeStrength": 0.2696245733604387,
-                        "sector": "AUTOMOBILE_AND_AUTO_COMPONENTS",
-                        "trendAligned": 1,
-                        "relativeStrength": 21.42057979160435,
-                        "deliveryRatio": 1.061934698934844,
-                        "atrRatio": 0.9268960286956571,
-                        "sectorAligned": 1,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Strong order book in engineering and infrastructure projects. Participation in government-driven capex cycles.",
-                        "confidence": 75,
-                        "threat": "Execution challenges, potential cost overruns, and competitive bidding processes."
-            },
-            {
-                        "symbol": "JSWSTEEL",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 1287.2,
-                        "stopLoss": 1238.27,
-                        "profitTarget": 1385.06,
-                        "rsi": 52.145275021867185,
-                        "emaDist": 0.30057364075876014,
-                        "volRatio": 0.703531567988745,
-                        "macdAccel": 0.46766278578086684,
-                        "closeStrength": NaN,
-                        "sector": "METALS_&_MINING",
-                        "trendAligned": 1,
-                        "relativeStrength": 17.6316741285532,
-                        "deliveryRatio": 1.0596630277949763,
-                        "atrRatio": 0.7019963489922026,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Expansion in steel production capacity and focus on value-added products. Benefiting from robust demand in construction and automotive sectors.",
-                        "confidence": 75,
-                        "threat": "Global steel price volatility, import threats, and rising input costs (e.g., iron ore, coal)."
-            },
-            {
-                        "symbol": "KAJARIACER",
-                        "label": "\ud83d\ude80 ACTIVE BREAKOUT",
-                        "close": 1155.9,
-                        "stopLoss": 1075.22,
-                        "profitTarget": 1317.26,
-                        "rsi": 65.884579125676,
-                        "emaDist": 5.350214105248651,
-                        "volRatio": 1.5094732993375817,
-                        "macdAccel": 2.817272560431718,
-                        "closeStrength": NaN,
-                        "sector": "CONSUMER_DURABLES",
-                        "trendAligned": 1,
-                        "relativeStrength": 8.983889484899036,
-                        "deliveryRatio": 1.1370076953698058,
-                        "atrRatio": 1.2973857986651602,
-                        "sectorAligned": 1,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Strong brand presence in the tile and sanitaryware segment. Growth driven by housing demand and renovation activities, with potential for premiumization.",
-                        "confidence": 70,
-                        "threat": "Intensifying competition, particularly from unorganized players, and rising raw material and energy costs."
-            },
-            {
-                        "symbol": "KPIL",
-                        "label": "\ud83d\ude80 ACTIVE BREAKOUT",
-                        "close": 1369.3,
-                        "stopLoss": 1287.63,
-                        "profitTarget": 1532.63,
-                        "rsi": 65.67440071504578,
-                        "emaDist": 5.770493779987533,
-                        "volRatio": 3.226870561524055,
-                        "macdAccel": 2.9250010315450083,
-                        "closeStrength": NaN,
-                        "sector": "CONSTRUCTION",
-                        "trendAligned": 1,
-                        "relativeStrength": 14.02162371803399,
-                        "deliveryRatio": 1.1117764499363951,
-                        "atrRatio": 1.215951671282077,
-                        "sectorAligned": 1,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Diversified infrastructure company with presence in roads, railways, and water. Strong order book and participation in government infrastructure development.",
-                        "confidence": 75,
-                        "threat": "Execution risks, project delays, and challenges in land acquisition."
-            },
-            {
-                        "symbol": "MAHABANK",
-                        "label": "\ud83d\ude80 INSIDER BREAKOUT",
-                        "close": 90.14,
-                        "stopLoss": 84.7,
-                        "profitTarget": 101.01,
-                        "rsi": 71.84725609921969,
-                        "emaDist": 8.435461849808725,
-                        "volRatio": 1.4797483238266405,
-                        "macdAccel": 0.09580661630152965,
-                        "closeStrength": 0.777777777576802,
+                        "close": 319.05,
+                        "stopLoss": 298.93,
+                        "profitTarget": 359.3,
+                        "rsi": 57.18055510880123,
+                        "emaDist": 2.982426095828942,
+                        "volRatio": 0.7250292806933644,
+                        "macdAccel": 0.7910657727815731,
+                        "closeStrength": 0.3870967741103061,
                         "sector": "FINANCIAL_SERVICES",
                         "trendAligned": 1,
-                        "relativeStrength": 42.67262457975836,
-                        "deliveryRatio": 0.7712537058653541,
-                        "atrRatio": 1.0722808059551614,
+                        "relativeStrength": 9.135398093794782,
+                        "deliveryRatio": 0.8404756852848335,
+                        "atrRatio": 1.009938523397698,
                         "sectorAligned": 1,
                         "sentiment": "NEUTRAL",
-                        "news_catalyst": "Focus on retail and MSME lending. Potential for improved asset quality and profitability under strategic initiatives.",
-                        "confidence": 55,
-                        "threat": "Competition from private banks and continued overhang of legacy NPAs."
-            },
-            {
-                        "symbol": "MOTILALOFS",
-                        "label": "\ud83d\ude80 ACTIVE BREAKOUT",
-                        "close": 942.85,
-                        "stopLoss": 882.14,
-                        "profitTarget": 1064.27,
-                        "rsi": 66.17583217788186,
-                        "emaDist": 7.7739226186739785,
-                        "volRatio": 1.3350245496470168,
-                        "macdAccel": 1.6658561222966117,
-                        "closeStrength": 0.14249999999287613,
-                        "sector": "FINANCIAL_SERVICES",
-                        "trendAligned": 1,
-                        "relativeStrength": 11.047033861907796,
-                        "deliveryRatio": 0.9529604208035029,
-                        "atrRatio": 1.0250536783206943,
-                        "sectorAligned": 1,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Strong growth in wealth management and broking services, benefiting from increasing retail participation in capital markets.",
-                        "confidence": 75,
-                        "threat": "Market volatility impacting trading volumes and regulatory changes affecting the financial services industry."
-            },
-            {
-                        "symbol": "SHYAMMETL",
-                        "label": "\ud83c\udfe2 INSTITUTIONAL LAUNCHPAD",
-                        "close": 955.55,
-                        "stopLoss": 904.51,
-                        "profitTarget": 1057.63,
-                        "rsi": 52.83429286761003,
-                        "emaDist": -0.2526055920807079,
-                        "volRatio": 0.6638916152325228,
-                        "macdAccel": -1.1942502291381878,
-                        "closeStrength": 0.29754601225167954,
-                        "sector": "CAPITAL_GOODS",
-                        "trendAligned": 1,
-                        "relativeStrength": 7.4547454193709495,
-                        "deliveryRatio": 1.405549053761251,
-                        "atrRatio": 0.9204477298763347,
-                        "sectorAligned": 1,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Expansion in ferroalloy production, driven by demand from the steel and specialty steel sectors. Potential for capacity augmentation.",
-                        "confidence": 70,
-                        "threat": "Fluctuations in raw material prices (e.g., manganese ore, coal) and global competition."
-            },
-            {
-                        "symbol": "SONACOMS",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 601.25,
-                        "stopLoss": 568.45,
-                        "profitTarget": 666.85,
-                        "rsi": 54.71460304102158,
-                        "emaDist": 1.0760281638867826,
-                        "volRatio": 1.0005631983642058,
-                        "macdAccel": 0.5181706196197338,
-                        "closeStrength": 0.38113207544293,
-                        "sector": "AUTOMOBILE_AND_AUTO_COMPONENTS",
-                        "trendAligned": 1,
-                        "relativeStrength": 11.31498918944095,
-                        "deliveryRatio": 1.0236352231135013,
-                        "atrRatio": 0.9400803977055537,
-                        "sectorAligned": 1,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Growth in automotive components, particularly in EV-related segments. Diversification into new product lines and geographies.",
-                        "confidence": 80,
-                        "threat": "Disruption from EV transition impacting traditional auto component demand and intense competition."
-            },
-            {
-                        "symbol": "TVSSCS",
-                        "label": "\ud83d\ude80 ACTIVE BREAKOUT",
-                        "close": 135.51,
-                        "stopLoss": 123.55,
-                        "profitTarget": 159.42,
-                        "rsi": 63.75850051169189,
-                        "emaDist": 8.63669957994334,
-                        "volRatio": 1.569726834708986,
-                        "macdAccel": 0.06781104105166236,
-                        "closeStrength": 0.4337837837251629,
-                        "sector": "SERVICES",
-                        "trendAligned": 1,
-                        "relativeStrength": 8.074878507337237,
-                        "deliveryRatio": 0.914292975367451,
-                        "atrRatio": 1.1492791239416018,
-                        "sectorAligned": 1,
-                        "sentiment": "NEUTRAL",
-                        "news_catalyst": "No active catalyst logged.",
+                        "news_catalyst": "Focus on the company's recent quarterly results, particularly its asset quality, profitability margins, and any forward-looking guidance provided by management. Also, monitor any regulatory changes impacting the gold loan industry in India.",
                         "confidence": 60,
-                        "threat": "No structural risk identified."
-            },
-            {
-                        "symbol": "VARROC",
-                        "label": "\ud83d\ude80 ACTIVE BREAKOUT",
-                        "close": 619.7,
-                        "stopLoss": 577.89,
-                        "profitTarget": 703.33,
-                        "rsi": 64.57433148034531,
-                        "emaDist": 6.750317706779938,
-                        "volRatio": 1.6345918663062353,
-                        "macdAccel": 1.5680319043654158,
-                        "closeStrength": 0.6305970148783181,
-                        "sector": "AUTOMOBILE_AND_AUTO_COMPONENTS",
-                        "trendAligned": 1,
-                        "relativeStrength": 12.487853853816477,
-                        "deliveryRatio": 0.8232734120449897,
-                        "atrRatio": 1.0336055977950853,
-                        "sectorAligned": 1,
-                        "sentiment": "NEUTRAL",
-                        "news_catalyst": "No active catalyst logged.",
-                        "confidence": 60,
-                        "threat": "No structural risk identified."
-            },
-            {
-                        "symbol": "WELSPUNLIV",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 146.65,
-                        "stopLoss": 137.56,
-                        "profitTarget": 164.84,
-                        "rsi": 61.601375991682794,
-                        "emaDist": 3.871238890274846,
-                        "volRatio": 1.044389773778873,
-                        "macdAccel": 0.24612477180665682,
-                        "closeStrength": 0.7031802117656608,
-                        "sector": "TEXTILES",
-                        "trendAligned": 1,
-                        "relativeStrength": 4.723516983803853,
-                        "deliveryRatio": 1.0151894242499884,
-                        "atrRatio": 0.9240019348539075,
-                        "sectorAligned": 1,
-                        "sentiment": "NEUTRAL",
-                        "news_catalyst": "No active catalyst logged.",
-                        "confidence": 60,
-                        "threat": "No structural risk identified."
-            },
-            {
-                        "symbol": "YESBANK",
-                        "label": "\ud83d\ude80 INSIDER BREAKOUT",
-                        "close": 25.11,
-                        "stopLoss": 23.56,
-                        "profitTarget": 28.22,
-                        "rsi": 71.72776653685162,
-                        "emaDist": 9.298351545808407,
-                        "volRatio": 1.8562916769642324,
-                        "macdAccel": 0.09889395132211687,
-                        "closeStrength": 0.7756410251438193,
-                        "sector": "FINANCIAL_SERVICES",
-                        "trendAligned": 1,
-                        "relativeStrength": 20.006827492034585,
-                        "deliveryRatio": 1.0204297890717846,
-                        "atrRatio": 1.2342323383448188,
-                        "sectorAligned": 1,
-                        "sentiment": "NEUTRAL",
-                        "news_catalyst": "No active catalyst logged.",
-                        "confidence": 60,
-                        "threat": "No structural risk identified."
+                        "threat": "Increased competition from banks and other NBFCs, adverse regulatory shifts, significant changes in gold prices affecting collateral value, and potential macroeconomic slowdown impacting loan demand and repayment capacity."
             }
 ];
+        let currentFilter = 'ALL';
         console.log("Ingested qualified strategic tickers:", initialTickers);
         
+        function updateFilterBadges() {
+            const counts = {
+                ALL: initialTickers.length,
+                ACTIVE: initialTickers.filter(t => t.label === '🚀 ACTIVE BREAKOUT').length,
+                INSIDER: initialTickers.filter(t => t.label === '🚀 INSIDER BREAKOUT').length,
+                LAUNCHPAD: initialTickers.filter(t => t.label === '🏢 LAUNCHPAD').length,
+                INST_LAUNCHPAD: initialTickers.filter(t => t.label === '🏢 INSTITUTIONAL LAUNCHPAD').length
+            };
+
+            document.getElementById("count-ALL").innerText = counts.ALL;
+            document.getElementById("count-ACTIVE").innerText = counts.ACTIVE;
+            document.getElementById("count-INSIDER").innerText = counts.INSIDER;
+            document.getElementById("count-LAUNCHPAD").innerText = counts.LAUNCHPAD;
+            document.getElementById("count-INST-LAUNCHPAD").innerText = counts.INST_LAUNCHPAD;
+
+            // Manage dynamic highlighting css toggles
+            const buttons = {
+                'ALL': 'btn-ALL',
+                'ACTIVE BREAKOUT': 'btn-ACTIVE',
+                'INSIDER BREAKOUT': 'btn-INSIDER',
+                'LAUNCHPAD': 'btn-LAUNCHPAD',
+                'INSTITUTIONAL LAUNCHPAD': 'btn-INST-LAUNCHPAD'
+            };
+
+            Object.keys(buttons).forEach(key => {
+                const btn = document.getElementById(buttons[key]);
+                if (!btn) return;
+                if (key === currentFilter) {
+                    btn.className = "text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-[#0f172a] text-white border-[#0f172a]";
+                } else {
+                    btn.className = "text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50";
+                }
+            });
+        }
+
+        function filterTable(labelKey) {
+            currentFilter = labelKey;
+            renderRows();
+        }
+
         function renderRows() {
             const container = document.getElementById("ticker-rows");
             if (!container) return;
-            if (initialTickers.length === 0) {
-                container.innerHTML = `<div class="p-12 text-center text-[#64748b] font-mono text-sm border-2 border-dashed border-[#e2e8f0] rounded-xl bg-[#f8fafc]">No actionable setups verified within the active technical market framework.</div>`;
+            
+            // Apply filtering layer array manipulation
+            const filteredData = currentFilter === 'ALL' 
+                ? initialTickers 
+                : initialTickers.filter(t => t.label === t.label.includes('BREAKOUT') ? t.label : t.label.toUpperCase().includes(currentFilter) || t.label === currentFilter);
+            
+            updateFilterBadges();
+
+            if (filteredData.length === 0) {
+                container.innerHTML = `<div class="p-12 text-center text-[#64748b] font-mono text-sm border-2 border-dashed border-[#e2e8f0] rounded-xl bg-[#f8fafc]">No active trading candidates matched the selected filter configuration.</div>`;
                 return;
             }
-            container.innerHTML = initialTickers.map(t => `
+            
+            container.innerHTML = filteredData.map(t => `
                 <div class="p-5 bg-white rounded-xl border border-[#e2e8f0] flex flex-col lg:flex-row justify-between items-start lg:items-center gap-5 hover:border-slate-400 hover:shadow-md transition-all duration-200">
                     <div class="w-full lg:max-w-xl">
                         <div class="flex flex-wrap items-center gap-2">
