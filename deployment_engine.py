@@ -114,7 +114,6 @@ class ProgrammaticDashboardDeployer:
                         <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono">🚀 ACTIVE BREAKOUT</span>
                     </div>
                     <p class="text-xs text-[#475569] leading-relaxed"><strong class="text-[#0f172a]">Plain Meaning:</strong> The stock is showing powerful upward trend momentum right now and has broken out of its short-term price ceiling.</p>
-                    <p class="text-[11px] font-mono text-[#64748b] mt-2 bg-white/80 p-1.5 rounded border border-emerald-200/60"><strong>Quant Logic:</strong> Vol Ratio &ge; 1.25, Trend Aligned (20 > 50 > 200 EMA), ROC_20 > 2.0, & MACD Accel > 0.</p>
                 </div>
                 
                 <div class="p-3.5 bg-cyan-50/40 border border-cyan-100 rounded-xl">
@@ -122,7 +121,6 @@ class ProgrammaticDashboardDeployer:
                         <span class="text-xs font-bold bg-cyan-50 text-cyan-800 border border-cyan-200 px-2 py-0.5 rounded font-mono">🚀 INSIDER BREAKOUT</span>
                     </div>
                     <p class="text-xs text-[#475569] leading-relaxed"><strong class="text-[#0f172a]">Plain Meaning:</strong> A breakout backed by high delivery conversion, indicating institutions are absorbing outstanding float supply.</p>
-                    <p class="text-[11px] font-mono text-[#64748b] mt-2 bg-white/80 p-1.5 rounded border border-cyan-200/60"><strong>Quant Logic:</strong> Active Breakout parameters met + Delivery Ratio &ge; 1.15 OR Intraday Close Location &ge; 0.65.</p>
                 </div>
 
                 <div class="p-3.5 bg-amber-50/50 border border-amber-100 rounded-xl">
@@ -130,7 +128,6 @@ class ProgrammaticDashboardDeployer:
                         <span class="text-xs font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-mono">🏢 LAUNCHPAD / INST.</span>
                     </div>
                     <p class="text-xs text-[#475569] leading-relaxed"><strong class="text-[#0f172a]">Plain Meaning:</strong> The stock is tightly consolidating inside a quiet compression base, hiding coiled springs before a macro expansion.</p>
-                    <p class="text-[11px] font-mono text-[#64748b] mt-2 bg-white/80 p-1.5 rounded border border-amber-200/60"><strong>Quant Logic:</strong> Close within &plusmn;4.5% of 20 EMA, Trend Aligned, Volatility contracting (ATR Ratio < 0.98).</p>
                 </div>
             </div>
         </section>
