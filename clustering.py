@@ -9,16 +9,16 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import silhouette_score
 import json
 from constants import (
-    CACHE_FILE
+    CACHE_FILE, TODAY, NSE_DATASET_PATH, fetch_data_from_nse
 )
 
 warnings.filterwarnings("ignore")
 
 
-class AuditedSectorClusterEngine:
+class SectorClusterEngine:
 
-    def __init__(self, csv_filename: str = "nse_companies.csv", lookback_years: float = 1.2):
-        self.csv_filename = csv_filename
+    def __init__(self, lookback_years: float = 1.2):
+        self.csv_filename = NSE_DATASET_PATH
         self.lookback_years = lookback_years
         self.scaler = StandardScaler()
         # Set to 5 clusters to capture all sub-trends without over-segmentation
@@ -36,11 +36,10 @@ class AuditedSectorClusterEngine:
             with open(self.cache_filename, "r", encoding="utf-8") as f:
                 cache_data = json.load(f)
             
-            today_str = datetime.date.today().strftime("%Y-%m-%d")
-            if cache_data.get("execution_date") == today_str:
-                print(f"✅ [CACHE HIT] Same-day cluster record discovered ({today_str}). Restoring sector matrix from disk cache.")
+            if cache_data.get("execution_date") == TODAY:
+                print(f"✅ [CACHE HIT] Same-day cluster record discovered ({TODAY}). Restoring sector matrix from disk cache.")
                 # Hydrate the internal dictionary mapping needed for downstream tasks
-                self.sector_mapping = cache_data.get("sector_mapping", {})
+                self.sector_mapping = cache_data["sector_mapping"]
                 # Reconstruct the tracking DataFrame from serialized storage records
                 return pd.DataFrame(cache_data["records"])
         except Exception as e:
@@ -54,9 +53,8 @@ class AuditedSectorClusterEngine:
             return
 
         try:
-            today_str = datetime.date.today().strftime("%Y-%m-%d")
             cache_payload = {
-                "execution_date": today_str,
+                "execution_date": TODAY,
                 "sector_mapping": self.sector_mapping,
                 "records": sector_matrix.to_dict(orient="records")  # Converts DataFrame rows into a clean dictionary list
             }
@@ -83,34 +81,17 @@ class AuditedSectorClusterEngine:
         if not self.sector_mapping:
             self.load_mappings_from_csv()
             
-        end_date = datetime.date.today()
-        start_date = end_date - datetime.timedelta(days=int(365 * self.lookback_years))
         
-        all_data = []
         sample_df = pd.DataFrame(list(self.sector_mapping.items()), columns=["Symbol", "Sector"])
-        sampled_symbols = sample_df.groupby("Sector").head(15)["Symbol"].tolist()
+        symbols = sample_df.groupby("Sector").head(15)["Symbol"].tolist()
+        return fetch_data_from_nse(symbols, self.sector_mapping)
         
-        print(f"[INGEST] Gathering performance footprints for {len(sampled_symbols)} assets...")
-        for symbol in sampled_symbols:
-            try:
-                df = capital_market.price_volume_and_deliverable_position_data(
-                    symbol=symbol, from_date=start_date.strftime("%d-%m-%Y"), to_date=end_date.strftime("%d-%m-%Y")
-                )
-                if df is not None and not df.empty:
-                    df.columns = [col.strip() for col in df.columns]
-                    if 'Series' in df.columns:
-                        df = df[df['Series'].str.strip() == 'EQ']
-                    df["Symbol"] = symbol
-                    df["Sector"] = self.sector_mapping[symbol]
-                    all_data.append(df)
-            except Exception:
-                pass
-                
-        return pd.concat(all_data, ignore_index=True) if all_data else pd.DataFrame()
 
-    def discover_and_export_sectors(self, output_filename: str = "sector_audit_report.txt") -> pd.DataFrame:
+    def discover_sectors(self) -> pd.DataFrame:
         """Gold Layer: Runs K-Means cluster pass, logs details to file, and returns the DataFrame."""
         # Check cache first before executing expensive operations
+        self.load_mappings_from_csv()
+        
         cached_df = self.load_cached_sectors()
         if not cached_df.empty:
             return cached_df
@@ -189,36 +170,5 @@ class AuditedSectorClusterEngine:
             reasons.append(reason_str)
             
         sector_matrix["Decision_Reason"] = reasons
-        sector_matrix = sector_matrix.sort_values(by="Sector_Rolling_Return", ascending=False)
-
-        # Export Layer: Write full structural details to text file
-        print(f"[EXPORT] Compiling full macro audit trails to text file: '{output_filename}'...")
-        with open(output_filename, "w", encoding="utf-8") as f:
-            # ... [Keep your text file compilation writing loops exactly the same as before] ...
-            f.write("=" * 120 + "\n")
-            f.write(f" PRODUCTION QUANT DATA LOGS: SYSTEM SECTOR ROTATION AUDIT\n")
-            f.write(f" Generated on: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Universe: Nifty 500\n")
-            f.write("=" * 120 + "\n\n")
-            f.write("## SECTION 1: DETAILED SECTOR MATRIX\n")
-            f.write("-" * 120 + "\n")
-            f.write(sector_matrix[["Sector", "Macro_Regime", "Sector_Rolling_Return", "Sector_Delivery_Avg"]].to_string(index=False))
-            f.write("\n\n" + "=" * 120 + "\n\n")
-            f.write("## SECTION 2: MATHEMATICAL CLUSTER CENTROIDS METADATA\n")
-            f.write("-" * 120 + "\n")
-            for idx in sorted_indices[::-1]:
-                label = regime_labels[idx]
-                c_ret, c_dly, c_vol = centers[idx]
-                f.write(f"{label:<35} | {c_ret:<15.2f} | {c_dly:<15.2f} | {c_vol:<18.2f}\n")
-            f.write("\n\n" + "=" * 120 + "\n\n")
-            f.write("## SECTION 3: EXPLICIT DECISION REASON LOG FILE\n")
-            f.write("-" * 120 + "\n")
-            for _, row in sector_matrix.iterrows():
-                f.write(f"📍 SECTOR: {row['Sector']}\n")
-                f.write(f"   REGIME: {row['Macro_Regime']}\n")
-                f.write(f"   AUDIT : {row['Decision_Reason']}\n")
-                f.write("-" * 60 + "\n")
-
-        # Commit newly generated structural maps down to hidden JSON disk dictionary files
-        self.save_sectors_to_cache(sector_matrix)
-                
+        sector_matrix = sector_matrix.sort_values(by="Sector_Rolling_Return", ascending=False)                
         return sector_matrix

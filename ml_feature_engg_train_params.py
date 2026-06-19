@@ -3,7 +3,7 @@ import json
 import numpy as np
 import pandas as pd
 from xgboost import XGBClassifier
-from rule_engine import AuditableMomentumPipeline
+from rule_engine import StocksRuleEngine
 from constants import MODEL_PATH, TODAY, MODEL_SCHEMA_METADATA, FEATURE_COLUMNS
 
 def generate_training_labels(
@@ -53,7 +53,7 @@ def generate_training_labels(
             
     return pd.concat(processed_groups, ignore_index=True) if processed_groups else pd.DataFrame()
 
-def run_offline_model_training(raw_universe_df: pd.DataFrame, pipeline_instance: AuditableMomentumPipeline):
+def run_offline_model_training(raw_universe_df: pd.DataFrame, pipeline_instance: StocksRuleEngine):
     """
     Extracts historical training matrices, applies relaxed domain constraints,
     enforces strict point-in-time chronological date splitting, applies early stopping,

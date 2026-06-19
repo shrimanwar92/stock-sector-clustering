@@ -1,17 +1,22 @@
 import os
-import datetime
 import warnings
-from concurrent.futures import ThreadPoolExecutor, as_completed
 import numpy as np
 import pandas as pd
-from nselib import capital_market
 from xgboost import XGBClassifier
-from constants import MODEL_PATH, FEATURE_COLUMNS
+from constants import (
+    MODEL_PATH, 
+    FEATURE_COLUMNS,
+    APPROVED_REGIMES, 
+    REPORTS_DIR,
+    fetch_data_from_nse
+)
+import gzip
+from xgboost import XGBClassifier
 
 warnings.filterwarnings("ignore")
 
 
-class AuditableMomentumPipeline:
+class StocksRuleEngine:
 
     def __init__(self, symbols: list, market_cap_map: dict = None, symbol_to_sector_map: dict = None, sector_regime_map: dict = None, lookback_years: float = 2.0):
         self.symbols = symbols
@@ -20,85 +25,55 @@ class AuditableMomentumPipeline:
         self.sector_regime_map = sector_regime_map or {}
         self.lookback_years = lookback_years
         self.allowed_categories = ['MIDCAP', 'SMALLCAP_100']
+        self.cache_file_path = os.path.join(REPORTS_DIR, ".micro_universe_cache.json.gz")
         
-        self.approved_regimes = [
-            "🔥 ULTRA_MOMENTUM_LEADERS", 
-            "🚀 ACTIVE_BREAKOUT_FIELDS", 
-            "📈 STABLE_UPWARD_ACCUMULATION"
-        ]
+        # self.approved_regimes = [
+        #     "🔥 ULTRA_MOMENTUM_LEADERS", 
+        #     "🚀 ACTIVE_BREAKOUT_FIELDS", 
+        #     "📈 STABLE_UPWARD_ACCUMULATION"
+        # ]
 
     def _normalize_string(self, val: str) -> str:
         return "".join(str(val).replace("_", "").replace(" ", "").upper().split())
+    
+    def load_stocks_from_cache(self):
+        cached_df = pd.DataFrame()
 
-    def fetch_universe_data(self) -> pd.DataFrame:
-        import gzip
-        today_str = datetime.date.today().strftime("%d-%m-%Y")
-        cache_dir = f"reports/[{today_str}]"
-        cache_file_path = os.path.join(cache_dir, ".micro_universe_cache.json.gz")
-
-        if os.path.exists(cache_file_path):
-            print(f"💾 [CACHE READ] Hydrating raw data from today's disk cache: '{cache_file_path}'")
+        if os.path.exists(self.cache_file_path):
+            print(f"💾 [CACHE READ] Hydrating raw data from today's disk cache: '{self.cache_file_path}'")
             try:
-                with gzip.open(cache_file_path, "rt", encoding="utf-8") as f:
+                with gzip.open(self.cache_file_path, "rt", encoding="utf-8") as f:
                     cached_df = pd.read_json(f, orient="records")
                 if not cached_df.empty:
                     cached_df.columns = [str(col).replace('ï»¿', '').strip() for col in cached_df.columns]
-                    return cached_df
             except Exception as ce:
                 print(f"[WARN] Cache read collision ({str(ce)}). Falling back to exchange engine...")
+        
+        return cached_df
+    
+    
+    def save_stocks_to_cache(self, df):
+        with gzip.open(self.cache_file_path, "wt", encoding="utf-8") as f:
+            df.to_json(f, orient="records", date_format="iso")
+        print(f"💾 [CACHE WRITE] Successfully stored today's raw micro universe data.")
+    
+    
 
-        if self.market_cap_map:
-            filtered_symbols = [
-                s for s in self.symbols 
-                if str(self.market_cap_map.get(s, '')).upper() in self.allowed_categories
-            ]
-            print(f"[GATEKEEPER] Universe refined: {len(self.symbols)} -> {len(filtered_symbols)} active candidates.")
-        else:
-            filtered_symbols = self.symbols
+    def fetch_universe_data(self) -> pd.DataFrame:
+        filtered_symbols = self.symbols
 
-        end_date = datetime.date.today()
-        start_date = end_date - datetime.timedelta(days=int(365 * self.lookback_years))
-        formatted_start = start_date.strftime("%d-%m-%Y")
-        formatted_end = end_date.strftime("%d-%m-%Y")
+        # if self.market_cap_map:
+        #     filtered_symbols = [
+        #         s for s in self.symbols 
+        #         if str(self.market_cap_map.get(s, '')).upper() in self.allowed_categories
+        #     ]
+        #     print(f"[GATEKEEPER] Universe refined: {len(self.symbols)} -> {len(filtered_symbols)} active candidates.")
+        nse_df = self.load_stocks_from_cache()
+        if nse_df.empty:
+            filtered_symbols = list(set(filtered_symbols + ["NIFTY 500"]))
+            nse_df = fetch_data_from_nse(filtered_symbols, self.symbol_to_sector_map)
+        return nse_df
 
-        clean_symbols = [str(sym).split('.')[0].strip().upper() for sym in filtered_symbols]
-        fetch_targets = list(set(clean_symbols + ["NIFTY 500"]))
-        all_data = []
-
-        def fetch_single_symbol(symbol):
-            try:
-                df = capital_market.price_volume_and_deliverable_position_data(
-                    symbol=symbol, from_date=formatted_start, to_date=formatted_end
-                )
-                if df is not None and not df.empty:
-                    df = df.copy().reset_index(drop=True)
-                    df.columns = [str(col).replace('ï»¿', '').strip() for col in df.columns]
-                    if "Symbol" in df.columns:
-                        df = df.drop(columns=["Symbol"])
-                    df["Symbol"] = str(symbol).upper()
-                    return df
-            except Exception: pass
-            return None
-
-        print(f"[START] Requesting historical streams across {len(fetch_targets)} target tickers...")
-        with ThreadPoolExecutor(max_workers=6) as executor:
-            future_to_symbol = {executor.submit(fetch_single_symbol, sym): sym for sym in fetch_targets}
-            for future in as_completed(future_to_symbol):
-                res = future.result()
-                if res is not None: all_data.append(res)
-
-        if all_data:
-            final_df = pd.concat(all_data, ignore_index=True, sort=False)
-            final_df.columns = [str(col).replace('ï»¿', '').strip() for col in final_df.columns]
-            final_df = final_df.loc[:, ~final_df.columns.duplicated()].copy()
-            try:
-                os.makedirs(cache_dir, exist_ok=True)
-                with gzip.open(cache_file_path, "wt", encoding="utf-8") as f:
-                    final_df.to_json(f, orient="records", date_format="iso")
-                print(f"💾 [CACHE WRITE] Successfully stored today's raw micro universe data.")
-            except Exception: pass
-            return final_df
-        return pd.DataFrame()
 
     def _parse_and_sanitize_columns(self, raw_df: pd.DataFrame) -> pd.DataFrame:
         df = raw_df.copy()
@@ -258,46 +233,39 @@ class AuditableMomentumPipeline:
                 
         return pd.concat(processed_stocks, ignore_index=True) if processed_stocks else pd.DataFrame()
 
-    def export_execution_signals(
+    def execute_ml_signals(
         self, 
-        gold_df: pd.DataFrame = None, 
-        filtered_candidates: pd.DataFrame = None,
-        model_classifier = None,
-        feature_columns = None
+        gold_df: pd.DataFrame = None
     ) -> pd.DataFrame:
         """
         HYBRID SYSTEM PHASE 2 FRAMEWORK (Optimized Schema Edition):
         Scores, ranks, and slices top 20 alpha assets using verified dataframe columns.
         """
-        # 1. Gracefully resolve input variations from main.py
-        input_df = gold_df if gold_df is not None else filtered_candidates
         
-        if input_df is None or input_df.empty:
+        if gold_df is None or gold_df.empty:
             print("[WARN] Empty candidate universe passed to rule engine. Skipping allocation.")
             return pd.DataFrame()
+        
+        model = XGBClassifier()
+        model.load_model(MODEL_PATH)
             
         # Deep copy to protect underlying data stream mutations
-        working_df = input_df.copy()
+        working_df = gold_df.copy()
         
         # 2. Strict point-in-time snapshot calculation (Solves Duplicate Rows)
         working_df = working_df.sort_values(by="Date")
         latest_snapshot = working_df.groupby("Symbol").tail(1).reset_index(drop=True)
-
-        # 3. Handle ML Dependencies
-        feature_cols = feature_columns if feature_columns is not None else getattr(self, "feature_columns", FEATURE_COLUMNS)
-        model_clf = model_classifier if model_classifier is not None else getattr(self, "model_classifier", None)
         
-        if model_clf is None:
-            if not os.path.exists(MODEL_PATH):
-                print(f"[CRITICAL] Compiled weights missing at {MODEL_PATH}. Run training first.")
-                return pd.DataFrame()
+        # if model is None:
+        #     if not os.path.exists(MODEL_PATH):
+        #         print(f"[CRITICAL] Compiled weights missing at {MODEL_PATH}. Run training first.")
+        #         return pd.DataFrame()
                 
-            print(f"[INFO] Hydrating XGBoost architecture from production target path: {MODEL_PATH}")
-            model_clf = XGBClassifier()
-            model_clf.load_model(MODEL_PATH)
+        #     print(f"[INFO] Hydrating XGBoost architecture from production target path: {MODEL_PATH}")
+        #     model_clf = XGBClassifier()
+        #     model_clf.load_model(MODEL_PATH)
 
         sector_regime_map = getattr(self, "sector_regime_map", {})
-        approved_regimes_list = getattr(self, "approved_regimes", [])
 
         latest_snapshot["Sector_Regime_Label"] = latest_snapshot["Sector"].map(sector_regime_map)
 
@@ -310,21 +278,16 @@ class AuditableMomentumPipeline:
             (latest_snapshot["Feature_RSI"] < 82.0) &
             (latest_snapshot["Close"] >= 15.0)
         )
-
-        print(approved_regimes_list)
         
         # 4. Enforce the Cluster Filter Gate:
         # Blocks assets belonging to unapproved/weak sectors, even if they temporarily cross above an EMA.
-        if sector_regime_map and approved_regimes_list:
-            cluster_gate = latest_snapshot["Sector_Regime_Label"].isin(approved_regimes_list)
-            domain_mask = domain_mask & cluster_gate
-            
-            # Diagnostic logging to see exactly what got thrown out at the macro level
-            rejected_sectors = latest_snapshot[~cluster_gate]["Sector"].unique()
-            if len(rejected_sectors) > 0:
-                print(f"[MACRO FILTER] Sifted out assets from unapproved sector clusters: {rejected_sectors}")
-        else:
-            print("[WARN] Pipeline instance is missing 'sector_regime_map' or 'approved_regimes'. Passing on base attributes.")
+        cluster_gate = latest_snapshot["Sector_Regime_Label"].isin(APPROVED_REGIMES)
+        domain_mask = domain_mask & cluster_gate
+        
+        # Diagnostic logging to see exactly what got thrown out at the macro level
+        rejected_sectors = latest_snapshot[~cluster_gate]["Sector"].unique()
+        if len(rejected_sectors) > 0:
+            print(f"[MACRO FILTER] Sifted out assets from unapproved sector clusters: {rejected_sectors}")
             
         valid_universe = latest_snapshot[domain_mask].copy()
         
@@ -333,8 +296,8 @@ class AuditableMomentumPipeline:
             return pd.DataFrame()
 
         # 5. Live Probability Alpha Scoring
-        X_live = valid_universe[feature_cols]
-        valid_universe["Alpha_ML_Score"] = model_clf.predict_proba(X_live)[:, 1]
+        X_live = valid_universe[FEATURE_COLUMNS]
+        valid_universe["Alpha_ML_Score"] = model.predict_proba(X_live)[:, 1]
         
         # 6. Absolute Ranking (Top 20 Selection)
         valid_universe = valid_universe.sort_values(by="Alpha_ML_Score", ascending=False).reset_index(drop=True)

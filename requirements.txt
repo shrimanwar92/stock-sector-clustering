@@ -5,3 +5,4 @@ scikit-learn
 lxml
 python-dotenv
 xgboost
+tqdm

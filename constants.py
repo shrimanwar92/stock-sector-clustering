@@ -1,11 +1,17 @@
 from datetime import date
 import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import datetime
+from nselib import capital_market
+import pandas as pd
+
+NSE_DATASET_PATH = "dataset/nse_companies.csv"
+LOOKBACK_YEARS = 2.0
 
 TODAY = date.today().strftime("%d-%m-%Y")
-os.makedirs(f"reports/[{TODAY}]", exist_ok=True)
-SECTOR_REPORTS_PATH = f"reports/[{TODAY}]/sector_audit_report.txt"
-STOCK_ANALYSIS = f"reports/[{TODAY}]/stock_analysis_report.txt"
-EXECUTION_SIGNALS = f"reports/[{TODAY}]/execution_signals_report.txt"
+REPORTS_DIR = f"reports/[{TODAY}]"
+os.makedirs(REPORTS_DIR, exist_ok=True)
+
 LLM_SENTIMENT_RESULT = f"reports/[{TODAY}]/llm_sentiment_results.json"
 CACHE_FILE = f"reports/[{TODAY}]/.sector_cache.json"
 MODEL_PATH = f"reports/[{TODAY}]/alpha_xgboost_scorer.json"
@@ -17,3 +23,61 @@ FEATURE_COLUMNS = [
     "Feature_ROC_20", "Feature_MACD_Hist_Accel", "Feature_Close_Strength",
     "Feature_Relative_Strength"
 ]
+
+APPROVED_REGIMES = [
+    "🔥 ULTRA_MOMENTUM_LEADERS", 
+    "🚀 ACTIVE_BREAKOUT_FIELDS", 
+    "📈 STABLE_UPWARD_ACCUMULATION"
+]
+
+def fetch_data_from_nse(filtered_symbols, symbol_to_sector_map):
+    end_date = datetime.datetime.strptime(TODAY, "%d-%m-%Y").date()
+    start_date = end_date - datetime.timedelta(days=int(365 * LOOKBACK_YEARS))
+
+    # Convert back to strings for nselib
+    start_date_str = start_date.strftime("%d-%m-%Y")
+    end_date_str = end_date.strftime("%d-%m-%Y")
+
+    filtered_symbols = [str(sym).split('.')[0].strip().upper() for sym in filtered_symbols]
+    all_data = []
+
+    def fetch_single_symbol(symbol):
+        #print(f"[FETCHING] data for {symbol}...")
+        df = capital_market.price_volume_and_deliverable_position_data(
+            symbol=symbol, from_date=start_date_str, to_date=end_date_str
+        )
+        if df is not None and not df.empty:
+            df = df.copy().reset_index(drop=True)
+            df.columns = [str(col).replace('ï»¿', '').strip() for col in df.columns]
+            if 'Series' in df.columns:
+                df = df[df['Series'].str.strip() == 'EQ']
+                if df.empty:
+                    return None  # Drop non-equity tracking tickers early
+                
+            if "Symbol" in df.columns:
+                df = df.drop(columns=["Symbol"])
+            
+            clean_symbol = str(symbol).strip().upper()
+            df["Symbol"] = clean_symbol
+            df["Sector"] = symbol_to_sector_map[clean_symbol]
+        return df
+
+    print(f"[START] Requesting historical streams across {len(filtered_symbols)} target tickers...")
+    with ThreadPoolExecutor(max_workers=6) as executor:
+        future_to_symbol = {
+            executor.submit(fetch_single_symbol, sym): sym
+            for sym in filtered_symbols
+        }
+
+        total = len(future_to_symbol)
+
+        for i, future in enumerate(as_completed(future_to_symbol), start=1):
+            symbol = future_to_symbol[future]
+
+            print(f"[{i}/{total}] Completed {symbol}")
+
+            res = future.result()
+            if res is not None:
+                all_data.append(res)
+
+    return pd.concat(all_data, ignore_index=True) if all_data else pd.DataFrame()

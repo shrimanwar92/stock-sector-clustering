@@ -1,0 +1,30 @@
+{
+    "compiled_on": "19-06-2026",
+    "features_schema": [
+        "Feature_RSI",
+        "Feature_EMA_Dist",
+        "Feature_Volume_Ratio",
+        "Feature_Delivery_Ratio",
+        "Feature_ADX_14",
+        "Feature_ATR_Ratio",
+        "Feature_ROC_20",
+        "Feature_MACD_Hist_Accel",
+        "Feature_Close_Strength",
+        "Feature_Relative_Strength"
+    ],
+    "training_samples_count": 14935,
+    "positive_class_ratio": 0.13809363422027618,
+    "best_iteration": 35,
+    "feature_importance": {
+        "Feature_ADX_14": 0.15991145372390747,
+        "Feature_EMA_Dist": 0.13642100989818573,
+        "Feature_ROC_20": 0.1353997439146042,
+        "Feature_ATR_Ratio": 0.11460757255554199,
+        "Feature_Relative_Strength": 0.11189009249210358,
+        "Feature_MACD_Hist_Accel": 0.08185811340808868,
+        "Feature_RSI": 0.0732874944806099,
+        "Feature_Delivery_Ratio": 0.06390168517827988,
+        "Feature_Volume_Ratio": 0.06340901553630829,
+        "Feature_Close_Strength": 0.05931384116411209
+    }
+}
