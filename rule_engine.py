@@ -7,7 +7,6 @@ from xgboost import XGBClassifier
 from constants import (
     MODEL_PATH, 
     FEATURE_COLUMNS,
-    APPROVED_REGIMES, 
     REPORTS_DIR,
     fetch_data_from_nse
 )
@@ -23,15 +22,17 @@ class StocksRuleEngine:
         market_cap_map: dict = None, 
         symbol_to_sector_map: dict = None, 
         sector_regime_map: dict = None, 
-        sector_score_map: dict = None,  # UPGRADE: Ingests the continuous GMM factor map
-        lookback_years: float = 2.0
+        sector_score_map: dict = None,  
+        lookback_years: float = 2.0,
+        macro_score_threshold: float = 0.55  # UPGRADE: Dynamic control dial for macro filtering
     ):
         self.symbols = symbols
         self.market_cap_map = market_cap_map or {}
         self.symbol_to_sector_map = symbol_to_sector_map or {}
         self.sector_regime_map = sector_regime_map or {}
-        self.sector_score_map = sector_score_map or {}  # UPGRADE: Default to empty dict
+        self.sector_score_map = sector_score_map or {}  
         self.lookback_years = lookback_years
+        self.macro_score_threshold = macro_score_threshold  # Blended expectation cutoff (0.55 = Strong + Top Neutral)
         self.allowed_categories = ['MIDCAP', 'SMALLCAP_100']
         self.cache_file_path = os.path.join(REPORTS_DIR, ".micro_universe_cache.json.gz")
     
@@ -221,9 +222,9 @@ class StocksRuleEngine:
 
     def execute_ml_signals(self, gold_df: pd.DataFrame = None) -> pd.DataFrame:
         """
-        HYBRID SYSTEM PRODUCTION ENGINE (GMM Soft-Regime Edition)
+        HYBRID SYSTEM PRODUCTION ENGINE (3-Component GMM Continuous Edition)
         Scores, filters, and scales positions using localized stock mechanics 
-        cross-referenced with continuous macro sector distributions.
+        cross-referenced with continuous soft macro sector distributions.
         """
         if gold_df is None or gold_df.empty:
             print("[WARN] Empty candidate universe passed to rule engine. Skipping allocation.")
@@ -237,20 +238,19 @@ class StocksRuleEngine:
         latest_snapshot = working_df.groupby("Symbol").tail(1).reset_index(drop=True)
         
         # -------------------------------------------------------------------------
-        # UPGRADE: Dual Stream Macro-Mapping (Saves Emojis and Maps Factor Scores)
+        # UPGRADE: Continuous Factor Map Extraction with Explicit Zero Fallbacks
         # -------------------------------------------------------------------------
         sector_regime_map = getattr(self, "sector_regime_map", {})
         sector_score_map = getattr(self, "sector_score_map", {})
 
-        print("\n🔍 [RULE ENGINE DIAGNOSTIC] Inspecting Map Alignment:")
-        print(f" -> Available keys in sector_score_map: {list(sector_score_map.keys())}")
-        print(f" -> Sample values in sector_score_map: {sector_score_map}")
+        print("\n🔍 [RULE ENGINE DIAGNOSTIC] Inspecting 3-Tier Map Alignment:")
+        print(f" -> Active Macro Score Hurdle Rate: {self.macro_score_threshold}")
         print(f" -> Unique sectors present in today's stock pool: {latest_snapshot['Sector'].unique().tolist()}")
         
-        latest_snapshot["Sector_Regime_Label"] = latest_snapshot["Sector"].map(sector_regime_map)
+        latest_snapshot["Sector_Regime_Label"] = latest_snapshot["Sector"].map(sector_regime_map).fillna("📈 NEUTRAL_SIDEWAYS_CONSOLIDATION")
         latest_snapshot["Sector_GMM_Factor"] = latest_snapshot["Sector"].map(sector_score_map).fillna(0.0)
 
-        # Base Domain Constraints
+        # Base Domain Technical Constraints
         domain_mask = (
             (latest_snapshot["is_tradable"] == 1) &
             (latest_snapshot["Feature_Sector_Aligned"] == 1) & 
@@ -260,27 +260,25 @@ class StocksRuleEngine:
         )
         
         # -------------------------------------------------------------------------
-        # UPGRADE: Continuous Threshold Gate (Replaces rigid .isin text filter)
+        # UPGRADE: Continuous Score Threshold Gate (Replaces old K=5 text labels)
         # -------------------------------------------------------------------------
-        # Keeps assets if their underlying sector factor score is >= 0.30
-        # This allows elements from borderline clusters to clear if their soft density warrants it.
-        cluster_gate = latest_snapshot["Sector_GMM_Factor"] >= 0.30
+        cluster_gate = latest_snapshot["Sector_GMM_Factor"] >= self.macro_score_threshold
         domain_mask = domain_mask & cluster_gate
         
-        rejected_sectors = latest_snapshot[latest_snapshot["Sector_GMM_Factor"] < 0.30]["Sector"].unique()
+        rejected_sectors = latest_snapshot[latest_snapshot["Sector_GMM_Factor"] < self.macro_score_threshold]["Sector"].unique()
         if len(rejected_sectors) > 0:
-            print(f"🛡️ [GMM FILTER] Excluded assets from weak macro matrices: {rejected_sectors}")
+            print(f"🛡️ [GMM FILTER] Guard closed. Excluded assets from macro groups failing hurdle rate: {rejected_sectors}")
             
         valid_universe = latest_snapshot[domain_mask].copy()
         if valid_universe.empty:
-            print("[WARN] Zero assets cleared GMM macro filters. Enforcing portfolio preservation.")
+            print(f"[WARN] Zero assets cleared GMM macro hurdle ({self.macro_score_threshold}). Enforcing portfolio preservation.")
             return pd.DataFrame()
 
-        # Compute Micro Model Probabilities
+        # Compute Micro Model Class Probabilities
         X_live = valid_universe[FEATURE_COLUMNS]
         valid_universe["Alpha_ML_Score"] = model.predict_proba(X_live)[:, 1]
         
-        # Isolate top candidates and apply ranking metrics
+        # Isolate top candidates and apply structural sequence ranking
         valid_universe = valid_universe.sort_values(by="Alpha_ML_Score", ascending=False).reset_index(drop=True)
         top_20_signals = valid_universe.head(20).copy()
         top_20_signals["Alpha_Rank"] = top_20_signals.index + 1
@@ -299,10 +297,9 @@ class StocksRuleEngine:
         top_20_signals["Profit_Target"] = np.round(profit_targets, 2)
         
         # -------------------------------------------------------------------------
-        # UPGRADE: Stage 5 Confidence Layer Blend
+        # UPGRADE: Continuous Portfolio Sizing Multiplier Blend
         # -------------------------------------------------------------------------
-        # Generates a holistic asset multiplier factor for downstream position sizing
-        # Blends 60% individual asset alpha score with 40% GMM parent sector score
+        # Smoothly blends 60% individual asset alpha with 40% GMM mathematical expectation
         top_20_signals["Confidence_Score"] = np.round(
             (0.6 * top_20_signals["Alpha_ML_Score"]) + (0.4 * top_20_signals["Sector_GMM_Factor"]), 2
         )
@@ -313,8 +310,7 @@ class StocksRuleEngine:
             conf = row["Confidence_Score"]
             deliv_ratio = row.get("Feature_Delivery_Ratio", 1.0)
             close_strength = row.get("Feature_Close_Strength", 0.5)
-            # UPGRADE: Present the Confidence Score directly to the text stream layout
-            base_reason = f"Model Prob: {score*100:.1f}% | Confidence Factor: {conf} | Stop: ₹{row['Stop_Loss']}"
+            base_reason = f"Model Prob: {score*100:.1f}% | Macro Blend Factor: {conf} | Stop: ₹{row['Stop_Loss']}"
             
             if score >= 0.70:
                 if deliv_ratio >= 1.15 or close_strength >= 0.65:
@@ -331,7 +327,6 @@ class StocksRuleEngine:
 
         print(f"🎯 Production Rank Complete. Dispatched {len(top_20_signals)} dynamically scaled assets to allocation framework.")
         
-        # Return exact payload including our updated confidence calculations
         return top_20_signals[[
             "Symbol", "Sector", "Close", "Alpha_ML_Score", "Confidence_Score", "Alpha_Rank", 
             "Stop_Loss", "Profit_Target", "Strategic_Label", "Decision_Reason",

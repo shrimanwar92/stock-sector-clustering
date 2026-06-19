@@ -25,48 +25,103 @@ FEATURE_COLUMNS = [
 ]
 
 APPROVED_REGIMES = [
-    "🔥 ULTRA_MOMENTUM_LEADERS", 
-    "🚀 ACTIVE_BREAKOUT_FIELDS", 
-    "📈 STABLE_UPWARD_ACCUMULATION"
+    "🔥 LEADING_MOMENTUM_ACCELERATION"
+    # "📈 NEUTRAL_SIDEWAYS_CONSOLIDATION"  # <-- Include this if you want to allow high-scoring sideways assets
 ]
 
-ORDERED_SECTOR_REGIMES = {
-    "DEEP_BEARISH_CAPITULATION":"❄️ DEEP_BEARISH_CAPITULATION",
-    "NEUTRAL_SIDEWAYS_CONSOLIDATION":"⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION",
-    "STABLE_UPWARD_ACCUMULATION":"📈 STABLE_UPWARD_ACCUMULATION",
-    "ACTIVE_BREAKOUT_FIELDS":"🚀 ACTIVE_BREAKOUT_FIELDS",
-    "ULTRA_MOMENTUM_LEADERS":"🔥 ULTRA_MOMENTUM_LEADERS"
+SECTOR_REGIMES = {
+    "STRONG": "🔥 LEADING_MOMENTUM_ACCELERATION",
+    "NEUTRAL": "📈 NEUTRAL_SIDEWAYS_CONSOLIDATION",
+    "WEAK": "❄️ DEEP_BEARISH_CAPITULATION"
 }
+
+import os
+import gzip
+import datetime
+import pandas as pd
+from tqdm.contrib.concurrent import thread_map
+from nselib import capital_market
+
 
 def fetch_data_from_nse(filtered_symbols, symbol_to_sector_map):
     end_date = datetime.datetime.strptime(TODAY, "%d-%m-%Y").date()
     start_date = end_date - datetime.timedelta(days=int(365 * LOOKBACK_YEARS))
 
-    filtered_symbols = [str(sym).split('.')[0].strip().upper() for sym in filtered_symbols]
+    cache_file = os.path.join(REPORTS_DIR, ".sector_universe_cache.json.gz")
 
+    if os.path.exists(cache_file):
+        try:
+            print(f"✅ [CACHE HIT] Loading sector universe from '{cache_file}'")
+
+            with gzip.open(cache_file, "rt", encoding="utf-8") as f:
+                cached_df = pd.read_json(f, orient="records")
+
+            if not cached_df.empty:
+                cached_df.columns = [
+                    str(c).replace("ï»¿", "").strip()
+                    for c in cached_df.columns
+                ]
+
+                return cached_df
+
+        except Exception as e:
+            print(f"[WARN] Cache read failed ({e}). Falling back to NSE fetch.")
+
+    # ------------------------------------------------------------------
+    # NORMALIZE SYMBOLS
+    # ------------------------------------------------------------------
+    filtered_symbols = [
+        str(sym).split(".")[0].strip().upper()
+        for sym in filtered_symbols
+    ]
+    
     def fetch_single_symbol(symbol):
-        df = capital_market.price_volume_and_deliverable_position_data(
-            symbol=symbol, 
-            from_date=start_date.strftime("%d-%m-%Y"), 
-            to_date=end_date.strftime("%d-%m-%Y")
-        )
-        if df is not None and not df.empty:
+
+        try:
+            df = capital_market.price_volume_and_deliverable_position_data(
+                symbol=symbol,
+                from_date=start_date.strftime("%d-%m-%Y"),
+                to_date=end_date.strftime("%d-%m-%Y")
+            )
+
+            if df is None or df.empty:
+                return None
+
             df = df.copy().reset_index(drop=True)
-            df.columns = [str(col).replace('ï»¿', '').strip() for col in df.columns]
-            if 'Series' in df.columns:
-                df = df[df['Series'].str.strip() == 'EQ']
+
+            df.columns = [
+                str(col).replace("ï»¿", "").strip()
+                for col in df.columns
+            ]
+
+            # keep only EQ series
+            if "Series" in df.columns:
+                df = df[df["Series"].astype(str).str.strip() == "EQ"]
+
                 if df.empty:
-                    return None  # Drop non-equity tracking tickers early
-                
+                    return None
+
             if "Symbol" in df.columns:
                 df = df.drop(columns=["Symbol"])
-            
-            clean_symbol = str(symbol).strip().upper()
-            df["Symbol"] = clean_symbol
-            df["Sector"] = symbol_to_sector_map[clean_symbol]
-        return df
 
-    print(f"[START] Requesting historical streams across {len(filtered_symbols)} target tickers...")
+            clean_symbol = str(symbol).strip().upper()
+
+            df["Symbol"] = clean_symbol
+            df["Sector"] = symbol_to_sector_map.get(
+                clean_symbol,
+                "UNKNOWN"
+            )
+
+            return df
+
+        except Exception:
+            return None
+
+    print(
+        f"[START] Requesting historical streams across "
+        f"{len(filtered_symbols)} target tickers..."
+    )
+
     results = thread_map(
         fetch_single_symbol,
         filtered_symbols,
@@ -76,4 +131,25 @@ def fetch_data_from_nse(filtered_symbols, symbol_to_sector_map):
 
     all_data = [r for r in results if r is not None]
 
-    return pd.concat(all_data, ignore_index=True) if all_data else pd.DataFrame()
+    if not all_data:
+        return pd.DataFrame()
+
+    final_df = pd.concat(all_data, ignore_index=True)
+
+    try:
+        with gzip.open(cache_file, "wt", encoding="utf-8") as f:
+            final_df.to_json(
+                f,
+                orient="records",
+                date_format="iso"
+            )
+
+        print(
+            f"💾 [CACHE WRITE] Successfully stored today's "
+            f"raw sector universe data."
+        )
+
+    except Exception as e:
+        print(f"[WARN] Cache write failed: {e}")
+
+    return final_df

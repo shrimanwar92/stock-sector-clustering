@@ -22,11 +22,6 @@ def run_production_pipeline():
     print(" PRODUCTION CONTROL ENGINE: EXECUTING TOP-DOWN HYBRID ML QUANT TRADING SYSTEM")
     print("=" * 110)
 
-    # csv_file = "dataset/nse_companies.csv"
-    # if not os.path.exists(csv_file):
-    #     print(f"[CRITICAL ERROR] File '{csv_file}' not found. Halting pipeline.")
-    #     return
-
     # -------------------------------------------------------------------------
     # STAGE 1: Identify bullish sectors using kmeans clustering
     # -------------------------------------------------------------------------
@@ -38,9 +33,16 @@ def run_production_pipeline():
     if sectors is None or sectors.empty:
         print("[CRITICAL ERROR] Macro Engine failed to return valid data. Halting.")
         return
+    
+    MIN_SCORE_HURDLE = 0.55 
+    filtered_df = sectors[sectors["Sector_Score"] >= MIN_SCORE_HURDLE]
 
+    # Rule 2: Cap the downstream pipeline to the Top 6 absolute best macro configurations
+    TOP_N_SECTORS_CAP = 6
     bullish_sectors = set(
-        sectors[sectors["Macro_Regime"].isin(APPROVED_REGIMES)]["Sector"].unique()
+        filtered_df.sort_values(by="Sector_Score", ascending=False)
+        .head(TOP_N_SECTORS_CAP)["Sector"]
+        .unique()
     )
     print(f"[STAGE 1] Bullish Clusters Identified: {list(bullish_sectors)}")
 
@@ -52,7 +54,7 @@ def run_production_pipeline():
         symbol for symbol, sector in cluster.sector_mapping.items() if sector in bullish_sectors
     ]
     print(f"[STAGE 2 GATEKEEPER] Universe restricted from {len(cluster.sector_mapping)} to {len(filtered_stocks)} stocks.")
-
+    
     # -------------------------------------------------------------------------
     # STAGE 3: Core Pipeline Initialization
     # -------------------------------------------------------------------------
@@ -66,7 +68,8 @@ def run_production_pipeline():
         symbol_to_sector_map=cluster.sector_mapping,
         sector_regime_map=gmm_regime_map,
         sector_score_map=gmm_score_map,
-        lookback_years=LOOKBACK_YEARS  # Kept at 2.0+ to guarantee warm features data blocks
+        lookback_years=LOOKBACK_YEARS,  # Kept at 2.0+ to guarantee warm features data blocks
+        macro_score_threshold=MIN_SCORE_HURDLE      # 🚨 UPGRADE: Continuous gatekeeper dial (0.55 = Strong + Top-Tier Neutral)
     )
     
     nse_df = rule_engine.fetch_universe_data()
