@@ -2,6 +2,7 @@ import os
 import warnings
 import numpy as np
 import pandas as pd
+import gzip
 from xgboost import XGBClassifier
 from constants import (
     MODEL_PATH, 
@@ -10,35 +11,32 @@ from constants import (
     REPORTS_DIR,
     fetch_data_from_nse
 )
-import gzip
-from xgboost import XGBClassifier
 
 warnings.filterwarnings("ignore")
 
 
 class StocksRuleEngine:
 
-    def __init__(self, symbols: list, market_cap_map: dict = None, symbol_to_sector_map: dict = None, sector_regime_map: dict = None, lookback_years: float = 2.0):
+    def __init__(
+        self, 
+        symbols: list, 
+        market_cap_map: dict = None, 
+        symbol_to_sector_map: dict = None, 
+        sector_regime_map: dict = None, 
+        sector_score_map: dict = None,  # UPGRADE: Ingests the continuous GMM factor map
+        lookback_years: float = 2.0
+    ):
         self.symbols = symbols
         self.market_cap_map = market_cap_map or {}
         self.symbol_to_sector_map = symbol_to_sector_map or {}
         self.sector_regime_map = sector_regime_map or {}
+        self.sector_score_map = sector_score_map or {}  # UPGRADE: Default to empty dict
         self.lookback_years = lookback_years
         self.allowed_categories = ['MIDCAP', 'SMALLCAP_100']
         self.cache_file_path = os.path.join(REPORTS_DIR, ".micro_universe_cache.json.gz")
-        
-        # self.approved_regimes = [
-        #     "🔥 ULTRA_MOMENTUM_LEADERS", 
-        #     "🚀 ACTIVE_BREAKOUT_FIELDS", 
-        #     "📈 STABLE_UPWARD_ACCUMULATION"
-        # ]
-
-    def _normalize_string(self, val: str) -> str:
-        return "".join(str(val).replace("_", "").replace(" ", "").upper().split())
     
     def load_stocks_from_cache(self):
         cached_df = pd.DataFrame()
-
         if os.path.exists(self.cache_file_path):
             print(f"💾 [CACHE READ] Hydrating raw data from today's disk cache: '{self.cache_file_path}'")
             try:
@@ -48,32 +46,20 @@ class StocksRuleEngine:
                     cached_df.columns = [str(col).replace('ï»¿', '').strip() for col in cached_df.columns]
             except Exception as ce:
                 print(f"[WARN] Cache read collision ({str(ce)}). Falling back to exchange engine...")
-        
         return cached_df
-    
     
     def save_stocks_to_cache(self, df):
         with gzip.open(self.cache_file_path, "wt", encoding="utf-8") as f:
             df.to_json(f, orient="records", date_format="iso")
         print(f"💾 [CACHE WRITE] Successfully stored today's raw micro universe data.")
-    
-    
 
     def fetch_universe_data(self) -> pd.DataFrame:
         filtered_symbols = self.symbols
-
-        # if self.market_cap_map:
-        #     filtered_symbols = [
-        #         s for s in self.symbols 
-        #         if str(self.market_cap_map.get(s, '')).upper() in self.allowed_categories
-        #     ]
-        #     print(f"[GATEKEEPER] Universe refined: {len(self.symbols)} -> {len(filtered_symbols)} active candidates.")
         nse_df = self.load_stocks_from_cache()
         if nse_df.empty:
             filtered_symbols = list(set(filtered_symbols + ["NIFTY 500"]))
             nse_df = fetch_data_from_nse(filtered_symbols, self.symbol_to_sector_map)
         return nse_df
-
 
     def _parse_and_sanitize_columns(self, raw_df: pd.DataFrame) -> pd.DataFrame:
         df = raw_df.copy()
@@ -233,15 +219,12 @@ class StocksRuleEngine:
                 
         return pd.concat(processed_stocks, ignore_index=True) if processed_stocks else pd.DataFrame()
 
-    def execute_ml_signals(
-        self, 
-        gold_df: pd.DataFrame = None
-    ) -> pd.DataFrame:
+    def execute_ml_signals(self, gold_df: pd.DataFrame = None) -> pd.DataFrame:
         """
-        HYBRID SYSTEM PHASE 2 FRAMEWORK (Optimized Schema Edition):
-        Scores, ranks, and slices top 20 alpha assets using verified dataframe columns.
+        HYBRID SYSTEM PRODUCTION ENGINE (GMM Soft-Regime Edition)
+        Scores, filters, and scales positions using localized stock mechanics 
+        cross-referenced with continuous macro sector distributions.
         """
-        
         if gold_df is None or gold_df.empty:
             print("[WARN] Empty candidate universe passed to rule engine. Skipping allocation.")
             return pd.DataFrame()
@@ -249,64 +232,62 @@ class StocksRuleEngine:
         model = XGBClassifier()
         model.load_model(MODEL_PATH)
             
-        # Deep copy to protect underlying data stream mutations
         working_df = gold_df.copy()
-        
-        # 2. Strict point-in-time snapshot calculation (Solves Duplicate Rows)
         working_df = working_df.sort_values(by="Date")
         latest_snapshot = working_df.groupby("Symbol").tail(1).reset_index(drop=True)
         
-        # if model is None:
-        #     if not os.path.exists(MODEL_PATH):
-        #         print(f"[CRITICAL] Compiled weights missing at {MODEL_PATH}. Run training first.")
-        #         return pd.DataFrame()
-                
-        #     print(f"[INFO] Hydrating XGBoost architecture from production target path: {MODEL_PATH}")
-        #     model_clf = XGBClassifier()
-        #     model_clf.load_model(MODEL_PATH)
-
+        # -------------------------------------------------------------------------
+        # UPGRADE: Dual Stream Macro-Mapping (Saves Emojis and Maps Factor Scores)
+        # -------------------------------------------------------------------------
         sector_regime_map = getattr(self, "sector_regime_map", {})
+        sector_score_map = getattr(self, "sector_score_map", {})
 
+        print("\n🔍 [RULE ENGINE DIAGNOSTIC] Inspecting Map Alignment:")
+        print(f" -> Available keys in sector_score_map: {list(sector_score_map.keys())}")
+        print(f" -> Sample values in sector_score_map: {sector_score_map}")
+        print(f" -> Unique sectors present in today's stock pool: {latest_snapshot['Sector'].unique().tolist()}")
+        
         latest_snapshot["Sector_Regime_Label"] = latest_snapshot["Sector"].map(sector_regime_map)
+        latest_snapshot["Sector_GMM_Factor"] = latest_snapshot["Sector"].map(sector_score_map).fillna(0.0)
 
-        # 4. Domain Constraints (Using your exact column schema names)
-        # Replaced 'Mapped_Regime_Label' lookup entirely with your active binary 'Market_Regime_Risk_Off' column
+        # Base Domain Constraints
         domain_mask = (
             (latest_snapshot["is_tradable"] == 1) &
-            (latest_snapshot["Feature_Sector_Aligned"] == 1) &  # Asset-level momentum confirmation
-            (latest_snapshot["Market_Regime_Risk_Off"] == 0) &   # Broad market macro check
+            (latest_snapshot["Feature_Sector_Aligned"] == 1) & 
+            (latest_snapshot["Market_Regime_Risk_Off"] == 0) &   
             (latest_snapshot["Feature_RSI"] < 82.0) &
             (latest_snapshot["Close"] >= 15.0)
         )
         
-        # 4. Enforce the Cluster Filter Gate:
-        # Blocks assets belonging to unapproved/weak sectors, even if they temporarily cross above an EMA.
-        cluster_gate = latest_snapshot["Sector_Regime_Label"].isin(APPROVED_REGIMES)
+        # -------------------------------------------------------------------------
+        # UPGRADE: Continuous Threshold Gate (Replaces rigid .isin text filter)
+        # -------------------------------------------------------------------------
+        # Keeps assets if their underlying sector factor score is >= 0.30
+        # This allows elements from borderline clusters to clear if their soft density warrants it.
+        cluster_gate = latest_snapshot["Sector_GMM_Factor"] >= 0.30
         domain_mask = domain_mask & cluster_gate
         
-        # Diagnostic logging to see exactly what got thrown out at the macro level
-        rejected_sectors = latest_snapshot[~cluster_gate]["Sector"].unique()
+        rejected_sectors = latest_snapshot[latest_snapshot["Sector_GMM_Factor"] < 0.30]["Sector"].unique()
         if len(rejected_sectors) > 0:
-            print(f"[MACRO FILTER] Sifted out assets from unapproved sector clusters: {rejected_sectors}")
+            print(f"🛡️ [GMM FILTER] Excluded assets from weak macro matrices: {rejected_sectors}")
             
         valid_universe = latest_snapshot[domain_mask].copy()
-        
         if valid_universe.empty:
-            print("[WARN] Zero assets cleared structural domain filters. Risk-Off state enforced.")
+            print("[WARN] Zero assets cleared GMM macro filters. Enforcing portfolio preservation.")
             return pd.DataFrame()
 
-        # 5. Live Probability Alpha Scoring
+        # Compute Micro Model Probabilities
         X_live = valid_universe[FEATURE_COLUMNS]
         valid_universe["Alpha_ML_Score"] = model.predict_proba(X_live)[:, 1]
         
-        # 6. Absolute Ranking (Top 20 Selection)
+        # Isolate top candidates and apply ranking metrics
         valid_universe = valid_universe.sort_values(by="Alpha_ML_Score", ascending=False).reset_index(drop=True)
         top_20_signals = valid_universe.head(20).copy()
         top_20_signals["Alpha_Rank"] = top_20_signals.index + 1
         
-        # 7. Vectorized Risk Stop & Target Calculations
+        # Vectorized Risk Stop & Target Boundaries
         close_prices = top_20_signals["Close"].values
-        atr_14 = top_20_signals.get("ATR_14", close_prices * 0.03).values  # Exact column match
+        atr_14 = top_20_signals.get("ATR_14", close_prices * 0.03).values  
         pivot_lows = top_20_signals.get("Pivot_Low_30", close_prices * 0.95).values
         
         volatility_sl = close_prices - (2 * atr_14)
@@ -317,12 +298,23 @@ class StocksRuleEngine:
         top_20_signals["Stop_Loss"] = np.round(stop_losses, 2)
         top_20_signals["Profit_Target"] = np.round(profit_targets, 2)
         
-        # 8. Presentation Layer Labels Assignment
+        # -------------------------------------------------------------------------
+        # UPGRADE: Stage 5 Confidence Layer Blend
+        # -------------------------------------------------------------------------
+        # Generates a holistic asset multiplier factor for downstream position sizing
+        # Blends 60% individual asset alpha score with 40% GMM parent sector score
+        top_20_signals["Confidence_Score"] = np.round(
+            (0.6 * top_20_signals["Alpha_ML_Score"]) + (0.4 * top_20_signals["Sector_GMM_Factor"]), 2
+        )
+        
+        # Presentation Layer Custom Labels
         def assign_presentation_tags(row):
             score = row["Alpha_ML_Score"]
+            conf = row["Confidence_Score"]
             deliv_ratio = row.get("Feature_Delivery_Ratio", 1.0)
             close_strength = row.get("Feature_Close_Strength", 0.5)
-            base_reason = f"Model Prob: {score*100:.1f}% | Stop: ₹{row['Stop_Loss']}"
+            # UPGRADE: Present the Confidence Score directly to the text stream layout
+            base_reason = f"Model Prob: {score*100:.1f}% | Confidence Factor: {conf} | Stop: ₹{row['Stop_Loss']}"
             
             if score >= 0.70:
                 if deliv_ratio >= 1.15 or close_strength >= 0.65:
@@ -337,11 +329,11 @@ class StocksRuleEngine:
         top_20_signals["Strategic_Label"] = ui_metadata[0]
         top_20_signals["Decision_Reason"] = ui_metadata[1]
 
-        print(f"🎯 Production Rank Complete. Dispatched {len(top_20_signals)} structurally validated assets to allocation framework.")
+        print(f"🎯 Production Rank Complete. Dispatched {len(top_20_signals)} dynamically scaled assets to allocation framework.")
         
-        # 9. Return the exact feature payload downstream consumers expect
+        # Return exact payload including our updated confidence calculations
         return top_20_signals[[
-            "Symbol", "Sector", "Close", "Alpha_ML_Score", "Alpha_Rank", 
+            "Symbol", "Sector", "Close", "Alpha_ML_Score", "Confidence_Score", "Alpha_Rank", 
             "Stop_Loss", "Profit_Target", "Strategic_Label", "Decision_Reason",
             "Feature_RSI", "Feature_ATR_Ratio", "Feature_Delivery_Ratio", "Feature_Close_Strength",
             "Feature_Relative_Strength", "Feature_EMA_Dist", "Feature_Volume_Ratio"

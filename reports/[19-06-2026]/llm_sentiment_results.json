@@ -1,122 +1,122 @@
 {
-    "SCHNEIDER": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Strong focus on energy management and automation solutions, particularly in the context of digital transformation and sustainability initiatives across industries. Recent acquisitions and partnerships likely to enhance market position in smart grids and data centers.",
-        "confidence_score": 85,
-        "strategic_threat": "Intensifying competition from other major industrial automation players and potential supply chain disruptions affecting critical component availability."
-    },
     "HFCL": {
         "sentiment": "POSITIVE",
-        "news_catalyst": "Significant order wins in telecommunications infrastructure (optical fiber cables, 5G deployment) and defense sectors. Government's push for domestic manufacturing and digital India initiatives are key drivers.",
-        "confidence_score": 88,
-        "strategic_threat": "Delays in project execution due to regulatory hurdles or land acquisition issues. Intense price competition in the optical fiber cable market."
+        "news_catalyst": "Strong order book growth in telecom infrastructure, government focus on 5G rollout and rural broadband expansion.",
+        "confidence_score": 85,
+        "strategic_threat": "Increased competition from other telecom infrastructure players and potential supply chain disruptions."
     },
-    "TEJASNET": {
+    "SCHNEIDER": {
         "sentiment": "POSITIVE",
-        "news_catalyst": "Beneficiary of 5G rollouts and increasing demand for optical networking solutions. Strong R&D capabilities and focus on high-speed broadband infrastructure development. Expansion into international markets.",
-        "confidence_score": 82,
-        "strategic_threat": "Technological obsolescence if R&D pipeline falters. Dependence on a few large telecom operators for revenue concentration."
-    },
-    "FINCABLES": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Robust demand for power cables driven by infrastructure development, renewable energy projects, and increasing electricity consumption. Diversification into specialty cables and conductors for enhanced margins.",
-        "confidence_score": 80,
-        "strategic_threat": "Volatility in raw material prices (copper, aluminum). Competition from both domestic and international cable manufacturers."
+        "news_catalyst": "Leadership in energy management and automation, benefiting from global trends in electrification, smart grids, and industrial digitalization.",
+        "confidence_score": 90,
+        "strategic_threat": "Geopolitical risks impacting global supply chains and potential shifts in demand due to economic slowdowns."
     },
     "BHEL": {
         "sentiment": "NEUTRAL",
-        "news_catalyst": "Government's focus on infrastructure and power generation, including thermal and renewable energy projects, offers opportunities. Order book regeneration is crucial, but execution pace and profitability remain under scrutiny.",
+        "news_catalyst": "Focus on renewable energy projects (solar, wind) and defense sector orders, along with participation in critical infrastructure development.",
         "confidence_score": 65,
-        "strategic_threat": "Strong competition from private players and international suppliers in power equipment. Challenges in adapting to the evolving energy mix (shift towards renewables)."
-    },
-    "CARBORUNIV": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Leading player in abrasives and industrial ceramics. Demand linked to automotive, manufacturing, and construction sectors. Expansion of product portfolio and capacity utilization are key growth drivers.",
-        "confidence_score": 78,
-        "strategic_threat": "Economic downturn impacting industrial production. Fluctuations in the prices of key raw materials like bauxite and silicon carbide."
-    },
-    "IDEA": {
-        "sentiment": "NEUTRAL",
-        "news_catalyst": "Focus on subscriber base recovery and ARPU (Average Revenue Per User) improvement in the competitive telecom market. Potential benefits from government support and tariff hikes. 5G rollout is a critical catalyst.",
-        "confidence_score": 55,
-        "strategic_threat": "Intense price competition, high spectrum costs, and significant debt burden. Aggressive moves by competitors could further erode market share."
+        "strategic_threat": "Intense competition in the power generation equipment market, and challenges in timely execution of large projects."
     },
     "KPRMILL": {
         "sentiment": "POSITIVE",
-        "news_catalyst": "Strong performance in textiles (garments and fabrics) driven by domestic and export demand. Expansion into renewable energy (sugar, ethanol, power) provides diversification and new revenue streams.",
-        "confidence_score": 83,
-        "strategic_threat": "Volatility in cotton prices. Global economic slowdown impacting textile exports. Regulatory changes in the sugar and ethanol industry."
+        "news_catalyst": "Diversification into technical textiles and renewable energy (wind power), alongside strong performance in its core textile business.",
+        "confidence_score": 78,
+        "strategic_threat": "Volatility in cotton prices and potential slowdown in global apparel demand."
     },
-    "WELSPUNLIV": {
+    "TEJASNET": {
         "sentiment": "POSITIVE",
-        "news_catalyst": "Growth in home textiles driven by increasing consumer spending and demand from developed markets. Focus on product innovation and expanding retail presence. Potential for market share gains in specialty segments.",
-        "confidence_score": 75,
-        "strategic_threat": "Intense competition from other home textile manufacturers. Rising input costs and logistics challenges. Currency fluctuations impacting export competitiveness."
-    },
-    "GRAPHITE": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Dominant position in graphite electrodes for the steel industry, benefiting from increased steel production. Expansion into specialty graphite products for emerging sectors like electric vehicles and solar power.",
-        "confidence_score": 85,
-        "strategic_threat": "Cyclical nature of the steel industry. Volatility in raw material prices (petroleum coke, pitch). Potential for capacity overruns in the industry."
-    },
-    "SYRMA": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Strong growth in electronics manufacturing services (EMS), driven by demand from automotive, consumer electronics, and industrial sectors. Increased outsourcing by global and domestic players. Focus on R&D and product development.",
-        "confidence_score": 87,
-        "strategic_threat": "Dependence on a few key clients. Intense competition in the EMS sector. Geopolitical risks affecting global supply chains."
-    },
-    "TITAGARH": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Significant order book growth in rolling stock for railways and defense vessels. Government's continued investment in rail infrastructure and 'Make in India' initiative are key tailwinds. Expansion into metro coaches and specialized wagons.",
-        "confidence_score": 90,
-        "strategic_threat": "Delays in project execution due to land acquisition or regulatory approvals. Competition from other large players in the railway and defense sectors."
+        "news_catalyst": "Growing demand for optical networking solutions driven by 5G deployment, data center expansion, and enterprise network upgrades.",
+        "confidence_score": 82,
+        "strategic_threat": "Rapid technological advancements requiring continuous R&D investment and competition from global players."
     },
     "BORORENEW": {
         "sentiment": "POSITIVE",
-        "news_catalyst": "Leading player in renewable energy (solar power projects and manufacturing). Beneficiary of government push for clean energy and declining solar module costs. Expansion into energy storage solutions.",
+        "news_catalyst": "Strong government impetus for renewable energy, especially solar, leading to significant order inflows and capacity expansion.",
+        "confidence_score": 88,
+        "strategic_threat": "Policy changes impacting solar tariffs, import dependence for key components, and intense price competition."
+    },
+    "SYRMA": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Leadership in electronics manufacturing services (EMS) with strong order pipeline across various sectors like automotive, industrial, and telecom.",
         "confidence_score": 86,
-        "strategic_threat": "Policy changes impacting renewable energy incentives. Intermittency of solar power and grid integration challenges. Global competition in solar panel manufacturing."
+        "strategic_threat": "Supply chain vulnerabilities for electronic components and the need to maintain pace with technological evolution."
+    },
+    "WELSPUNLIV": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Expansion in technical textiles, home textiles, and renewable energy projects, with a focus on high-margin segments.",
+        "confidence_score": 79,
+        "strategic_threat": "Fluctuations in raw material costs (cotton) and global demand for home textiles."
+    },
+    "FINCABLES": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Growth in demand for cables and wires driven by infrastructure development, power transmission, and the renewable energy sector.",
+        "confidence_score": 75,
+        "strategic_threat": "Price volatility of copper and aluminum, and competition from larger, established players."
     },
     "JINDALSAW": {
         "sentiment": "POSITIVE",
-        "news_catalyst": "Strong demand for steel pipes and plates driven by infrastructure development, oil & gas exploration, and industrial applications. Capacity expansions and focus on value-added products are key growth levers.",
-        "confidence_score": 81,
-        "strategic_threat": "Volatility in steel prices. Competition from both domestic and international steel pipe manufacturers. Regulatory changes affecting the oil and gas sector."
+        "news_catalyst": "Strong demand for steel pipes driven by oil & gas, water infrastructure, and construction sectors, coupled with expansion plans.",
+        "confidence_score": 80,
+        "strategic_threat": "Volatility in steel prices and potential impact of global trade policies."
     },
-    "ENGINERSIN": {
+    "GRAPHITE": {
         "sentiment": "POSITIVE",
-        "news_catalyst": "Focus on infrastructure development projects (water, environment, energy). Benefits from government's increased spending on public infrastructure. Diversification into new segments like smart cities and industrial solutions.",
-        "confidence_score": 79,
-        "strategic_threat": "Project execution risks and delays. Dependence on government tenders and approvals. Competition from other large engineering and construction firms."
+        "news_catalyst": "Leadership in graphite electrodes for steel production, benefiting from increased steel demand and capacity expansion in India.",
+        "confidence_score": 83,
+        "strategic_threat": "Reliance on demand from the steel industry and potential for volatile raw material costs."
     },
     "TRITURBINE": {
         "sentiment": "POSITIVE",
-        "news_catalyst": "Specialized in wind turbine manufacturing. Benefiting from the global push for renewable energy and government support for wind power projects. Focus on developing more efficient and cost-effective turbine solutions.",
-        "confidence_score": 78,
-        "strategic_threat": "Intense competition from global wind turbine manufacturers. Technological advancements by competitors could lead to obsolescence. Grid connectivity challenges for wind projects."
-    },
-    "KPIL": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Strong presence in EPC contracts for infrastructure development, including roads, bridges, and irrigation projects. Government's focus on infrastructure spending provides a steady pipeline of opportunities. Diversification into other segments.",
-        "confidence_score": 82,
-        "strategic_threat": "Project execution delays and cost overruns. Dependence on timely payments from government agencies. Intense competition in the EPC sector."
-    },
-    "WELCORP": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Diversified conglomerate with interests in steel pipes, home textiles, and retail. Synergies between businesses and expansion of product offerings are key drivers. Growth in the retail segment and increasing demand for steel products.",
+        "news_catalyst": "Focus on wind turbine manufacturing and associated services, benefiting from India's push towards renewable energy and energy independence.",
         "confidence_score": 77,
-        "strategic_threat": "Cyclical nature of steel industry. Volatility in commodity prices. Intense competition in the retail sector."
+        "strategic_threat": "Competition from established global players and potential policy shifts affecting wind power incentives."
     },
-    "KAJARIACER": {
+    "TITAGARH": {
         "sentiment": "POSITIVE",
-        "news_catalyst": "Leading manufacturer of ceramic and vitrified tiles. Benefits from growth in the real estate and construction sectors, driven by urbanization and increasing disposable incomes. Expansion of manufacturing capacity and product portfolio.",
-        "confidence_score": 80,
-        "strategic_threat": "Economic slowdown impacting real estate demand. Intense competition from domestic and international tile manufacturers. Volatility in raw material costs."
+        "news_catalyst": "Strong order book in shipbuilding, metro coaches, and defense, supported by government's Make in India initiative and infrastructure spending.",
+        "confidence_score": 87,
+        "strategic_threat": "Long gestation periods for large projects, and potential for execution delays."
+    },
+    "CARBORUNIV": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Dominant player in abrasives and industrial ceramics, catering to automotive, manufacturing, and infrastructure sectors with growth potential.",
+        "confidence_score": 81,
+        "strategic_threat": "Sensitivity to industrial output and demand cycles, and competition from domestic and international players."
+    },
+    "BEL": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Leading defense electronics manufacturer with significant order pipeline for radar, communication, and electronic warfare systems.",
+        "confidence_score": 89,
+        "strategic_threat": "Dependence on government defense budgets and long procurement cycles for defense contracts."
     },
     "RAYMOND": {
         "sentiment": "NEUTRAL",
-        "news_catalyst": "Focus on strengthening its core textile and apparel business, including branded apparel and textile sales. Expansion into real estate and wellness segments provides diversification. Potential turnaround driven by strategic restructuring.",
-        "confidence_score": 60,
-        "strategic_threat": "Intense competition in the apparel and retail sector. Challenges in turning around the real estate ventures. Managing debt and improving profitability remain key concerns."
+        "news_catalyst": "Focus on consolidating its textile business, expanding branded retail presence, and exploring growth in real estate and engineering.",
+        "confidence_score": 55,
+        "strategic_threat": "Intense competition in the apparel market and cyclical nature of the real estate sector."
+    },
+    "SHYAMMETL": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Growth in specialty steel products catering to demand from automotive, infrastructure, and renewable energy sectors.",
+        "confidence_score": 76,
+        "strategic_threat": "Volatility in steel prices and dependence on key raw material availability."
+    },
+    "KAJARIACER": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Strong brand in the tile industry with increasing demand driven by housing and infrastructure development, and focus on premium segments.",
+        "confidence_score": 78,
+        "strategic_threat": "Fluctuations in construction activity and competition from both domestic and imported tiles."
+    },
+    "ELGIEQUIP": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Leading manufacturer of air compressors, benefiting from increased industrialization and demand from various sectors like manufacturing, mining, and infrastructure.",
+        "confidence_score": 80,
+        "strategic_threat": "Sensitivity to industrial capex cycles and competition from global compressor manufacturers."
+    },
+    "IDEA": {
+        "sentiment": "NEGATIVE",
+        "news_catalyst": "Struggling to regain market share and profitability in a highly competitive telecom sector, facing significant debt burden.",
+        "confidence_score": 30,
+        "strategic_threat": "Intense competition from well-capitalized players and regulatory challenges impacting ARPU growth."
     }
 }

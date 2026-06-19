@@ -30,6 +30,14 @@ APPROVED_REGIMES = [
     "📈 STABLE_UPWARD_ACCUMULATION"
 ]
 
+ORDERED_SECTOR_REGIMES = {
+    "DEEP_BEARISH_CAPITULATION":"❄️ DEEP_BEARISH_CAPITULATION",
+    "NEUTRAL_SIDEWAYS_CONSOLIDATION":"⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION",
+    "STABLE_UPWARD_ACCUMULATION":"📈 STABLE_UPWARD_ACCUMULATION",
+    "ACTIVE_BREAKOUT_FIELDS":"🚀 ACTIVE_BREAKOUT_FIELDS",
+    "ULTRA_MOMENTUM_LEADERS":"🔥 ULTRA_MOMENTUM_LEADERS"
+}
+
 def fetch_data_from_nse(filtered_symbols, symbol_to_sector_map):
     end_date = datetime.datetime.strptime(TODAY, "%d-%m-%Y").date()
     start_date = end_date - datetime.timedelta(days=int(365 * LOOKBACK_YEARS))

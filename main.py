@@ -57,13 +57,15 @@ def run_production_pipeline():
     # STAGE 3: Core Pipeline Initialization
     # -------------------------------------------------------------------------
 
-    sector_regime_map = dict(zip(sectors["Sector"], sectors["Macro_Regime"]))
+    gmm_score_map = dict(zip(sectors["Sector"], sectors["Sector_Score"]))
+    gmm_regime_map = dict(zip(sectors["Sector"], sectors["Macro_Regime"]))
 
     rule_engine = StocksRuleEngine(
         symbols=filtered_stocks,
         market_cap_map={},
         symbol_to_sector_map=cluster.sector_mapping,
-        sector_regime_map=sector_regime_map,
+        sector_regime_map=gmm_regime_map,
+        sector_score_map=gmm_score_map,
         lookback_years=LOOKBACK_YEARS  # Kept at 2.0+ to guarantee warm features data blocks
     )
     

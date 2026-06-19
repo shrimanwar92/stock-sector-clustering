@@ -1,15 +1,15 @@
-import datetime
 import os
 import warnings
 import numpy as np
 import pandas as pd
-from nselib import capital_market
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
+from sklearn.mixture import GaussianMixture
 from sklearn.metrics import silhouette_score
 import json
 from constants import (
-    CACHE_FILE, TODAY, NSE_DATASET_PATH, fetch_data_from_nse
+    CACHE_FILE, TODAY, NSE_DATASET_PATH, fetch_data_from_nse,
+    ORDERED_SECTOR_REGIMES
 )
 
 warnings.filterwarnings("ignore")
@@ -21,8 +21,7 @@ class SectorClusterEngine:
         self.csv_filename = NSE_DATASET_PATH
         self.lookback_years = lookback_years
         self.scaler = StandardScaler()
-        # Set to 5 clusters to capture all sub-trends without over-segmentation
-        self.model = KMeans(n_clusters=5, random_state=42, n_init=10)
+        self.model = GaussianMixture(n_components=5, covariance_type='full', random_state=42, n_init=10)
         self.sector_features = ["Sector_Rolling_Return", "Sector_Delivery_Avg", "Sector_Volume_Expansion"]
         self.sector_mapping = {}
         self.cache_filename =  CACHE_FILE # Hidden disk cache file
@@ -88,8 +87,7 @@ class SectorClusterEngine:
         
 
     def discover_sectors(self) -> pd.DataFrame:
-        """Gold Layer: Runs K-Means cluster pass, logs details to file, and returns the DataFrame."""
-        # Check cache first before executing expensive operations
+        """Gold Layer: Runs GMM clustering pass, calculates soft assignments, and returns the DataFrame."""
         self.load_mappings_from_csv()
         
         cached_df = self.load_cached_sectors()
@@ -126,49 +124,100 @@ class SectorClusterEngine:
             Sector_Volume_Expansion=("Vol_Ratio", "mean")
         ).reset_index().dropna()
 
-        # Fit 5-Cluster Machine Learning Pass
         scaled_features = self.scaler.fit_transform(sector_matrix[self.sector_features])
-        sector_matrix["Cluster_ID"] = self.model.fit_predict(scaled_features)
+        
+        # Hyperparameter Tuning Via BIC (Model Complexity Balance Selection)
+        max_candidate_k = min(6, len(sector_matrix) - 1)
+        candidate_k_values = list(range(2, max_candidate_k + 1))
+        
+        best_bic = float("inf")
+        optimal_k = 5
+        best_model = None
+        
+        for k in candidate_k_values:
+            test_model = GaussianMixture(n_components=k, covariance_type='full', random_state=42, n_init=5)
+            test_model.fit(scaled_features)
+            bic_score = test_model.bic(scaled_features)
+            
+            if bic_score < best_bic:
+                best_bic = bic_score
+                optimal_k = k
+                best_model = test_model
 
-        # Extract Unscaled Cluster Centroids Metadata
-        centers = self.scaler.inverse_transform(self.model.cluster_centers_)
+        print(f"🤖 [BIC OPTIMIZATION] Selected optimal regime count K={optimal_k} based on lowest BIC score of {best_bic:.2f}")
+        self.model = best_model
+        
+        # MLOps Density Audit
+        log_likelihood = self.model.score(scaled_features)
+        print(f"[MLOPS AUDIT] GMM Average Log-Likelihood: {log_likelihood:.4f}")
+        if log_likelihood < -10.0:
+            print("[WARN] Anomalous distribution matrix. Sector metrics are highly scattered today.")
+
+        # Extract soft probabilities and hard assignments from optimized GMM density matrix
+        hard_clusters = self.model.predict(scaled_features)
+        soft_probabilities = self.model.predict_proba(scaled_features)
+
+        # Align clusters from worst absolute return performance to highest
+        centers = self.scaler.inverse_transform(self.model.means_)
         sorted_indices = np.argsort(centers[:, 0])
         
-        regime_labels = {
-            sorted_indices[4]: "🔥 ULTRA_MOMENTUM_LEADERS",
-            sorted_indices[3]: "🚀 ACTIVE_BREAKOUT_FIELDS",
-            sorted_indices[2]: "📈 STABLE_UPWARD_ACCUMULATION",
-            sorted_indices[1]: "⏳ NEUTRAL_SIDEWAYS_CONSOLIDATION",
-            sorted_indices[0]: "❄️ DEEP_BEARISH_CAPITULATION"
-        }
+        sector_matrix["Cluster_ID"] = hard_clusters
         
-        sector_matrix["Macro_Regime"] = sector_matrix["Cluster_ID"].map(regime_labels)
+        # Map a standardized momentum reward ranking factor based on performance index orientation
+        rank_score_lookup = {sorted_indices[rank]: np.round(rank / (optimal_k - 1), 2) for rank in range(optimal_k)}
+        sector_matrix["Sector_Score"] = sector_matrix["Cluster_ID"].map(rank_score_lookup)
 
-        unique_clusters = len(sector_matrix["Cluster_ID"].unique())
-        if unique_clusters > 1:
-            score = silhouette_score(scaled_features, sector_matrix["Cluster_ID"])
-            print(f"[MLOPS AUDIT] Global Silhouette Score: {score:.4f}")
+        # Inject clean probability values as independent data frame features (e.g., Prob_ULTRA_MOMENTUM_LEADERS)
+        labels_ordered = list(ORDERED_SECTOR_REGIMES.keys())
+        for i, idx in enumerate(sorted_indices):
+            col_name = f"Prob_{labels_ordered[i]}"
+            sector_matrix[col_name] = np.round(soft_probabilities[:, idx], 4)
+
+        # -------------------------------------------------------------------------
+        # UPDATE: Map Percentile Directly to Downstream Labeled Regimes with Icons
+        # -------------------------------------------------------------------------
+        def assign_dynamic_regime_label(row):
+            cluster_id = row["Cluster_ID"]
+            # Locate where this cluster sits within the ordered performance rank array
+            rank_pos = np.where(sorted_indices == cluster_id)[0][0]
+            percentile = rank_pos / (optimal_k - 1)
             
-            if score < 0.25:
-                print("[WARN] Weak mathematical clustering. Sectors are overlapping today.")
-        else:
-            print("[MLOPS AUDIT] Silhouette Score skipped: Single cluster detected or insufficient variance.")
+            if percentile == 1.0: 
+                key = "ULTRA_MOMENTUM_LEADERS"
+            elif percentile >= 0.66: 
+                key = "ACTIVE_BREAKOUT_FIELDS"
+            elif percentile >= 0.33: 
+                key = "STABLE_UPWARD_ACCUMULATION"
+            elif percentile > 0.0: 
+                key = "NEUTRAL_SIDEWAYS_CONSOLIDATION"
+            else: 
+                key = "DEEP_BEARISH_CAPITULATION"
+                
+            # Safely fetch the exact formatted string containing the downstream icon
+            return ORDERED_SECTOR_REGIMES[key]
 
-        # Generate custom human-readable reasons for every single sector row
+        # Apply the layout mapping to populate the pipeline framework
+        sector_matrix["Macro_Regime"] = sector_matrix.apply(assign_dynamic_regime_label, axis=1)
+
+        # Generate readable reasoning using the icon-appended labels
+        best_cluster_idx = sorted_indices[-1]
         reasons = []
-        for _, row in sector_matrix.iterrows():
+        for idx, row in sector_matrix.iterrows():
             ret = row["Sector_Rolling_Return"]
-            dly = row["Sector_Delivery_Avg"]
-            vol = row["Sector_Volume_Expansion"]
-            regime = row["Macro_Regime"]
+            regime = row["Macro_Regime"] # Pulls icon directly (e.g. "🔥 ULTRA_MOMENTUM_LEADERS")
+            score = row["Sector_Score"]
+            p_top = soft_probabilities[idx, best_cluster_idx] * 100
             
             reason_str = (
-                f"Assigned to {regime} because the sector features a 3-Month return profile of {ret:.1f}%, "
-                f"sustained overnight institutional delivery weight of {dly:.1f}%, and an active volume "
-                f"expansion multiplier of {vol:.2f}x relative to its historical baseline values."
+                f"Assigned hard category '{regime}' (Factor Score: {score}). "
+                f"Features a 3-Month return profile of {ret:.1f}%. The Gaussian distribution maps a "
+                f"{p_top:.1f}% explicit membership convergence with the leading macro vector."
             )
             reasons.append(reason_str)
             
         sector_matrix["Decision_Reason"] = reasons
-        sector_matrix = sector_matrix.sort_values(by="Sector_Rolling_Return", ascending=False)                
+        sector_matrix = sector_matrix.sort_values(by="Sector_Score", ascending=False).reset_index(drop=True)
+        
+        # Cache outputs before exporting
+        self.save_sectors_to_cache(sector_matrix)
         return sector_matrix
