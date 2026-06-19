@@ -1,122 +1,122 @@
 {
-    "SPARC": {
-        "sentiment": "NEUTRAL",
-        "news_catalyst": "Ongoing clinical trials and potential drug approvals are key catalysts. Market sentiment will depend on trial outcomes and regulatory decisions.  Focus on pipeline advancements.",
-        "confidence_score": 65,
-        "strategic_threat": "Competition from other pharmaceutical companies with similar drug candidates or alternative treatments.  Regulatory hurdles and trial failures pose significant risks."
+    "GRAPHITE": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Increasing demand for graphite electrodes due to steel production recovery and growth in the electric vehicle battery sector.",
+        "confidence_score": 85,
+        "strategic_threat": "Volatility in raw material prices (coke, pitch) and potential oversupply if new capacities come online too quickly."
     },
     "HFCL": {
         "sentiment": "POSITIVE",
-        "news_catalyst": "Government initiatives promoting digital infrastructure, 5G rollout, and broadband expansion are significant positive catalysts. Order book visibility and execution capability are critical.",
-        "confidence_score": 75,
-        "strategic_threat": "Intense competition from domestic and international players in the telecom infrastructure sector.  Supply chain disruptions and raw material price volatility can impact margins."
+        "news_catalyst": "Strong order book in optical fiber cables and telecom infrastructure, benefiting from government's 5G rollout and rural broadband initiatives. Diversification into defense sector provides additional growth avenues.",
+        "confidence_score": 88,
+        "strategic_threat": "Intense competition in the telecom equipment market and execution risks associated with large-scale projects."
+    },
+    "TEJASNET": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Key player in optical networking solutions, poised to benefit from ongoing 5G deployment, enterprise digital transformation, and government's BharatNet project. Significant R&D focus.",
+        "confidence_score": 87,
+        "strategic_threat": "Rapid technological obsolescence in the telecom hardware space and dependence on government spending cycles."
     },
     "SYRMA": {
         "sentiment": "POSITIVE",
-        "news_catalyst": "Expansion into new product segments, increasing demand for electronic manufacturing services (EMS), and potential acquisitions or partnerships are catalysts.  Focus on revenue diversification.",
-        "confidence_score": 70,
-        "strategic_threat": "Dependence on key clients and sector-specific demand.  Rapid technological obsolescence and the need for continuous R&D investment are threats."
+        "news_catalyst": "Expanding capabilities in electronics manufacturing services (EMS), catering to diverse sectors like automotive, industrial, and consumer electronics. Government's 'Make in India' and PLI schemes are significant tailwinds.",
+        "confidence_score": 82,
+        "strategic_threat": "Supply chain disruptions for electronic components and increasing competition from both domestic and international EMS providers."
     },
-    "IDEA": {
+    "TRITURBINE": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Focus on renewable energy solutions, particularly wind turbines. Government's push for renewable energy targets and opportunities in offshore wind projects are key drivers.",
+        "confidence_score": 78,
+        "strategic_threat": "Project execution delays, land acquisition challenges, and policy changes in the renewable energy sector."
+    },
+    "GPIL": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Specialty semiconductor player with strong demand for its microcontrollers and analog ICs, particularly for automotive and industrial applications. Expansion of manufacturing capacity.",
+        "confidence_score": 80,
+        "strategic_threat": "Global semiconductor shortages and cyclical nature of the semiconductor industry. Intense competition from established global players."
+    },
+    "JINDALSAW": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Leading manufacturer of specialty steel products, with strong demand from infrastructure, automotive, and construction sectors. Capacity expansion and diversification into new product lines.",
+        "confidence_score": 85,
+        "strategic_threat": "Volatility in steel prices, competition from imports, and potential slowdown in key end-user industries."
+    },
+    "SPARC": {
         "sentiment": "NEUTRAL",
-        "news_catalyst": "Revival in subscriber growth, ARPU (Average Revenue Per User) improvement, and successful debt reduction strategies are potential catalysts.  Market share competition remains a concern.",
+        "news_catalyst": "Pharmaceutical company focused on novel drug development.  While potential for breakthrough drugs exists, development timelines are long and success is uncertain.",
         "confidence_score": 55,
-        "strategic_threat": "Intense competition from established players, impacting market share and pricing power.  High capital expenditure requirements for network upgrades and spectrum acquisition."
+        "strategic_threat": "High R&D costs, regulatory hurdles, patent cliffs, and intense competition in the pharmaceutical market."
     },
-    "BEL": {
+    "ANURAS": {
         "sentiment": "POSITIVE",
-        "news_catalyst": "Government's defense modernization push, indigenization of defense equipment, and increasing order book from defense and non-defense sectors are strong catalysts.  Export opportunities are also a driver.",
-        "confidence_score": 80,
-        "strategic_threat": "Geopolitical shifts impacting defense spending.  Delays in government procurement processes and  competition from private sector players in certain segments."
-    },
-    "CGPOWER": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Growth in power generation and transmission infrastructure, increasing demand for electrical equipment, and capacity expansion initiatives are key catalysts.  Focus on operational efficiency.",
+        "news_catalyst": "Emerging player in green energy solutions and advanced materials.  Focus on electric vehicle components and battery technology offers significant growth potential, aligned with global sustainability trends.",
         "confidence_score": 75,
-        "strategic_threat": "Commodity price fluctuations (copper, aluminum) impacting raw material costs.  Intense competition in the electrical equipment manufacturing space."
-    },
-    "RRKABEL": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Demand from infrastructure development, renewable energy projects, and increasing consumption of electrical cables are positive catalysts.  Expansion into new product lines and markets.",
-        "confidence_score": 70,
-        "strategic_threat": "No operational risk threats identified."
-    },
-    "BHEL": {
-        "sentiment": "NEUTRAL",
-        "news_catalyst": "Government's focus on power sector expansion, renewable energy integration, and railway modernization are potential catalysts.  Turnaround in order execution and profitability is crucial.",
-        "confidence_score": 60,
-        "strategic_threat": "Stiff competition from international players, especially in large EPC projects.  Delays in project execution and working capital management challenges."
-    },
-    "BORORENEW": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Government push for renewable energy, particularly solar power, and increased global focus on sustainable energy solutions are strong catalysts.  Expansion of manufacturing capacity and product portfolio.",
-        "confidence_score": 80,
-        "strategic_threat": "Policy changes affecting solar tariffs and subsidies.  Intense competition from domestic and international solar module manufacturers.  Supply chain dependency for key components."
-    },
-    "SHYAMMETL": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Growth in sectors like construction, infrastructure, and automotive driving demand for steel.  Expansion plans and backward integration efforts are key.",
-        "confidence_score": 70,
-        "strategic_threat": "Volatility in steel prices, influenced by global demand and supply.  Environmental regulations and the need for sustainable manufacturing practices."
-    },
-    "ITI": {
-        "sentiment": "NEUTRAL",
-        "news_catalyst": "Government's focus on digital India, telecom infrastructure development, and defense sector orders are potential catalysts.  Turnaround in financial performance and operational efficiency is critical.",
-        "confidence_score": 50,
-        "strategic_threat": "High competition in the telecom equipment sector from established global players.  Legacy issues and the need for significant technological upgrades."
-    },
-    "USHAmART": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Increasing consumer demand for home appliances and electronics, market penetration in tier-2/3 cities, and product innovation are positive catalysts.  Brand building and distribution network expansion.",
-        "confidence_score": 65,
-        "strategic_threat": "Intense competition from organized and unorganized players.  Price sensitivity of consumers and the need for aggressive marketing."
-    },
-    "FINCABLES": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Growth in the power and telecommunications sectors, driving demand for power and telecommunication cables.  Expansion into new product segments and geographies.",
-        "confidence_score": 70,
-        "strategic_threat": "Volatility in raw material prices (copper, aluminum).  Competition from larger players and unorganized sector."
-    },
-    "ALIVUS": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Expansion of renewable energy projects, particularly wind power, and the increasing demand for components in the renewable energy sector are strong catalysts. Focus on technological advancements and capacity enhancement.",
-        "confidence_score": 75,
-        "strategic_threat": "Dependence on government policies and incentives for renewable energy.  Competition from domestic and international manufacturers of renewable energy components. Supply chain disruptions."
-    },
-    "CARBORUNIV": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Growth in manufacturing sectors like automotive, industrial machinery, and construction, driving demand for abrasives and ceramics.  Innovation in product offerings and market expansion.",
-        "confidence_score": 70,
-        "strategic_threat": "Competition from both domestic and international players.  Economic downturns impacting end-user industries.  Price sensitivity of customers."
+        "strategic_threat": "Early-stage company with execution and scaling risks.  Dependence on technological advancements and market acceptance of new products."
     },
     "SCHNEIDER": {
         "sentiment": "POSITIVE",
-        "news_catalyst": "Focus on energy management, automation, and digitalization solutions. Increasing demand for smart grid technologies and sustainable energy infrastructure.  Strong global presence and product portfolio.",
+        "news_catalyst": "Global leader in energy management and automation solutions.  Benefits from digitalization, electrification, and sustainability trends across industries, including data centers, buildings, and industrial automation.",
+        "confidence_score": 90,
+        "strategic_threat": "Geopolitical risks impacting global supply chains and economic slowdowns affecting capital expenditure by businesses."
+    },
+    "LAURUSLABS": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Strong presence in Active Pharmaceutical Ingredients (APIs) and growing presence in contract research and manufacturing services (CRAMS).  Diversification into specialty chemicals and formulations.",
+        "confidence_score": 88,
+        "strategic_threat": "Regulatory changes in the pharmaceutical industry, pricing pressures on APIs, and intense competition in the CRAMS space."
+    },
+    "GNFC": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Diversified chemical manufacturer with significant capacity in urea, methanol, and other industrial chemicals.  Benefits from strong demand in agriculture and industrial sectors.  Focus on specialty chemicals.",
+        "confidence_score": 80,
+        "strategic_threat": "Volatility in raw material prices (natural gas) and fluctuations in government policies related to fertilizer subsidies."
+    },
+    "ZEEL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Media and entertainment company.  Performance is highly dependent on content creation, advertising revenue, and subscription growth.  Ongoing merger/acquisition activities create uncertainty.",
+        "confidence_score": 60,
+        "strategic_threat": "Disruptive digital media landscape, changing consumer viewing habits, and regulatory scrutiny on media ownership."
+    },
+    "TITAGARH": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Key player in the railway rolling stock and freight wagon manufacturing sector.  Benefiting from government's significant capex in railways and infrastructure development.  Diversification into defense and metro coaches.",
+        "confidence_score": 86,
+        "strategic_threat": "Order book dependency, execution timelines, and potential policy shifts impacting railway infrastructure spending."
+    },
+    "CARBORUNIV": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Leading manufacturer of silicon carbide and fused grains, essential for abrasives, refractories, and ceramics.  Demand is linked to industrial production and infrastructure development. Expansion into specialty products.",
+        "confidence_score": 83,
+        "strategic_threat": "Volatility in raw material costs and competition from global players."
+    },
+    "FINCABLES": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Manufacturer of electrical cables and wires.  Benefits from growth in the power sector, construction, and infrastructure projects.  Expanding product portfolio and capacity.",
+        "confidence_score": 78,
+        "strategic_threat": "Raw material price fluctuations (copper, aluminum) and intense competition in the cable industry."
+    },
+    "WELCORP": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Conglomerate with interests in steel, textiles, and infrastructure.  Steel division benefits from infrastructure spending, while textiles are driven by domestic and export demand.  Focus on expanding capacities.",
+        "confidence_score": 75,
+        "strategic_threat": "Commodity price volatility, cyclical nature of its key businesses, and currency fluctuations impacting exports."
+    },
+    "BHEL": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Major player in the power generation equipment sector, benefiting from government's focus on renewable energy, thermal power plant modernization, and transmission infrastructure. Expanding into defense and aerospace.",
+        "confidence_score": 80,
+        "strategic_threat": "Long project cycles, dependence on government orders, and competition from international players in the power equipment market."
+    },
+    "WELSPUNLIV": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Leading player in home textiles, benefiting from increasing disposable incomes, growing organized retail, and export opportunities.  Expansion into new markets and product categories.",
+        "confidence_score": 77,
+        "strategic_threat": "Raw material price volatility (cotton), intense competition, and potential trade barriers."
+    },
+    "AETHER": {
+        "sentiment": "POSITIVE",
+        "news_catalyst": "Electric vehicle manufacturer with a focus on performance and innovation.  Strong brand appeal and growing demand for electric two-wheelers and performance bikes.  Expansion of charging infrastructure and product line.",
         "confidence_score": 85,
-        "strategic_threat": "Geopolitical risks and currency fluctuations impacting global operations.  Intense competition in specific segments.  Pace of technological innovation and adoption."
-    },
-    "ZYDUSLIFE": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Pipeline of new drug development, expansion into niche therapeutic areas, and strong performance in domestic and international markets are key catalysts.  Regulatory approvals for new products are critical.",
-        "confidence_score": 75,
-        "strategic_threat": "Intense competition in the pharmaceutical sector.  Pricing pressures and patent expirations.  Regulatory hurdles and clinical trial risks."
-    },
-    "KSB": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Growth in infrastructure projects, water management, and industrial sector demand for pumps and valves.  Focus on energy-efficient solutions and expanding market reach.",
-        "confidence_score": 70,
-        "strategic_threat": "Competition from domestic and international players.  Commodity price volatility affecting raw material costs.  Economic slowdown impacting industrial capex."
-    },
-    "MEDANTA": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Increasing healthcare spending, demand for specialized medical services, and expansion of healthcare infrastructure are positive catalysts.  Focus on patient volumes and service quality.",
-        "confidence_score": 75,
-        "strategic_threat": "Competition from other large hospital chains and specialized clinics.  Regulatory changes in the healthcare sector.  Rising operational costs."
-    },
-    "FORTIS": {
-        "sentiment": "POSITIVE",
-        "news_catalyst": "Growing demand for quality healthcare services, expansion of hospital network, and focus on niche medical specialties are key drivers.  Government initiatives promoting healthcare access.",
-        "confidence_score": 75,
-        "strategic_threat": "Intense competition within the healthcare industry.  Regulatory compliance and evolving healthcare policies.  Staffing challenges and rising medical costs."
+        "strategic_threat": "Intensifying competition in the EV market, supply chain constraints for EV components, and evolving government regulations."
     }
 }

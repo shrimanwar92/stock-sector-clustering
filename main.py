@@ -102,15 +102,6 @@ def run_production_pipeline():
         print("[WARN] Hybrid tree scorer returned zero active trade signals. Halting.")
         return
 
-    # # Generate Audit Logging trace
-    # with open(STOCK_ANALYSIS, "w", encoding="utf-8") as f:
-    #     f.write("=" * 120 + "\n")
-    #     f.write(" PRODUCTION QUANT DATA LOGS: STAGE 2 HYBRID TRACE\n")
-    #     f.write(f" Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-    #     f.write("=" * 120 + "\n\n")
-    #     for _, row in sector_report.iterrows():
-    #         f.write(f"📍 SECTOR: {row['Sector']:<35} | REGIME: {row['Macro_Regime']}\n")
-
     # -------------------------------------------------------------------------
     # STAGE 5: Autonomous LLM Semantic Overlay
     # -------------------------------------------------------------------------
