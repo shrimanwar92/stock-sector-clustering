@@ -1,6 +1,7 @@
 from datetime import date
 import os
 import datetime
+from datetime import timezone, timedelta
 from nselib import capital_market
 import pandas as pd
 from tqdm.contrib.concurrent import thread_map
@@ -8,7 +9,8 @@ from tqdm.contrib.concurrent import thread_map
 NSE_DATASET_PATH = "dataset/nse_companies.csv"
 LOOKBACK_YEARS = 2.0
 
-TODAY = date.today().strftime("%d-%m-%Y")
+IST = timezone(timedelta(hours=5, minutes=30))
+TODAY = datetime.now(IST).strftime("[%d-%m-%Y]")
 REPORTS_DIR = f"reports/[{TODAY}]"
 os.makedirs(REPORTS_DIR, exist_ok=True)
 

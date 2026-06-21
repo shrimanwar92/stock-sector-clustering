@@ -11,7 +11,7 @@ from ml_feature_engg_train_params import run_offline_model_training
 
 from deployment_engine import ProgrammaticDashboardDeployer
 from llm_sentiment_engine import GeminiSentimentEngine
-from constants import LOOKBACK_YEARS, TODAY
+from constants import LOOKBACK_YEARS, TODAY, REPORTS_DIR
 
 load_dotenv()
 
@@ -21,36 +21,22 @@ def purge_historical_artifacts(reports_base_dir="reports"):
     successfully generated fresh target data assets.
     """
     print("\n[STAGE 7] Executing Historical Artifact Purge Engine...")
-    
-    # 1. Enforce strict Indian Standard Time (IST) alignment to override cloud runner UTC drift
-    IST = timezone(timedelta(hours=5, minutes=30))
-    today_folder_name = datetime.now(IST).strftime("[%d-%m-%Y]")
-    today_folder_path = os.path.join(reports_base_dir, today_folder_name)
-    
-    print(f" Target active directory to preserve (IST Profile): {today_folder_name}")
-    
-    # Verify base directory existence
-    if not os.path.exists(reports_base_dir):
-        print(f" ⚠️ Base directory '{reports_base_dir}' does not exist. Creating empty structure.")
-        os.makedirs(reports_base_dir, exist_ok=True)
-        return
 
-    # 2. THE CRITICAL SYSTEM GUARD:
     # If today's run yielded no signals, preserve history to prevent repository data wipes.
-    if not os.path.exists(today_folder_path):
-        print(f" ⚠️ Notice: Today's folder '{today_folder_name}' was not generated (No confirmed trades/assets logged).")
+    if not os.path.exists(TODAY):
+        print(f" ⚠️ Notice: Today's folder '{TODAY}' was not generated (No confirmed trades/assets logged).")
         print(" [SAFEGUARD ACTUATED] Halting purge routine to protect existing historical repository data.")
         return
 
     # 3. Controlled Purge Matrix (Runs only when today's generation is confirmed present)
     try:
         purged_count = 0
-        for item in os.listdir(reports_base_dir):
-            item_path = os.path.join(reports_base_dir, item)
+        for item in os.listdir(REPORTS_DIR):
+            item_path = os.path.join(REPORTS_DIR, item)
             
             # Interact exclusively with child directories
             if os.path.isdir(item_path):
-                if item != today_folder_name:
+                if item != TODAY:
                     print(f" 🗑️ Deleting historical artifact directory: {item_path}")
                     shutil.rmtree(item_path)
                     purged_count += 1
