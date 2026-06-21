@@ -3,7 +3,7 @@ import time
 import json
 import requests
 from constants import (
-    LLM_SENTIMENT_RESULT
+    LLM_SENTIMENT_RESULT, LLM_MODEL_NAME
 )
 
 class GeminiSentimentEngine:
@@ -12,9 +12,9 @@ class GeminiSentimentEngine:
     Optimized for batch processing to eliminate throttling and network latency.
     Saves and stores the final returned sentiment analysis to a structured JSON file.
     """
-    def __init__(self, output_json_path: str = "llm_sentiment_results.json"):
+    def __init__(self):
         self.api_key = os.environ.get("GEMINI_API_KEY", "")
-        self.model_name = "gemini-2.5-flash-lite"
+        self.model_name = LLM_MODEL_NAME
         self.endpoint_url = f"https://generativelanguage.googleapis.com/v1beta/models/{self.model_name}:generateContent"
         self.output_json_path = LLM_SENTIMENT_RESULT
 

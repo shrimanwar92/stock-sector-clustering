@@ -1,4 +1,5 @@
 import os
+import shutil
 import pandas as pd
 from datetime import datetime
 from dotenv import load_dotenv
@@ -10,12 +11,41 @@ from ml_feature_engg_train_params import run_offline_model_training
 
 from deployment_engine import ProgrammaticDashboardDeployer
 from llm_sentiment_engine import GeminiSentimentEngine
-from constants import LOOKBACK_YEARS, APPROVED_REGIMES
+from constants import LOOKBACK_YEARS, TODAY
 
 load_dotenv()
 
-# Operational Configuration Flag
-TRAIN_MODE = True  # Set to True when updating XGBoost patterns historically
+def purge_historical_artifacts(reports_base_dir="reports"):
+    """
+    Scans the reports folder and aggressively deletes directories 
+    matching past dates to maintain a clean atomic git footprint.
+    """
+    print("\n[STAGE 7] Executing Historical Artifact Purge Engine...")
+    
+    # Generate the exact today string matching your directory schema
+    print(f" Target active directory to preserve: {TODAY}")
+    
+    if not os.path.exists(reports_base_dir):
+        print(f" ⚠️ Warning: Base directory '{reports_base_dir}' does not exist. Skipping purge.")
+        return
+
+    try:
+        purged_count = 0
+        for item in os.listdir(reports_base_dir):
+            item_path = os.path.join(reports_base_dir, item)
+            
+            # Ensure we are strictly interacting with directories
+            if os.path.isdir(item_path):
+                if item != TODAY:
+                    print(f" 🗑️ Deleting historical artifact directory: {item_path}")
+                    shutil.rmtree(item_path)
+                    purged_count += 1
+                else:
+                    print(f" ✅ Preserving active current directory: {item_path}")
+                    
+        print(f" 🟢 Purge cycle completed. Cleared {purged_count} historical directories.")
+    except Exception as e:
+        print(f" [ERROR] Structural failure during filesystem cleanup: {str(e)}")
 
 def run_production_pipeline():
     print("=" * 110)
@@ -49,7 +79,6 @@ def run_production_pipeline():
     # -------------------------------------------------------------------------
     # STAGE 2: pick stocks from bullish sectors only
     # -------------------------------------------------------------------------
-    
     filtered_stocks = [
         symbol for symbol, sector in cluster.sector_mapping.items() if sector in bullish_sectors
     ]
@@ -58,7 +87,6 @@ def run_production_pipeline():
     # -------------------------------------------------------------------------
     # STAGE 3: Core Pipeline Initialization
     # -------------------------------------------------------------------------
-
     gmm_score_map = dict(zip(sectors["Sector"], sectors["Sector_Score"]))
     gmm_regime_map = dict(zip(sectors["Sector"], sectors["Macro_Regime"]))
 
@@ -81,7 +109,6 @@ def run_production_pipeline():
     # -------------------------------------------------------------------------
     # 4: Machine Learning Training To Find Best Indicators
     # -------------------------------------------------------------------------
-    
     print("\n[HOOK] Train configuration active. Commencing XGBoost parameter updates...")
     run_offline_model_training(nse_df, rule_engine)
 
@@ -149,8 +176,13 @@ def run_production_pipeline():
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
     print(" 🟢 Saved dashboard layout locally to 'index.html'.")
+    # deployer_engine.deploy_to_github(file_content=html, destination_path="index.html")
 
-    deployer_engine.deploy_to_github(file_content=html, destination_path="index.html")
+    # -------------------------------------------------------------------------
+    # STAGE 7: Historical Artifact Purge Engine
+    # -------------------------------------------------------------------------
+    # Executed right before exit to guarantee today's processing completes first
+    purge_historical_artifacts(reports_base_dir="reports")
 
 if __name__ == "__main__":
     run_production_pipeline()

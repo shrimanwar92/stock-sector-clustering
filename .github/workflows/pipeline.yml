@@ -1,0 +1,60 @@
+name: SWING TRADING STOCKS PIPELINE
+
+on:
+  schedule:
+    # 8:00 PM IST matches 2:30 PM (14:30) UTC. Runs Monday through Friday.
+    - cron: '30 14 * * 1-5'
+  workflow_dispatch: # Allows manual trigger from UI
+
+permissions:
+  contents: write # Explicitly grants write permissions to allow pushing updates back
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      # This runs the full pipeline, generates the reports, and purges old ones natively
+      - name: Run Trading Pipeline
+        run: python main.py
+        env:
+          # This maps the GitHub Secret to an OS Environment Variable
+          REPO_OWNER: shrimanwar92
+          REPO_NAME: stock-sector-clustering
+          BRANCH: main
+          GITHUB_PAT: ${{ secrets.PAT_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      # Consolidates new additions and directory purges in a single atomic commit step
+      - name: Commit and Push Updated Artifacts
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Stage all modifications, new directories, and deletions within the reports folder
+          git add reports/
+          
+          # Conditional check to ensure we don't throw an empty commit error if run multiple times a day
+          if git diff --staged --quiet; then
+            echo "No structural changes or new reports detected. Skipping push."
+          else
+            TODAY_DATE=$(date +"%d-%m-%Y")
+            git commit -m "🤖 Dynamic Swing Trading Data Deployment: [$TODAY_DATE]"
+            git push origin main
+          fi
