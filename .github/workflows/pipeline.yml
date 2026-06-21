@@ -47,8 +47,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Stage all modifications, new directories, and deletions within the reports folder
-          git add reports/
+          git add .
           
           # Conditional check to ensure we don't throw an empty commit error if run multiple times a day
           if git diff --staged --quiet; then

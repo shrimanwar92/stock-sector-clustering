@@ -1,7 +1,7 @@
 import os
+from datetime import datetime, timedelta, timezone
+import os
 import shutil
-import pandas as pd
-from datetime import datetime
 from dotenv import load_dotenv
 
 # Import updated modular entities
@@ -17,33 +17,47 @@ load_dotenv()
 
 def purge_historical_artifacts(reports_base_dir="reports"):
     """
-    Scans the reports folder and aggressively deletes directories 
-    matching past dates to maintain a clean atomic git footprint.
+    Safely purges historical reports ONLY if today's automated trading run 
+    successfully generated fresh target data assets.
     """
     print("\n[STAGE 7] Executing Historical Artifact Purge Engine...")
     
-    # Generate the exact today string matching your directory schema
-    print(f" Target active directory to preserve: {TODAY}")
+    # 1. Enforce strict Indian Standard Time (IST) alignment to override cloud runner UTC drift
+    IST = timezone(timedelta(hours=5, minutes=30))
+    today_folder_name = datetime.now(IST).strftime("[%d-%m-%Y]")
+    today_folder_path = os.path.join(reports_base_dir, today_folder_name)
     
+    print(f" Target active directory to preserve (IST Profile): {today_folder_name}")
+    
+    # Verify base directory existence
     if not os.path.exists(reports_base_dir):
-        print(f" ⚠️ Warning: Base directory '{reports_base_dir}' does not exist. Skipping purge.")
+        print(f" ⚠️ Base directory '{reports_base_dir}' does not exist. Creating empty structure.")
+        os.makedirs(reports_base_dir, exist_ok=True)
         return
 
+    # 2. THE CRITICAL SYSTEM GUARD:
+    # If today's run yielded no signals, preserve history to prevent repository data wipes.
+    if not os.path.exists(today_folder_path):
+        print(f" ⚠️ Notice: Today's folder '{today_folder_name}' was not generated (No confirmed trades/assets logged).")
+        print(" [SAFEGUARD ACTUATED] Halting purge routine to protect existing historical repository data.")
+        return
+
+    # 3. Controlled Purge Matrix (Runs only when today's generation is confirmed present)
     try:
         purged_count = 0
         for item in os.listdir(reports_base_dir):
             item_path = os.path.join(reports_base_dir, item)
             
-            # Ensure we are strictly interacting with directories
+            # Interact exclusively with child directories
             if os.path.isdir(item_path):
-                if item != TODAY:
+                if item != today_folder_name:
                     print(f" 🗑️ Deleting historical artifact directory: {item_path}")
                     shutil.rmtree(item_path)
                     purged_count += 1
                 else:
                     print(f" ✅ Preserving active current directory: {item_path}")
                     
-        print(f" 🟢 Purge cycle completed. Cleared {purged_count} historical directories.")
+        print(f" 🟢 Purge cycle completed successfully. Cleared {purged_count} historical records.")
     except Exception as e:
         print(f" [ERROR] Structural failure during filesystem cleanup: {str(e)}")
 
