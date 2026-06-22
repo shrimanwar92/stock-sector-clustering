@@ -1,0 +1,142 @@
+{
+    "HONAUT": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No specific recent news or institutional flow drivers are immediately apparent for HONAUT. Its recent performance appears to be driven by technical factors.",
+        "confidence_score": 50,
+        "strategic_threat": "Potential competition from emerging technologies in its sector and cyclical sensitivity of its end markets.",
+        "shap_synthesis": "The model's prediction for HONAUT is driven by a positive 'Feature_ATR_Ratio', suggesting a potential for volatility and price movement, but this is countered by negative 'Feature_ROC_20' and 'Feature_RSI', indicating a lack of recent upward momentum. Positive 'Feature_ADX_14' and 'Feature_MACD_Hist_Accel' suggest some trending activity, but the overall sentiment leans neutral due to conflicting indicators."
+    },
+    "APARINDS": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "General market sentiment and technical indicators appear to be the primary drivers for APARINDS, with no significant news or fundamental catalysts highlighted.",
+        "confidence_score": 50,
+        "strategic_threat": "Competition from larger, more established players and the risk of oversupply in its specific product segment.",
+        "shap_synthesis": "APARINDS' neutral prediction is influenced by a strong positive 'Feature_ATR_Ratio' indicating potential price swings. However, negative 'Feature_ROC_20' and 'Feature_RSI' temper bullish expectations, while a positive 'Feature_ADX_14' and 'Feature_Relative_Strength' suggest some underlying directional conviction. The overall balance of these technical factors leads to a neutral classification."
+    },
+    "DATAPATTNS": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No specific macroeconomic, fundamental, or market-structure catalysts are prominently driving DATAPATTNS; its prediction is primarily based on technical patterns.",
+        "confidence_score": 50,
+        "strategic_threat": "Rapid technological obsolescence and increasing data privacy regulations impacting data handling businesses.",
+        "shap_synthesis": "DATAPATTNS exhibits a neutral sentiment, primarily driven by a high positive 'Feature_ATR_Ratio', suggesting volatility. The negative 'Feature_ROC_20' and 'Feature_RSI' indicate a lack of recent upward price trend. Positive contributions from 'Feature_MACD_Hist_Accel' and 'Feature_Volume_Ratio' are noted, but the overall technical picture, especially the weak relative strength, suggests a neutral outlook."
+    },
+    "GRAPHITE": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Positive recent price momentum indicated by ROC and RSI, along with increasing relative strength, suggests a bullish technical outlook despite some short-term volatility indicators.",
+        "confidence_score": 65,
+        "strategic_threat": "Dependence on commodity prices, potential for substitute materials, and environmental regulations related to its production.",
+        "shap_synthesis": "GRAPHITE's bullish sentiment is supported by strong positive 'Feature_ROC_20' and 'Feature_RSI', indicating healthy upward momentum. While 'Feature_ATR_Ratio' is negative, suggesting lower recent volatility, positive 'Feature_MACD_Hist_Accel' and 'Feature_Relative_Strength' reinforce the upward trend. The combination of strong momentum and improving relative strength points to a bullish classification."
+    },
+    "RRKABEL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The selection of RRKABEL appears to be driven by technical indicators rather than specific news or fundamental catalysts. Market trends are the primary influence.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense price competition within the cable manufacturing sector and cyclical demand tied to infrastructure and construction.",
+        "shap_synthesis": "RRKABEL is classified as neutral. The significant positive 'Feature_ATR_Ratio' indicates potential for price movement, while the negative 'Feature_ROC_20' and 'Feature_RSI' suggest a lack of sustained upward momentum. Positive 'Feature_ADX_14' and 'Feature_MACD_Hist_Accel' point to some trending activity, but the conflicting signals result in a neutral outlook."
+    },
+    "CAPLIPOINT": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "No specific macroeconomic, fundamental, or market-structure catalysts are evident for CAPLIPOINT; the model's prediction relies on technical patterns.",
+        "confidence_score": 50,
+        "strategic_threat": "Regulatory scrutiny on its product efficacy and potential competition from generics or alternative treatment methods.",
+        "shap_synthesis": "CAPLIPOINT's neutral classification stems from a high positive 'Feature_ATR_Ratio', indicating volatility. Negative 'Feature_ROC_20' and 'Feature_Relative_Strength' are observed, while positive 'Feature_ADX_14' and 'Feature_MACD_Hist_Accel' suggest some trending characteristics. The mixed technical signals, particularly the downward pressure on relative strength, result in a neutral outlook."
+    },
+    "AIAENG": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The prediction for AIAENG is driven by technical factors, with no distinct macroeconomic, fundamental, or market-structure catalysts readily apparent.",
+        "confidence_score": 50,
+        "strategic_threat": "Exposure to cyclical industries and potential supply chain disruptions impacting project timelines and costs.",
+        "shap_synthesis": "AIAENG shows a neutral sentiment, driven by a positive 'Feature_ATR_Ratio' suggesting volatility. Negative 'Feature_ROC_20' and 'Feature_RSI' indicate a lack of strong upward momentum. While 'Feature_MACD_Hist_Accel', 'Feature_Volume_Ratio', and 'Feature_Relative_Strength' offer some positive technical signals, the overall balance of indicators, particularly the subdued relative strength, leads to a neutral classification."
+    },
+    "SCHNEIDER": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Schneider Electric's classification appears to be driven by technical indicators, with no specific recent macroeconomic, fundamental, or market-structure catalysts being the primary driver.",
+        "confidence_score": 50,
+        "strategic_threat": "Increased competition in the automation and energy management space, and the cyclical nature of capital expenditures in its customer industries.",
+        "shap_synthesis": "SCHNEIDER is classified as neutral. A high positive 'Feature_ATR_Ratio' suggests potential volatility, contrasted by a negative 'Feature_ROC_20' and 'Feature_RSI' indicating a lack of immediate upward price trend. Positive 'Feature_MACD_Hist_Accel', 'Feature_Volume_Ratio', and 'Feature_Relative_Strength' provide some technical support, but the combination of volatility and mixed momentum signals results in a neutral outlook."
+    },
+    "VIJAYA": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The prediction for VIJAYA is driven by technical indicators; no significant recent macroeconomic, fundamental, or market-structure catalysts are identified as primary drivers.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense competition in the pharmaceutical sector and potential regulatory hurdles for new drug approvals.",
+        "shap_synthesis": "VIJAYA is neutral. A strong positive 'Feature_ATR_Ratio' indicates potential for price swings. Negative 'Feature_ROC_20' and 'Feature_RSI' suggest a lack of recent upward momentum. Positive contributions from 'Feature_MACD_Hist_Accel', 'Feature_ADX_14', and 'Feature_Volume_Ratio' suggest some trending activity, but the overall technical picture, including muted relative strength, leads to a neutral classification."
+    },
+    "FINCABLES": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "FINCABLES' classification appears to be based on technical patterns rather than specific recent macroeconomic, fundamental, or market-structure catalysts.",
+        "confidence_score": 50,
+        "strategic_threat": "Vulnerability to raw material price fluctuations and competition from both domestic and international players.",
+        "shap_synthesis": "FINCABLES is classified as neutral. The positive 'Feature_ATR_Ratio' suggests volatility, while the negative 'Feature_ROC_20' and 'Feature_RSI' indicate a lack of immediate upward momentum. Positive 'Feature_MACD_Hist_Accel' and 'Feature_Volume_Ratio' offer some technical support, but the combination of volatility and mixed momentum, alongside weak relative strength, results in a neutral outlook."
+    },
+    "GLENMARK": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Glenmark Pharmaceuticals' current classification is driven by technical factors, with no prominent recent macroeconomic, fundamental, or market-structure catalysts highlighted.",
+        "confidence_score": 50,
+        "strategic_threat": "Patent expirations on key drugs, pricing pressures from regulators and competitors, and the high cost of R&D.",
+        "shap_synthesis": "GLENMARK is neutral. The positive 'Feature_ROC_20' and 'Feature_Relative_Strength' suggest some positive price action, but this is countered by negative 'Feature_ATR_Ratio', 'Feature_ADX_14', and 'Feature_RSI', indicating waning momentum and trend strength. Positive 'Feature_MACD_Hist_Accel' provides a slight upward bias, but the overall mixed technical signals lead to a neutral classification."
+    },
+    "WELCORP": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "WELCORP's classification is primarily driven by technical indicators, with no specific recent macroeconomic, fundamental, or market-structure catalysts identified as the primary influence.",
+        "confidence_score": 50,
+        "strategic_threat": "Exposure to cyclical demand from the construction and infrastructure sectors and potential for raw material price volatility.",
+        "shap_synthesis": "WELCORP is neutral. The high positive 'Feature_ATR_Ratio' indicates significant volatility. Negative 'Feature_ROC_20' and 'Feature_RSI' suggest a lack of immediate upward price momentum. While 'Feature_MACD_Hist_Accel', 'Feature_ADX_14', and 'Feature_Relative_Strength' offer some positive technical signals, the overall balance of mixed indicators results in a neutral classification."
+    },
+    "TEJASNET": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The prediction for TEJASNET is based on technical patterns; no specific recent macroeconomic, fundamental, or market-structure catalysts are prominently driving its classification.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense competition in the telecommunications infrastructure space and rapid technological advancements requiring continuous investment.",
+        "shap_synthesis": "TEJASNET is classified as neutral. A strong positive 'Feature_ATR_Ratio' suggests significant volatility. Negative 'Feature_ROC_20' and 'Feature_RSI' indicate a lack of immediate upward momentum. Positive 'Feature_ADX_14', 'Feature_Volume_Ratio', and 'Feature_MACD_Hist_Accel' provide some technical support, but the overall mixed signals and negative relative strength result in a neutral outlook."
+    },
+    "TRITURBINE": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "TRITURBINE's classification appears to be driven by technical indicators, with no specific recent macroeconomic, fundamental, or market-structure catalysts being the primary driver.",
+        "confidence_score": 50,
+        "strategic_threat": "Dependence on renewable energy policies and large project cycles, and competition from established global energy players.",
+        "shap_synthesis": "TRITURBINE is neutral. The high positive 'Feature_ATR_Ratio' suggests volatility. Negative 'Feature_ROC_20' and 'Feature_RSI' indicate a lack of sustained upward momentum. Positive 'Feature_ADX_14', 'Feature_MACD_Hist_Accel', and 'Feature_Volume_Ratio' provide some technical support, but the overall balance of mixed signals, including muted relative strength, leads to a neutral classification."
+    },
+    "ADANIENSOL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The prediction for ADANIENSOL is driven by technical indicators, with no specific recent macroeconomic, fundamental, or market-structure catalysts standing out as primary influences.",
+        "confidence_score": 50,
+        "strategic_threat": "Regulatory risks associated with the energy sector and potential headwinds from geopolitical factors impacting energy infrastructure projects.",
+        "shap_synthesis": "ADANIENSOL is neutral. A positive 'Feature_ATR_Ratio' indicates volatility. Negative 'Feature_ROC_20' and 'Feature_RSI' suggest a lack of immediate upward momentum. Positive 'Feature_MACD_Hist_Accel' and 'Feature_Volume_Ratio' provide some technical support, but the overall mixed technical signals, coupled with negative 'Feature_ADX_14' and 'Feature_EMA_Dist', result in a neutral classification."
+    },
+    "ADANIGREEN": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "ADANIGREEN's classification is driven by technical indicators; no specific recent macroeconomic, fundamental, or market-structure catalysts are highlighted as the primary influence.",
+        "confidence_score": 50,
+        "strategic_threat": "Exposure to fluctuating renewable energy tariffs and potential policy shifts impacting the sector, as well as competition from other energy providers.",
+        "shap_synthesis": "ADANIGREEN is neutral. A positive 'Feature_ATR_Ratio' indicates potential volatility. Negative 'Feature_ROC_20' and 'Feature_RSI' suggest a lack of immediate upward price momentum. Positive 'Feature_ADX_14', 'Feature_MACD_Hist_Accel', and 'Feature_Volume_Ratio' offer some technical support, but the overall mixed technical signals, combined with negative 'Feature_EMA_Dist', result in a neutral classification."
+    },
+    "TITAGARH": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "TITAGARH's classification is driven by technical indicators; no specific recent macroeconomic, fundamental, or market-structure catalysts are identified as the primary drivers.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense competition in the shipbuilding and rail sectors, and reliance on government contracts and large infrastructure projects.",
+        "shap_synthesis": "TITAGARH is neutral. A strong positive 'Feature_ATR_Ratio' suggests volatility. Negative 'Feature_ROC_20' and 'Feature_RSI' indicate a lack of immediate upward momentum. Positive contributions from 'Feature_MACD_Hist_Accel' and 'Feature_Volume_Ratio' offer some technical support, but the overall mixed technical signals, including negative 'Feature_ADX_14' and 'Feature_EMA_Dist', result in a neutral classification."
+    },
+    "LAURUSLABS": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The prediction for LAURUSLABS is driven by technical factors; no specific recent macroeconomic, fundamental, or market-structure catalysts are prominently highlighted.",
+        "confidence_score": 50,
+        "strategic_threat": "R&D intensity and associated risks, pricing pressures in the API market, and potential regulatory challenges for pharmaceutical products.",
+        "shap_synthesis": "LAURUSLABS is neutral. A positive 'Feature_ATR_Ratio' indicates volatility. Negative 'Feature_ROC_20' and 'Feature_RSI' suggest a lack of immediate upward momentum. Positive 'Feature_ADX_14', 'Feature_MACD_Hist_Accel', and 'Feature_Volume_Ratio' offer some technical support, but the overall mixed technical signals, combined with negative 'Feature_EMA_Dist', result in a neutral classification."
+    },
+    "GRANULES": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "GRANULES' classification is driven by technical indicators; no specific recent macroeconomic, fundamental, or market-structure catalysts are identified as the primary drivers.",
+        "confidence_score": 50,
+        "strategic_threat": "Competition in the generic pharmaceutical and API market, and the need for continuous investment in R&D and manufacturing capabilities.",
+        "shap_synthesis": "GRANULES is neutral. A positive 'Feature_ATR_Ratio' indicates volatility. Negative 'Feature_ROC_20' and 'Feature_RSI' suggest a lack of immediate upward momentum. Positive 'Feature_MACD_Hist_Accel' and 'Feature_Volume_Ratio' offer some technical support, but the overall mixed technical signals, including negative 'Feature_ADX_14' and 'Feature_EMA_Dist', result in a neutral classification."
+    },
+    "SYRMA": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "SYRMA's classification is driven by technical indicators, with no specific recent macroeconomic, fundamental, or market-structure catalysts highlighted as the primary influence.",
+        "confidence_score": 50,
+        "strategic_threat": "Competition in the electronics manufacturing services (EMS) sector and potential supply chain vulnerabilities.",
+        "shap_synthesis": "SYRMA is neutral. A high positive 'Feature_ATR_Ratio' indicates potential volatility. Negative 'Feature_ROC_20' and 'Feature_RSI' suggest a lack of immediate upward momentum. Positive 'Feature_ADX_14', 'Feature_Relative_Strength', and 'Feature_Volume_Ratio' offer some technical support, but the overall mixed signals and negative 'Feature_MACD_Hist_Accel' lead to a neutral classification."
+    }
+}
