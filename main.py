@@ -1,42 +1,94 @@
 import os
-from datetime import datetime, timedelta, timezone
 import os
 import shutil
 from dotenv import load_dotenv
-
-# Import updated modular entities
+import shap
+import numpy as np
 from clustering import SectorClusterEngine
 from rule_engine import StocksRuleEngine
 from ml_feature_engg_train_params import run_offline_model_training
 
 from deployment_engine import ProgrammaticDashboardDeployer
 from llm_sentiment_engine import GeminiSentimentEngine
-from constants import LOOKBACK_YEARS, TODAY, REPORTS_DIR
+from constants import LOOKBACK_YEARS, TODAY, REPORTS_DIR, FEATURE_COLUMNS
 
 load_dotenv()
 
-def purge_historical_artifacts(reports_base_dir="reports"):
+def extract_local_shap_drivers(model, X_live, feature_columns):
+    """
+    Extracts local SHAP decision drivers for a multi-class model,
+    capturing both positive and negative drivers sorted by absolute impact magnitude.
+    """
+    import numpy as np
+    import shap
+    import pandas as pd
+
+    # 1. Feature Alignment Guard
+    try:
+        model_features = model.get_booster().feature_names
+    except Exception:
+        model_features = None
+
+    if model_features is not None:
+        X_df = pd.DataFrame(X_live, columns=feature_columns)
+        X_aligned = X_df[model_features].values
+        active_features = model_features
+    else:
+        X_aligned = X_live
+        active_features = feature_columns
+
+    # 2. Compute SHAP values
+    explainer = shap.TreeExplainer(model)
+    raw_shap = explainer.shap_values(X_aligned)
+
+    # 3. Isolate Class 2 (Alpha_ML_Score / Success Class)
+    if isinstance(raw_shap, list):
+        shap_matrix = raw_shap[2] if len(raw_shap) > 2 else raw_shap[-1]
+    elif isinstance(raw_shap, np.ndarray) and len(raw_shap.shape) == 3:
+        if raw_shap.shape[2] == 3:
+            shap_matrix = raw_shap[:, :, 2]
+        elif raw_shap.shape[0] == 3:
+            shap_matrix = raw_shap[2, :, :]
+        else:
+            shap_matrix = raw_shap[:, :, -1]
+    elif hasattr(raw_shap, "values") and len(raw_shap.values.shape) == 3:
+        shap_matrix = raw_shap.values[:, :, 2]
+    else:
+        shap_matrix = raw_shap
+
+    # 4. Parse execution metrics using absolute magnitude
+    shap_drivers_result = []
+    for i in range(len(X_aligned)):
+        sample_drivers = {}
+        for j, feat in enumerate(active_features):
+            attribution_weight = shap_matrix[i, j]
+            
+            # ✅ Capture both tailwinds (+) and headwinds (-) ignoring micro-noise
+            if abs(attribution_weight) > 1e-4:
+                sample_drivers[feat] = float(attribution_weight)
+                
+        # ✅ Sort by absolute importance so the most influential drivers appear first
+        sorted_drivers = dict(sorted(sample_drivers.items(), key=lambda item: abs(item[1]), reverse=True))
+        shap_drivers_result.append(sorted_drivers)
+
+    return shap_drivers_result
+
+def purge_historical_artifacts(reports_dir = "reports"):
     """
     Safely purges historical reports ONLY if today's automated trading run 
     successfully generated fresh target data assets.
     """
     print("\n[STAGE 7] Executing Historical Artifact Purge Engine...")
 
-    # If today's run yielded no signals, preserve history to prevent repository data wipes.
-    if not os.path.exists(TODAY):
-        print(f" ⚠️ Notice: Today's folder '{TODAY}' was not generated (No confirmed trades/assets logged).")
-        print(" [SAFEGUARD ACTUATED] Halting purge routine to protect existing historical repository data.")
-        return
-
     # 3. Controlled Purge Matrix (Runs only when today's generation is confirmed present)
     try:
         purged_count = 0
-        for item in os.listdir(REPORTS_DIR):
-            item_path = os.path.join(REPORTS_DIR, item)
+        for item in os.listdir(reports_dir):
+            item_path = os.path.join(reports_dir, item)
             
             # Interact exclusively with child directories
             if os.path.isdir(item_path):
-                if item != TODAY:
+                if item != f"[{TODAY}]":
                     print(f" 🗑️ Deleting historical artifact directory: {item_path}")
                     shutil.rmtree(item_path)
                     purged_count += 1
@@ -130,59 +182,61 @@ def run_production_pipeline():
         return
 
     # -------------------------------------------------------------------------
-    # STAGE 5: Autonomous LLM Semantic Overlay
+    # STAGE 5: Autonomous LLM Semantic Overlay (With SHAP Grounding)
     # -------------------------------------------------------------------------
     print("\n[STAGE 5] Querying Autonomous LLM Narrative Analyst (Batch Mode)...")
+    
+    # Extract the live feature values matching the top candidates
+    X_live = execution_signals[FEATURE_COLUMNS].values
+    shap_drivers = extract_local_shap_drivers(rule_engine.model, X_live, FEATURE_COLUMNS)
+    
+    # 🛠️ FIX 1: Align naming convention to match the exact key the LLM Prompt Generator expects
+    execution_signals['shap_drivers'] = shap_drivers
+    execution_signals['quantitative_drivers'] = shap_drivers 
+
     llm_engine = GeminiSentimentEngine()
     
-    tickers_payload = [
-        {"symbol": row["Symbol"], "sector": row["Sector"], "close": row["Close"], "label": row["Strategic_Label"]}
-        for idx, row in execution_signals.iterrows()
-    ]
+    # Dispatch data to the engine
+    batch_analysis = llm_engine.analyze_batch_narratives(execution_signals)
 
-    batch_analysis = llm_engine.analyze_batch_narratives(tickers_payload)
-    
-    sentiments, catalysts, confidence_scores, threats = [], [], [], []
-    for row in tickers_payload:
-        sym = row["symbol"]
+    # 🛠️ FIX 2: Uncomment and initialize lists to avoid NameError/stale mapping crashes
+    sentiments, catalysts, confidence_scores, threats, shap_syntheses = [], [], [], [], []
+
+    # 🛠️ FIX 3: Parse the LLM batch dict directly against the execution_signals rows
+    for _, row in execution_signals.iterrows():
+        # Production Safeguard: Normalize symbol casing to guarantee exact match with the LLM output keys
+        sym = str(row.get("Symbol", "")).strip().upper()
+        
         analysis = batch_analysis.get(sym, {})
+        
         sentiments.append(analysis.get("sentiment", "NEUTRAL"))
         catalysts.append(analysis.get("news_catalyst", "No active catalyst logged."))
         confidence_scores.append(analysis.get("confidence_score", 60))
         threats.append(analysis.get("strategic_threat", "No structural risk identified."))
+        
+        # Pull the now-populated explainability text
+        shap_syntheses.append(analysis.get("shap_synthesis", "No mathematical-fundamental alignment synthesis generated."))
 
+    # Map arrays cleanly back to your master execution signal DataFrame/Structure
     execution_signals["Sentiment"] = sentiments
     execution_signals["News_Catalyst"] = catalysts
     execution_signals["Confidence_Score"] = confidence_scores
     execution_signals["Strategic_Threat"] = threats
+    execution_signals["SHAP_Synthesis"] = shap_syntheses
 
     # -------------------------------------------------------------------------
     # STAGE 6: Programmatic HTML Generation & Deployment
     # -------------------------------------------------------------------------
     print("\n[STAGE 6] Triggering Automated GitHub Deployment Pipelines...")
     
-    deployer_engine = ProgrammaticDashboardDeployer(
-        github_token=os.getenv("GITHUB_PAT"),
-        repo_owner=os.getenv("REPO_OWNER"),
-        repo_name=os.getenv("REPO_NAME"),
-        branch=os.getenv("BRANCH")
-    )
-
-    # Sort final candidates by raw statistical probability before dashboard generation
-    execution_signals = execution_signals.sort_values(by="Alpha_ML_Score", ascending=False)
-    html = deployer_engine.generate_html_string(execution_signals)
-
-    # save local
-    with open("index.html", "w", encoding="utf-8") as f:
-        f.write(html)
-    print(" 🟢 Saved dashboard layout locally to 'index.html'.")
-    # deployer_engine.deploy_to_github(file_content=html, destination_path="index.html")
+    deployer = ProgrammaticDashboardDeployer()
+    deployer.generate_and_save_data(execution_signals)
 
     # -------------------------------------------------------------------------
     # STAGE 7: Historical Artifact Purge Engine
     # -------------------------------------------------------------------------
     # Executed right before exit to guarantee today's processing completes first
-    purge_historical_artifacts(reports_base_dir="reports")
+    purge_historical_artifacts()
 
 if __name__ == "__main__":
     run_production_pipeline()

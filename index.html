@@ -34,7 +34,7 @@
         <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 border-t sm:border-t-0 pt-3 sm:pt-0 border-[#e2e8f0]">
             <div class="text-xs text-[#64748b] text-right">
                 <p class="font-semibold text-[#334155]">Data Published on</p>
-                <p class="font-mono mt-0.5 text-[11px]">2026-06-21 17:08:44</p>
+                <p id="publish-timestamp" class="font-mono mt-0.5 text-[11px]">Loading timestamp...</p>
             </div>
         </div>
     </header>
@@ -74,480 +74,63 @@
             <button onclick="filterTable('ALL')" id="btn-ALL" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-[#0f172a] text-white border-[#0f172a]">
                 All Verified Setups (<span id="count-ALL">0</span>)
             </button>
-            <button onclick="filterTable('ACTIVE BREAKOUT')" id="btn-ACTIVE" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
+            <button onclick="filterTable('ACTIVE')" id="btn-ACTIVE" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
                 🚀 Active Breakout (<span id="count-ACTIVE">0</span>)
             </button>
-            <button onclick="filterTable('INSIDER BREAKOUT')" id="btn-INSIDER" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
+            <button onclick="filterTable('INSIDER')" id="btn-INSIDER" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
                 💎 Insider Breakout (<span id="count-INSIDER">0</span>)
             </button>
             <button onclick="filterTable('LAUNCHPAD')" id="btn-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
                 🏢 Launchpad (<span id="count-LAUNCHPAD">0</span>)
             </button>
-            <button onclick="filterTable('INSTITUTIONAL LAUNCHPAD')" id="btn-INST-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
+            <button onclick="filterTable('INST-LAUNCHPAD')" id="btn-INST-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
                 🏛️ Institutional Launchpad (<span id="count-INST-LAUNCHPAD">0</span>)
             </button>
         </section>
 
         <section class="w-full">
             <div class="bg-white border border-[#e2e8f0] rounded-2xl p-4 sm:p-6 shadow-sm">
-                <div id="ticker-rows" class="grid gap-4"></div>
+                <div id="ticker-rows" class="grid gap-4">
+                    <div class="p-12 text-center text-[#64748b] font-mono text-sm">
+                        <i class="fa-solid fa-spinner fa-spin mr-2"></i> Synchronizing live pipeline data...
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
     <script>
-        const initialTickers = [
-            {
-                        "symbol": "HFCL",
-                        "label": "\ud83c\udfe2 INSTITUTIONAL LAUNCHPAD",
-                        "close": 209.61,
-                        "stopLoss": 189.91,
-                        "profitTarget": 249.0,
-                        "rsi": 73.64933261838385,
-                        "emaDist": 17.87234747736046,
-                        "volRatio": 0.5528242551478956,
-                        "macdAccel": 0.0,
-                        "closeStrength": 0.9999999998214285,
-                        "sector": "TELECOMMUNICATION",
-                        "trendAligned": 0,
-                        "relativeStrength": 102.0164107113556,
-                        "deliveryRatio": 1.2199915577665927,
-                        "atrRatio": 1.3898041374212298,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Strong order book in telecom infrastructure, potential government focus on 5G rollout and digital India initiatives.",
-                        "confidence": 85,
-                        "threat": "Increasing competition in the telecom infrastructure space and potential delays in project execution."
-            },
-            {
-                        "symbol": "GRAPHITE",
-                        "label": "\ud83c\udfe2 INSTITUTIONAL LAUNCHPAD",
-                        "close": 639.55,
-                        "stopLoss": 620.6,
-                        "profitTarget": 677.45,
-                        "rsi": 36.242775084614955,
-                        "emaDist": -5.825509900290828,
-                        "volRatio": 0.555082911472607,
-                        "macdAccel": 0.0,
-                        "closeStrength": 0.3702531645335236,
-                        "sector": "CAPITAL_GOODS",
-                        "trendAligned": 0,
-                        "relativeStrength": 6.239138196661642,
-                        "deliveryRatio": 1.2946326566978124,
-                        "atrRatio": 0.9176871525646623,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Increasing demand for graphite electrodes due to growth in steel production, particularly from the electric arc furnace (EAF) route. Expansion plans.",
-                        "confidence": 80,
-                        "threat": "Volatility in raw material prices (petroleum coke, needle coke) and potential for oversupply in the global market."
-            },
-            {
-                        "symbol": "TEJASNET",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 632.35,
-                        "stopLoss": 565.87,
-                        "profitTarget": 765.3,
-                        "rsi": 71.05670854195908,
-                        "emaDist": 13.327096838038965,
-                        "volRatio": 0.9325251185082692,
-                        "macdAccel": 0.0,
-                        "closeStrength": 0.745641025625731,
-                        "sector": "TELECOMMUNICATION",
-                        "trendAligned": 0,
-                        "relativeStrength": 8.284064033066674,
-                        "deliveryRatio": 0.9630448032196426,
-                        "atrRatio": 1.1692833396745541,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Focus on optical networking solutions, 5G deployment, and expansion into new geographies. Government initiatives supporting domestic manufacturing.",
-                        "confidence": 85,
-                        "threat": "Intense competition from global and domestic players, rapid technological advancements requiring continuous R&D investment."
-            },
-            {
-                        "symbol": "NLCINDIA",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 321.7,
-                        "stopLoss": 305.1,
-                        "profitTarget": 354.9,
-                        "rsi": 47.71221722077542,
-                        "emaDist": -1.2108383862517427,
-                        "volRatio": 0.7387045744828412,
-                        "macdAccel": 0.0,
-                        "closeStrength": 0.2929292928997025,
-                        "sector": "POWER",
-                        "trendAligned": 0,
-                        "relativeStrength": 18.32503793423518,
-                        "deliveryRatio": 1.0998077260136536,
-                        "atrRatio": 1.0479617036825075,
-                        "sectorAligned": 0,
-                        "sentiment": "NEUTRAL",
-                        "news_catalyst": "Diversification into renewable energy (solar and wind) alongside its core lignite mining and thermal power generation business. Government's push for energy transition.",
-                        "confidence": 70,
-                        "threat": "Regulatory risks associated with coal mining and thermal power, price fluctuations in coal, and challenges in scaling up renewable energy projects."
-            },
-            {
-                        "symbol": "SYRMA",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 1334.0,
-                        "stopLoss": NaN,
-                        "profitTarget": NaN,
-                        "rsi": 75.79879330464595,
-                        "emaDist": 9.725820888154374,
-                        "volRatio": 0.8111471986593995,
-                        "macdAccel": 0.0,
-                        "closeStrength": NaN,
-                        "sector": "CAPITAL_GOODS",
-                        "trendAligned": 0,
-                        "relativeStrength": 103.38066656907237,
-                        "deliveryRatio": 0.9966886825132514,
-                        "atrRatio": 1.0152864269550164,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Strong presence in electronics manufacturing services (EMS), benefiting from 'Make in India' initiatives and demand from sectors like automotive, industrial, and consumer electronics.",
-                        "confidence": 88,
-                        "threat": "Supply chain disruptions, geopolitical risks impacting component availability, and intense competition in the EMS sector."
-            },
-            {
-                        "symbol": "TRITURBINE",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 672.3,
-                        "stopLoss": 612.43,
-                        "profitTarget": 792.04,
-                        "rsi": 55.13745981777744,
-                        "emaDist": 1.37510768807148,
-                        "volRatio": 0.3506748945242705,
-                        "macdAccel": 0.0,
-                        "closeStrength": 0.23101265822053596,
-                        "sector": "CAPITAL_GOODS",
-                        "trendAligned": 0,
-                        "relativeStrength": 5.085514032941742,
-                        "deliveryRatio": 1.033334164953116,
-                        "atrRatio": 1.1728112580923435,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Focus on renewable energy generation (wind) and potentially expanding into other green energy solutions. Government policies favoring renewable energy adoption.",
-                        "confidence": 75,
-                        "threat": "Intermittency of wind power, dependence on government incentives and policies, and competition from larger renewable energy players."
-            },
-            {
-                        "symbol": "SPARC",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 238.09,
-                        "stopLoss": 211.52,
-                        "profitTarget": 291.23,
-                        "rsi": 67.49758700617069,
-                        "emaDist": 10.575560287979183,
-                        "volRatio": 0.357008086716093,
-                        "macdAccel": 0.0,
-                        "closeStrength": 0.21568627448754568,
-                        "sector": "HEALTHCARE",
-                        "trendAligned": 0,
-                        "relativeStrength": 38.38412858510114,
-                        "deliveryRatio": 1.144441163796066,
-                        "atrRatio": 1.2770315937237116,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Focus on pharmaceutical research and development, particularly in ophthalmology. Potential for novel drug approvals and partnerships.",
-                        "confidence": 70,
-                        "threat": "High R&D costs, long development cycles for drugs, regulatory hurdles for drug approvals, and patent expirations."
-            },
-            {
-                        "symbol": "SCHNEIDER",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 1331.4,
-                        "stopLoss": NaN,
-                        "profitTarget": NaN,
-                        "rsi": 67.62427367848747,
-                        "emaDist": 13.408672570932717,
-                        "volRatio": 1.1335081167155858,
-                        "macdAccel": 0.0,
-                        "closeStrength": NaN,
-                        "sector": "CAPITAL_GOODS",
-                        "trendAligned": 0,
-                        "relativeStrength": 43.7950041999154,
-                        "deliveryRatio": 0.8356754538695497,
-                        "atrRatio": 1.242166816509557,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Global leader in energy management and automation. Benefits from digitization, energy efficiency trends, and smart grid development. Strong order pipeline.",
-                        "confidence": 90,
-                        "threat": "Economic slowdown impacting capital expenditure, currency fluctuations, and intense competition from diversified players."
-            },
-            {
-                        "symbol": "ADANIENSOL",
-                        "label": "\ud83c\udfe2 INSTITUTIONAL LAUNCHPAD",
-                        "close": 1507.4,
-                        "stopLoss": NaN,
-                        "profitTarget": NaN,
-                        "rsi": 57.24414974628984,
-                        "emaDist": 1.6612962602664236,
-                        "volRatio": 0.5713231359051149,
-                        "macdAccel": 0.0,
-                        "closeStrength": NaN,
-                        "sector": "POWER",
-                        "trendAligned": 0,
-                        "relativeStrength": 48.057988638624025,
-                        "deliveryRatio": 1.3978973135365327,
-                        "atrRatio": 1.2847854233184888,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Focus on solar energy projects and renewable energy infrastructure. Backed by the Adani Group's expansion plans in the green energy sector.",
-                        "confidence": 88,
-                        "threat": "Regulatory changes in the renewable energy sector, land acquisition challenges, and execution risks in large-scale projects."
-            },
-            {
-                        "symbol": "LAURUSLABS",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 1412.9,
-                        "stopLoss": NaN,
-                        "profitTarget": NaN,
-                        "rsi": 63.83960135986617,
-                        "emaDist": 3.0431411706553426,
-                        "volRatio": 0.9382341563910847,
-                        "macdAccel": 0.0,
-                        "closeStrength": NaN,
-                        "sector": "HEALTHCARE",
-                        "trendAligned": 0,
-                        "relativeStrength": 68.97782336793394,
-                        "deliveryRatio": 0.8278923369483997,
-                        "atrRatio": 1.2461263599219998,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Strong position in Active Pharmaceutical Ingredients (APIs), particularly for antiretrovirals and oncology. Expansion into formulations and contract manufacturing.",
-                        "confidence": 85,
-                        "threat": "Price erosion in APIs, increasing regulatory scrutiny from global health authorities, and competition from other API manufacturers."
-            },
-            {
-                        "symbol": "BHEL",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 414.35,
-                        "stopLoss": 386.13,
-                        "profitTarget": 470.8,
-                        "rsi": 62.657390604255866,
-                        "emaDist": 5.412898345299007,
-                        "volRatio": 1.2785533868737042,
-                        "macdAccel": 0.0,
-                        "closeStrength": 0.5289672543814131,
-                        "sector": "CAPITAL_GOODS",
-                        "trendAligned": 0,
-                        "relativeStrength": 38.562702489958575,
-                        "deliveryRatio": 1.0248054388154288,
-                        "atrRatio": 1.1320586874914829,
-                        "sectorAligned": 0,
-                        "sentiment": "NEUTRAL",
-                        "news_catalyst": "Key player in power generation equipment. Potential for revival in capex cycles for thermal and renewable power projects. Government's focus on energy security.",
-                        "confidence": 70,
-                        "threat": "Slowdown in thermal power plant orders, intense competition from international players, and the ongoing transition to renewable energy which may reduce demand for traditional equipment."
-            },
-            {
-                        "symbol": "ZEEL",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 113.36,
-                        "stopLoss": 101.64,
-                        "profitTarget": 136.8,
-                        "rsi": 65.47938973534593,
-                        "emaDist": 9.0811445294474,
-                        "volRatio": 0.7204349040351666,
-                        "macdAccel": 0.0,
-                        "closeStrength": 0.3786816268753601,
-                        "sector": "MEDIA_ENTERTAINMENT_&_PUBLICATION",
-                        "trendAligned": 0,
-                        "relativeStrength": 4.910751418198036,
-                        "deliveryRatio": 0.8860786234407632,
-                        "atrRatio": 1.295434698091101,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Merger with Sony Pictures Networks India creates a larger entertainment entity. Potential for synergies, cost optimization, and expanded content offerings.",
-                        "confidence": 80,
-                        "threat": "Intense competition in the media and entertainment sector from streaming giants and other players, regulatory changes impacting broadcasting, and subscription fatigue."
-            },
-            {
-                        "symbol": "CARBORUNIV",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 1241.7,
-                        "stopLoss": NaN,
-                        "profitTarget": NaN,
-                        "rsi": 78.99751831135023,
-                        "emaDist": 15.441055939513607,
-                        "volRatio": 3.8626000391956605,
-                        "macdAccel": 0.0,
-                        "closeStrength": NaN,
-                        "sector": "CAPITAL_GOODS",
-                        "trendAligned": 0,
-                        "relativeStrength": 26.637092278614784,
-                        "deliveryRatio": 0.3664156926847328,
-                        "atrRatio": 1.044514816939878,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Leading manufacturer of silicon carbide and other abrasive materials. Benefits from growth in industries like automotive, construction, and manufacturing.",
-                        "confidence": 78,
-                        "threat": "Cyclicality of end-user industries, volatility in raw material prices, and competition from domestic and international players."
-            },
-            {
-                        "symbol": "FINCABLES",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 1164.3,
-                        "stopLoss": NaN,
-                        "profitTarget": NaN,
-                        "rsi": 64.75786868813132,
-                        "emaDist": 9.259193022671736,
-                        "volRatio": 1.1001978818935774,
-                        "macdAccel": 0.0,
-                        "closeStrength": NaN,
-                        "sector": "CAPITAL_GOODS",
-                        "trendAligned": 0,
-                        "relativeStrength": 16.19051852018103,
-                        "deliveryRatio": 1.0945283019685887,
-                        "atrRatio": 1.1524073963461987,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Manufacturer of power cables and wires. Benefits from increased infrastructure spending, housing development, and the push for electrification.",
-                        "confidence": 75,
-                        "threat": "Fluctuations in copper and aluminum prices, intense competition, and potential for project delays in the infrastructure sector."
-            },
-            {
-                        "symbol": "TITAGARH",
-                        "label": "\ud83c\udfe2 INSTITUTIONAL LAUNCHPAD",
-                        "close": 922.45,
-                        "stopLoss": 852.38,
-                        "profitTarget": 1062.59,
-                        "rsi": 67.9093144189003,
-                        "emaDist": 7.845985489952367,
-                        "volRatio": 1.3884333754334552,
-                        "macdAccel": 0.0,
-                        "closeStrength": 0.4013888888777405,
-                        "sector": "CAPITAL_GOODS",
-                        "trendAligned": 0,
-                        "relativeStrength": 9.569166927381833,
-                        "deliveryRatio": 1.2201673622539762,
-                        "atrRatio": 1.1239943612246532,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Diversified player in freight wagons, metro coaches, and defense shipbuilding. Benefits from government's focus on railway modernization, urban infra, and defense indigenization.",
-                        "confidence": 88,
-                        "threat": "Order book dependency, execution challenges in large projects, and competition from established players in each segment."
-            },
-            {
-                        "symbol": "WELCORP",
-                        "label": "\ud83c\udfe2 INSTITUTIONAL LAUNCHPAD",
-                        "close": 1423.4,
-                        "stopLoss": NaN,
-                        "profitTarget": NaN,
-                        "rsi": 63.354195120626436,
-                        "emaDist": 3.9664110237271357,
-                        "volRatio": 0.5657975090307207,
-                        "macdAccel": 0.0,
-                        "closeStrength": NaN,
-                        "sector": "CAPITAL_GOODS",
-                        "trendAligned": 0,
-                        "relativeStrength": 35.18116909512911,
-                        "deliveryRatio": 1.2861059445126326,
-                        "atrRatio": 1.1536710947495281,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Diversified business with interests in hospitality, healthcare, and other sectors. Potential for recovery in hospitality and growth in healthcare services.",
-                        "confidence": 65,
-                        "threat": "Sensitivity to economic cycles, operational challenges in hospitality, and competition in the healthcare sector."
-            },
-            {
-                        "symbol": "RRKABEL",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 2321.1,
-                        "stopLoss": NaN,
-                        "profitTarget": NaN,
-                        "rsi": 75.19026703623919,
-                        "emaDist": 8.892675192744736,
-                        "volRatio": 1.3754942438456232,
-                        "macdAccel": 0.0,
-                        "closeStrength": NaN,
-                        "sector": "CAPITAL_GOODS",
-                        "trendAligned": 0,
-                        "relativeStrength": 49.5249868320195,
-                        "deliveryRatio": 1.0096873664577626,
-                        "atrRatio": 0.674441129321338,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Manufacturer of wires and cables. Benefits from government's focus on infrastructure development, housing, and electrification projects.",
-                        "confidence": 77,
-                        "threat": "Volatility in commodity prices (copper, aluminum), competition from unorganized sector and large players, and dependence on infrastructure spending."
-            },
-            {
-                        "symbol": "KPRMILL",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 1159.75,
-                        "stopLoss": 1100.66,
-                        "profitTarget": 1277.93,
-                        "rsi": 69.74782204371508,
-                        "emaDist": 10.633746726187121,
-                        "volRatio": 3.4043676857687784,
-                        "macdAccel": 0.0,
-                        "closeStrength": NaN,
-                        "sector": "TEXTILES",
-                        "trendAligned": 0,
-                        "relativeStrength": 11.50704726008617,
-                        "deliveryRatio": 0.7826796110964235,
-                        "atrRatio": 0.9281904209308555,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Diversified into textiles, renewable energy (wind), and paper. Strong textile business with expanding capacity. Renewable energy contribution expected to grow.",
-                        "confidence": 75,
-                        "threat": "Volatility in textile prices and demand, competition in the textile industry, and risks associated with renewable energy project execution."
-            },
-            {
-                        "symbol": "VTL",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 657.45,
-                        "stopLoss": 609.06,
-                        "profitTarget": 754.24,
-                        "rsi": 64.88670074965731,
-                        "emaDist": 5.250812576567531,
-                        "volRatio": 1.8514483223514673,
-                        "macdAccel": 0.0,
-                        "closeStrength": 0.3420365535069472,
-                        "sector": "TEXTILES",
-                        "trendAligned": 0,
-                        "relativeStrength": 22.853908367047893,
-                        "deliveryRatio": 0.8641654734608784,
-                        "atrRatio": 1.1028938773565866,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Leading player in the commercial vehicle segment. Benefits from economic recovery, increased logistics demand, and government's focus on infrastructure.",
-                        "confidence": 82,
-                        "threat": "Cyclical nature of the automotive industry, rising input costs, and competition from other commercial vehicle manufacturers."
-            },
-            {
-                        "symbol": "ASTERDM",
-                        "label": "\ud83c\udfe2 LAUNCHPAD",
-                        "close": 809.4,
-                        "stopLoss": 754.92,
-                        "profitTarget": 918.36,
-                        "rsi": 63.90600948666899,
-                        "emaDist": 4.814510000708695,
-                        "volRatio": 0.6785916558870027,
-                        "macdAccel": 0.0,
-                        "closeStrength": 0.7136498516108711,
-                        "sector": "HEALTHCARE",
-                        "trendAligned": 0,
-                        "relativeStrength": 28.695062306914984,
-                        "deliveryRatio": 1.0189740629877548,
-                        "atrRatio": 1.1285987650673561,
-                        "sectorAligned": 0,
-                        "sentiment": "POSITIVE",
-                        "news_catalyst": "Integrated healthcare services provider with hospitals and pharmacies. Benefits from rising healthcare demand, expansion into new geographies, and increased medical tourism.",
-                        "confidence": 80,
-                        "threat": "Regulatory changes in the healthcare sector, increasing competition from both domestic and international players, and operational efficiency challenges."
-            }
-];
+        let allTickers = [];
         let currentFilter = 'ALL';
-        console.log("Ingested qualified strategic tickers:", initialTickers);
+
+        // 🟢 ASYNC FETCH: Get the pure JSON dataset dumped by Python
+        async function loadDashboardData() {
+            try {
+                // Fetch cache-busting variant to ensure GitHub Pages doesn't hold old assets
+                const response = await fetch(`./dataset/data.json?t=${new Date().getTime()}`);
+                if (!response.ok) throw new Error("Network metadata payload rejected.");
+                
+                const data = await response.json();
+                allTickers = data.tickers || [];
+                
+                document.getElementById("publish-timestamp").innerText = data.updated_at || "N/A";
+                renderRows();
+            } catch (error) {
+                console.error("Critical Runtime Fetch Failure:", error);
+                document.getElementById("ticker-rows").innerHTML = `
+                    <div class="p-12 text-center text-rose-600 font-mono text-sm border border-rose-200 rounded-xl bg-rose-50">
+                        <i class="fa-solid fa-triangle-exclamation mr-2"></i> Failed to sync dashboard telemetry dataset.
+                    </div>`;
+            }
+        }
         
         function updateFilterBadges() {
             const counts = {
-                ALL: initialTickers.length,
-                ACTIVE: initialTickers.filter(t => t.label === '🚀 ACTIVE BREAKOUT').length,
-                INSIDER: initialTickers.filter(t => t.label === '🚀 INSIDER BREAKOUT').length,
-                LAUNCHPAD: initialTickers.filter(t => t.label === '🏢 LAUNCHPAD').length,
-                INST_LAUNCHPAD: initialTickers.filter(t => t.label === '🏢 INSTITUTIONAL LAUNCHPAD').length
+                ALL: allTickers.length,
+                ACTIVE: allTickers.filter(t => t.label.includes('ACTIVE BREAKOUT')).length,
+                INSIDER: allTickers.filter(t => t.label.includes('INSIDER BREAKOUT')).length,
+                LAUNCHPAD: allTickers.filter(t => t.label === '🏢 LAUNCHPAD').length,
+                INST_LAUNCHPAD: allTickers.filter(t => t.label === '🏢 INSTITUTIONAL LAUNCHPAD').length
             };
 
             document.getElementById("count-ALL").innerText = counts.ALL;
@@ -556,13 +139,12 @@
             document.getElementById("count-LAUNCHPAD").innerText = counts.LAUNCHPAD;
             document.getElementById("count-INST-LAUNCHPAD").innerText = counts.INST_LAUNCHPAD;
 
-            // Manage dynamic highlighting css toggles
             const buttons = {
                 'ALL': 'btn-ALL',
-                'ACTIVE BREAKOUT': 'btn-ACTIVE',
-                'INSIDER BREAKOUT': 'btn-INSIDER',
+                'ACTIVE': 'btn-ACTIVE',
+                'INSIDER': 'btn-INSIDER',
                 'LAUNCHPAD': 'btn-LAUNCHPAD',
-                'INSTITUTIONAL LAUNCHPAD': 'btn-INST-LAUNCHPAD'
+                'INST-LAUNCHPAD': 'btn-INST-LAUNCHPAD'
             };
 
             Object.keys(buttons).forEach(key => {
@@ -585,10 +167,17 @@
             const container = document.getElementById("ticker-rows");
             if (!container) return;
             
-            // Apply filtering layer array manipulation
-            const filteredData = currentFilter === 'ALL' 
-                ? initialTickers 
-                : initialTickers.filter(t => t.label === t.label.includes('BREAKOUT') ? t.label : t.label.toUpperCase().includes(currentFilter) || t.label === currentFilter);
+            // Clean dynamic filtering criteria logic
+            let filteredData = allTickers;
+            if (currentFilter === 'ACTIVE') {
+                filteredData = allTickers.filter(t => t.label.includes('ACTIVE BREAKOUT'));
+            } else if (currentFilter === 'INSIDER') {
+                filteredData = allTickers.filter(t => t.label.includes('INSIDER BREAKOUT'));
+            } else if (currentFilter === 'LAUNCHPAD') {
+                filteredData = allTickers.filter(t => t.label === '🏢 LAUNCHPAD');
+            } else if (currentFilter === 'INST-LAUNCHPAD') {
+                filteredData = allTickers.filter(t => t.label === '🏢 INSTITUTIONAL LAUNCHPAD');
+            }
             
             updateFilterBadges();
 
@@ -598,39 +187,71 @@
             }
             
             container.innerHTML = filteredData.map(t => `
-                <div class="p-5 bg-white rounded-xl border border-[#e2e8f0] flex flex-col lg:flex-row justify-between items-start lg:items-center gap-5 hover:border-slate-400 hover:shadow-md transition-all duration-200">
-                    <div class="w-full lg:max-w-xl">
-                        <div class="flex flex-wrap items-center gap-2">
-                            <h4 class="font-bold text-[#0f172a] font-mono text-base tracking-tight">${t.symbol}</h4>
-                            <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-[#f1f5f9] text-[#475569] border border-[#e2e8f0] font-mono">${t.sector}</span>
-                            <span class="text-[10px] px-2 py-0.5 rounded font-bold ${t.label.includes('BREAKOUT') ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200' }">${t.label}</span>
+                <div class="p-5 bg-white rounded-xl border border-[#e2e8f0] flex flex-col gap-4 hover:border-slate-400 hover:shadow-md transition-all duration-200">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                        <div class="w-full lg:max-w-xl">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <h4 class="font-bold text-[#0f172a] font-mono text-base tracking-tight">${t.symbol}</h4>
+                                <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-[#f1f5f9] text-[#475569] border border-[#e2e8f0] font-mono">
+                                    ${t.sector}
+                                </span>
+                                <span class="text-[10px] px-2 py-0.5 rounded font-bold ${
+                                    t.label.includes('BREAKOUT')
+                                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                                        : 'bg-amber-50 text-amber-700 border border-amber-200'
+                                }">
+                                    ${t.label}
+                                </span>
+                            </div>
+
+                            <div class="text-xs text-[#334155] mt-2.5 bg-[#f8fafc] p-3 rounded-lg border border-[#f1f5f9] flex flex-wrap gap-x-4 gap-y-1.5 font-medium">
+                                <div>Close: <span class="text-[#0f172a] font-mono font-bold">₹${t.close.toLocaleString('en-IN')}</span></div>
+                                <div class="border-l border-[#e2e8f0] pl-4">Stop-Loss: <span class="text-rose-600 font-mono font-bold">₹${t.stopLoss.toLocaleString('en-IN')}</span></div>
+                                <div class="border-l border-[#e2e8f0] pl-4">Target: <span class="text-emerald-600 font-mono font-bold">₹${t.profitTarget.toLocaleString('en-IN')}</span></div>
+                            </div>
                         </div>
-                        <div class="text-xs text-[#334155] mt-2.5 bg-[#f8fafc] p-3 rounded-lg border border-[#f1f5f9] flex flex-wrap gap-x-4 gap-y-1.5 font-medium">
-                            <div>Close: <span class="text-[#0f172a] font-mono font-bold">₹${t.close.toLocaleString('en-IN')}</span></div>
-                            <div class="border-l border-[#e2e8f0] pl-4">Stop-Loss: <span class="text-rose-600 font-mono font-bold">₹${t.stopLoss.toLocaleString('en-IN')}</span></div>
-                            <div class="border-l border-[#e2e8f0] pl-4">Target: <span class="text-emerald-600 font-mono font-bold">₹${t.profitTarget.toLocaleString('en-IN')}</span></div>
-                        </div>
-                        <div class="text-[11px] text-[#64748b] mt-3 font-mono flex flex-wrap gap-x-3 gap-y-1 bg-[#f1f5f9]/40 px-2.5 py-1.5 rounded border border-dashed border-[#e2e8f0]">
-                            <span>RSI: <strong class="text-[#334155]">${t.rsi.toFixed(1)}</strong></span>
-                            <span>•</span>
-                            <span>Vol Ratio: <strong class="text-[#334155]">${t.volRatio.toFixed(2)}</strong></span>
-                            <span>•</span>
-                            <span>ATR Ratio: <strong class="text-[#334155]">${t.atrRatio.toFixed(2)}</strong></span>
-                            <span>•</span>
-                            <span>Close Strength: <strong class="text-[#334155]">${t.closeStrength.toFixed(2)}</strong></span>
+
+                        <div class="w-full lg:text-right lg:max-w-md border-t lg:border-t-0 pt-3 lg:pt-0 border-[#f1f5f9] flex flex-col lg:items-end gap-1.5">
+                            <div>
+                                <span class="text-[10px] px-2.5 py-1 rounded-full font-mono font-bold tracking-wide ${
+                                    t.sentiment === 'BULLISH'
+                                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                                        : 'bg-slate-100 text-slate-600 border border-slate-200'
+                                }">
+                                    <i class="fa-solid fa-circle text-[6px] mr-1.5 align-middle"></i>
+                                    ${t.sentiment}
+                                </span>
+                            </div>
+                            <p class="text-xs font-semibold text-[#334155] mt-1 italic leading-relaxed">"${t.news_catalyst}"</p>
+                            <p class="text-[10px] text-[#94a3b8] font-medium mt-0.5">Confidence Layer Score: <span class="font-mono text-[#475569] font-bold">${t.confidence}%</span></p>
                         </div>
                     </div>
-                    <div class="w-full lg:text-right lg:max-w-md border-t lg:border-t-0 pt-4 lg:pt-0 border-[#f1f5f9] flex flex-col lg:items-end gap-1.5">
-                        <div>
-                            <span class="text-[10px] px-2.5 py-1 rounded-full font-mono font-bold tracking-wide ${t.sentiment === 'BULLISH' ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-600 border border-slate-200'}"><i class="fa-solid fa-circle text-[6px] mr-1.5 align-middle"></i>${t.sentiment}</span>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-3 border-t border-dashed border-[#e2e8f0] text-xs">
+                        <div class="bg-slate-50/70 rounded-xl p-3 border border-[#f1f5f9]">
+                            <p class="text-[10px] font-bold tracking-wider uppercase text-slate-500 mb-1"><i class="fa-solid fa-calculator mr-1 text-teal-600"></i> SHAP Mathematical Grounding Synthesis</p>
+                            <p class="text-slate-600 font-normal leading-relaxed font-sans">${t.shapSynthesis}</p>
                         </div>
-                        <p class="text-xs font-semibold text-[#334155] mt-1 italic leading-relaxed">"${t.news_catalyst}"</p>
-                        <p class="text-[10px] text-[#94a3b8] font-medium mt-0.5">Confidence Layer Score: <span class="font-mono text-[#475569] font-bold">${t.confidence}%</span></p>
+                        <div class="bg-rose-50/30 rounded-xl p-3 border border-rose-100/50">
+                            <p class="text-[10px] font-bold tracking-wider uppercase text-rose-700 mb-1"><i class="fa-solid fa-triangle-exclamation mr-1 text-rose-500"></i> Operational Risk & Strategic Threat</p>
+                            <p class="text-rose-900/80 font-normal leading-relaxed font-sans">${t.threat}</p>
+                        </div>
+                    </div>
+
+                    <div class="text-[11px] text-[#64748b] font-mono flex flex-wrap gap-x-3 gap-y-1 bg-[#f1f5f9]/40 px-2.5 py-1.5 rounded border border-dashed border-[#e2e8f0]">
+                        <span>RSI: <strong class="text-[#334155]">${t.rsi.toFixed(1)}</strong></span>
+                        <span>•</span>
+                        <span>Vol Ratio: <strong class="text-[#334155]">${t.volRatio.toFixed(2)}</strong></span>
+                        <span>•</span>
+                        <span>ATR Ratio: <strong class="text-[#334155]">${t.atrRatio.toFixed(2)}</strong></span>
+                        <span>•</span>
+                        <span>Close Strength: <strong class="text-[#334155]">${t.closeStrength.toFixed(2)}</strong></span>
                     </div>
                 </div>
             `).join("");
         }
-        window.onload = renderRows;
+
+        window.onload = loadDashboardData;
     </script>
 </body>
 </html>

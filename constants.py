@@ -1,7 +1,6 @@
-from datetime import date
 import os
 import datetime
-from datetime import timezone, timedelta
+from datetime import timezone, timedelta, datetime
 from nselib import capital_market
 import pandas as pd
 from tqdm.contrib.concurrent import thread_map
@@ -10,7 +9,7 @@ NSE_DATASET_PATH = "dataset/nse_companies.csv"
 LOOKBACK_YEARS = 2.0
 
 IST = timezone(timedelta(hours=5, minutes=30))
-TODAY = datetime.now(IST).strftime("[%d-%m-%Y]")
+TODAY = datetime.now(IST).strftime("%d-%m-%Y")
 REPORTS_DIR = f"reports/[{TODAY}]"
 os.makedirs(REPORTS_DIR, exist_ok=True)
 
@@ -51,7 +50,7 @@ from nselib import capital_market
 
 
 def fetch_data_from_nse(filtered_symbols, symbol_to_sector_map):
-    end_date = datetime.datetime.strptime(TODAY, "%d-%m-%Y").date()
+    end_date = datetime.datetime.strptime(TODAY, "%d-%m-%Y")
     start_date = end_date - datetime.timedelta(days=int(365 * LOOKBACK_YEARS))
 
     cache_file = os.path.join(REPORTS_DIR, ".sector_universe_cache.json.gz")
