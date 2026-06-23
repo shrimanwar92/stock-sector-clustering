@@ -1,21 +1,29 @@
 import os
+import json
 import warnings
+import gzip
+import joblib
 import numpy as np
 import pandas as pd
-import gzip
+from datetime import datetime
 from xgboost import XGBClassifier
 from constants import (
     MODEL_PATH, 
     FEATURE_COLUMNS,
     REPORTS_DIR,
     fetch_data_from_nse,
-    CALIBRATOR_MODEL
+    CALIBRATOR_MODEL,
+    TODAY
 )
 
 warnings.filterwarnings("ignore")
 
 
 class StocksRuleEngine:
+    """
+    Engine responsible for high-performance feature engineering, data sanitation,
+    label definition, and executing/monitoring production ML trade signals.
+    """
 
     def __init__(
         self, 
@@ -36,8 +44,11 @@ class StocksRuleEngine:
         self.macro_score_threshold = macro_score_threshold  
         self.allowed_categories = ['MIDCAP', 'SMALLCAP_100']
         self.cache_file_path = os.path.join(REPORTS_DIR, ".micro_universe_cache.json.gz")
-    
-    def load_stocks_from_cache(self):
+        self.metadata_path = os.path.join(REPORTS_DIR, "model_health_metadata.json")
+        self.model = None
+
+    # --- EXISTING TELEMETRY & CACHING FUNCTIONS ---
+    def load_stocks_from_cache(self) -> pd.DataFrame:
         cached_df = pd.DataFrame()
         if os.path.exists(self.cache_file_path):
             print(f"💾 [CACHE READ] Hydrating raw data from today's disk cache: '{self.cache_file_path}'")
@@ -50,7 +61,7 @@ class StocksRuleEngine:
                 print(f"[WARN] Cache read collision ({str(ce)}). Falling back to exchange engine...")
         return cached_df
     
-    def save_stocks_to_cache(self, df):
+    def save_stocks_to_cache(self, df: pd.DataFrame):
         with gzip.open(self.cache_file_path, "wt", encoding="utf-8") as f:
             df.to_json(f, orient="records", date_format="iso")
         print(f"💾 [CACHE WRITE] Successfully stored today's raw micro universe data.")
@@ -69,7 +80,8 @@ class StocksRuleEngine:
         
         possible_closes = ['ClosePrice', 'Close', 'close', 'CLOSE', 'ClosePriceParticulars']
         close_col = next((c for c in possible_closes if c in df.columns), None)
-        if not close_col: return pd.DataFrame()
+        if not close_col: 
+            return pd.DataFrame()
             
         df["Close"] = pd.to_numeric(df[close_col].astype(str).str.replace(",", ""), errors='coerce')
         
@@ -98,7 +110,8 @@ class StocksRuleEngine:
 
     def _generate_benchmark_regime_maps(self, df: pd.DataFrame) -> tuple:
         index_df = df[df["Symbol"] == "NIFTY 500"].sort_values(by="Date").copy()
-        if index_df.empty: return {}, {}, {}, {}
+        if index_df.empty: 
+            return {}, {}, {}, {}
             
         index_df["Index_EMA_200"] = index_df["Close"].ewm(span=200, adjust=False).mean()
         index_df["Market_Regime_Risk_Off"] = (index_df["Close"] < index_df["Index_EMA_200"]).astype(int)
@@ -131,9 +144,18 @@ class StocksRuleEngine:
             sector_trends[sector_name] = dict(zip(s_group["Date"], s_group["Sector_Bullish"]))
         return sector_trends
 
-    def _engineer_single_asset_features(self, group: pd.DataFrame, index_roc_20_map: dict, index_roc_252_map: dict, regime_risk_map: dict, sector_trends: dict, dynamic_alpha_map: dict) -> pd.DataFrame:
+    def _engineer_single_asset_features(
+        self, 
+        group: pd.DataFrame, 
+        index_roc_20_map: dict, 
+        index_roc_252_map: dict, 
+        regime_risk_map: dict, 
+        sector_trends: dict, 
+        dynamic_alpha_map: dict
+    ) -> pd.DataFrame:
         group = group.sort_values(by="Date").copy()
-        if len(group) < 252: return pd.DataFrame()
+        if len(group) < 252: 
+            return pd.DataFrame()
 
         group["Feature_ROC_20"] = group["Close"].pct_change(periods=20) * 100
         group["Feature_ROC_252"] = group["Close"].pct_change(periods=252) * 100
@@ -214,169 +236,274 @@ class StocksRuleEngine:
 
     def engineer_gold_features(self, raw_df: pd.DataFrame) -> pd.DataFrame:
         df = self._parse_and_sanitize_columns(raw_df)
-        if df.empty: return pd.DataFrame()
+        if df.empty: 
+            return pd.DataFrame()
             
         index_roc_20, index_roc_252, regime_risk, dynamic_alpha = self._generate_benchmark_regime_maps(df)
         stock_pool_df = df[df["Symbol"] != "NIFTY 500"].sort_values(by="Date").copy()
-        if stock_pool_df.empty: return pd.DataFrame()
+        if stock_pool_df.empty: 
+            return pd.DataFrame()
             
         sector_trends = self._generate_sector_trend_maps(stock_pool_df)
         
         processed_stocks = []
         for _, group in stock_pool_df.groupby("Symbol"):
             feat_df = self._engineer_single_asset_features(group, index_roc_20, index_roc_252, regime_risk, sector_trends, dynamic_alpha)
-            if not feat_df.empty: processed_stocks.append(feat_df)
+            if not feat_df.empty: 
+                processed_stocks.append(feat_df)
                 
         return pd.concat(processed_stocks, ignore_index=True) if processed_stocks else pd.DataFrame()
-
-    # -------------------------------------------------------------------------
-    # UPGRADE: Comprehensive López de Prado Path Engine (Typo Fixed + Timeout Return Rules)
-    # -------------------------------------------------------------------------
-    def _apply_lopez_de_prado_barriers(
-        self,
-        group: pd.DataFrame,
-        pt_horizon: int,
-        base_pt_mult: float,
-        base_sl_mult: float
-    ) -> pd.Series:
-        """
-        Simplified López de Prado triple barrier engine.
-
-        Class 0 -> Failure
-        Class 1 -> Stagnation
-        Class 2 -> Success
-        """
-
-        labels = np.zeros(len(group), dtype=int)
-
-        close_prices = group["Close"].values
-        high_prices = group["High"].values if "High" in group.columns else close_prices
-        low_prices = group["Low"].values if "Low" in group.columns else close_prices
-
-        if "ATR_14" in group.columns:
-            atr_values = group["ATR_14"].fillna(group["Close"] * 0.02).values
-        else:
-            atr_values = close_prices * 0.02
-
-        total_bars = len(group)
-
-        for i in range(total_bars):
-
-            entry_close = close_prices[i]
-            entry_atr = max(atr_values[i], entry_close * 0.01)
-
-            pt_barrier = entry_close + (base_pt_mult * entry_atr)
-            sl_barrier = entry_close - (base_sl_mult * entry_atr)
-
-            end_idx = min(i + pt_horizon + 1, total_bars)
-
-            barrier_hit = False
-
-            for j in range(i + 1, end_idx):
-
-                if high_prices[j] >= pt_barrier:
-                    labels[i] = 2
-                    barrier_hit = True
-                    break
-
-                if low_prices[j] <= sl_barrier:
-                    labels[i] = 0
-                    barrier_hit = True
-                    break
-
-            # Vertical barrier timeout
-            if not barrier_hit:
-
-                terminal_close = close_prices[end_idx - 1]
-
-                timeout_return_pct = (
-                    terminal_close - entry_close
-                ) / (entry_close + 1e-9)
-
-                atr_pct = (
-                    entry_atr / (entry_close + 1e-9)
-                )
-
-                # Wider stagnation zone
-                stagnation_boundary = atr_pct * 0.75
-
-                if timeout_return_pct > stagnation_boundary:
-                    labels[i] = 2
-
-                elif timeout_return_pct < -stagnation_boundary:
-                    labels[i] = 0
-
-                else:
-                    labels[i] = 1
-
-        return pd.Series(labels, index=group.index)
-
+    
     def engineer_training_labels(
-        self,
-        df: pd.DataFrame,
-        pt_horizon: int = 20,
-        pt_mult: float = 2.5,
+        self, 
+        gold_df: pd.DataFrame, 
+        pt_horizon: int = 20, 
+        pt_mult: float = 2.5, 
         sl_mult: float = 1.5
     ) -> pd.DataFrame:
-
-        print(
-            "⚙️ [LABEL ENGINE] Executing Simplified Triple Barrier Matrix..."
-        )
-
-        if "Strategic_Label" in df.columns:
-            df = df.drop(columns=["Strategic_Label"])
-
-        df = (
-            df
-            .sort_values(["Symbol", "Date"])
-            .copy()
-        )
-
-        labelled_groups = []
-
+        """
+        Applies a forward-looking Triple-Barrier labeling matrix across each asset series.
+        Looks forward 'pt_horizon' steps to categorize structural returns into discrete classes.
+        
+        Returns labels matching the downstream 3-class operational target schema:
+          0 = Lower barrier breached first (Stop Loss / Failure)
+          1 = Neither barrier breached within horizon window (Stagnation)
+          2 = Upper barrier breached first (Profit Target / Success)
+        """
+        print(f"\n🏷️ [LABELING ENGINE] Generating Triple Barrier target matrix (Horizon={pt_horizon} steps)...")
+        if gold_df.empty:
+            print("[WARN] Empty DataFrame supplied to labeling loop. Returning empty shell.")
+            return pd.DataFrame()
+            
+        df = gold_df.copy().sort_values(by=["Symbol", "Date"]).reset_index(drop=True)
+        processed_groups = []
+        
+        # Isolate asset series to avoid cross-symbol contamination during window shift
         for symbol, group in df.groupby("Symbol"):
+            group = group.copy().reset_index(drop=True)
+            n_steps = len(group)
+            target_labels = np.full(n_steps, np.nan)
+            
+            close_arr = group["Close"].values
+            atr_arr = group["ATR_14"].fillna(group["Close"] * 0.03).values
+            
+            for i in range(n_steps):
+                # Edge truncation gate: discard windows that run past the terminal boundary of our data
+                if i + pt_horizon >= n_steps:
+                    continue
+                
+                entry_price = close_arr[i]
+                current_atr = atr_arr[i]
+                
+                # Compute distinct matrix walls
+                upper_barrier = entry_price + (pt_mult * current_atr)
+                lower_barrier = entry_price - (sl_mult * current_atr)
+                
+                # Extract forward look-ahead segment
+                forward_window = close_arr[i + 1 : i + pt_horizon + 1]
+                
+                # Default assignment is Stagnation (Class 1)
+                assigned_class = 1
+                
+                # Check sequentially which barrier line gets touched first inside the time path
+                for price in forward_window:
+                    if price <= lower_barrier:
+                        assigned_class = 0  # Failure / Stop Loss
+                        break
+                    elif price >= upper_barrier:
+                        assigned_class = 2  # Success / Profit Target
+                        break
+                        
+                target_labels[i] = assigned_class
+                
+            group["Strategic_Label"] = target_labels
+            processed_groups.append(group)
+            
+        labeled_master_df = pd.concat(processed_groups, ignore_index=True)
+        
+        # Cleanly truncate un-labeled end rows near current date boundaries
+        total_rows_before = len(labeled_master_df)
+        labeled_master_df = labeled_master_df.dropna(subset=["Strategic_Label"])
+        labeled_master_df["Strategic_Label"] = labeled_master_df["Strategic_Label"].astype(int)
+        
+        print(f"✅ Target allocation vector established. Retained {len(labeled_master_df)} / {total_rows_before} training rows after horizon truncation.")
+        print("📊 Training Label Distribution:")
+        print(labeled_master_df["Strategic_Label"].value_counts())
+        print("-" * 60)
+        
+        return labeled_master_df
 
-            group = group.copy()
+    # --- ADVANCED MODEL HEALTH MONITORING ENGINE ---
+    def compile_and_save_health_contract(self, training_pool: pd.DataFrame, master_model, avg_auc, avg_p10, avg_edge, wf_records):
+        """
+        Constructs and materializes the complete Model Health Metadata Contract 
+        to disk at the end of a master training pipeline run.
+        """
+        print("\n⚙️ [METADATA CONTRACT] Generating Model Health Metadata Contract...")
+        X_master = training_pool[FEATURE_COLUMNS]
+        y_master = training_pool["Strategic_Label"]
 
-            group["Strategic_Label"] = self._apply_lopez_de_prado_barriers(
-                group=group,
-                pt_horizon=pt_horizon,
-                base_pt_mult=pt_mult,
-                base_sl_mult=sl_mult
-            )
+        # 1. Feature Statistics
+        feature_statistics = {}
+        for col in FEATURE_COLUMNS:
+            feature_statistics[col] = {
+                "mean": float(X_master[col].mean()),
+                "std": float(X_master[col].std()),
+                "min": float(X_master[col].min()),
+                "max": float(X_master[col].max())
+            }
 
-            labelled_groups.append(group)
+        # 2. Label Distribution
+        label_dist_raw = y_master.value_counts(normalize=True).sort_index().to_dict()
+        label_distribution = {str(k): float(v) for k, v in label_dist_raw.items()}
 
-        df = pd.concat(labelled_groups, ignore_index=True)
-
-        # Diagnostics
-        print("\n📊 LABEL DISTRIBUTION")
-
-        distribution = (
-            df["Strategic_Label"]
-            .value_counts(normalize=True)
-            .sort_index()
-            * 100
-        )
-
-        label_names = {
-            0: "Failure",
-            1: "Stagnation",
-            2: "Success"
+        # 3. Probability Dispersion Statistics
+        master_probs = master_model.predict_proba(X_master.values)
+        probability_statistics = {
+            "failure_mean": float(master_probs[:, 0].mean()),
+            "failure_std": float(master_probs[:, 0].std()),
+            "stagnation_mean": float(master_probs[:, 1].mean()),
+            "stagnation_std": float(master_probs[:, 1].std()),
+            "success_mean": float(master_probs[:, 2].mean()),
+            "success_std": float(master_probs[:, 2].std())
         }
 
-        for cls, pct in distribution.items():
+        # 4. Regime Distribution
+        if "Sector_Regime_Label" in training_pool.columns:
+            regime_distribution = {str(k): float(v) for k, v in training_pool["Sector_Regime_Label"].value_counts(normalize=True).to_dict().items()}
+        else:
+            regime_distribution = {}
 
-            print(
-                f" -> {label_names[int(cls)]}: {pct:.2f}%"
+        # 5. Feature Importance Extraction
+        feature_importance = dict(
+            sorted(
+                zip(FEATURE_COLUMNS, [float(x) for x in master_model.feature_importances_]),
+                key=lambda x: x[1],
+                reverse=True
             )
+        )
 
-        print("-" * 60)
+        # Build Master Contract Object
+        metadata = {
+            "compiled_on": TODAY,
+            "features_schema": list(FEATURE_COLUMNS),
+            "global_samples_count": len(training_pool),
+            "average_walk_forward_auc": float(avg_auc),
+            "average_precision_top_10": float(avg_p10),
+            "average_pure_alpha_edge": float(avg_edge),
+            "label_distribution": label_distribution,
+            "probability_statistics": probability_statistics,
+            "feature_statistics": feature_statistics,
+            "regime_distribution": regime_distribution,
+            "feature_importance": feature_importance,
+            "walk_forward_folds": wf_records
+        }
 
-        return df
+        with open(self.metadata_path, "w") as f:
+            json.dump(metadata, f, indent=4)
+        print(f"✅ [METADATA CONTRACT] Stored health profile contract at: '{self.metadata_path}'")
+        return metadata
 
+    def check_live_health_degradation(self, live_gold_df: pd.DataFrame) -> bool:
+        """
+        Evaluates current micro universe feature properties against historical thresholds.
+        Returns True if a drift boundary, variance collapse, or performance degradation triggers retraining.
+        """
+        if not os.path.exists(self.metadata_path):
+            print("⚠️ [HEALTH CHECK] Metadata contract missing from file system. Initial training forced.")
+            return True
+
+        if live_gold_df.empty:
+            print("[HEALTH CHECK] Live dataset empty. Skipping real-time drift verification.")
+            return False
+
+        with open(self.metadata_path, "r") as f:
+            metadata = json.load(f)
+
+        print("\n" + "="*60)
+        print(" 🔍 RUNNING AUTONOMOUS MODEL HEALTH VALIDATION MATRIX")
+        print("="*60)
+
+        # Filter to target live snapshot items (latest date step for active cross-sectional profile)
+        live_snapshot = live_gold_df.groupby("Symbol").tail(1).reset_index(drop=True)
+        
+        # 1. FEATURE DRIFT CHECK (Statistical Shift Detection)
+        drift_signals = 0
+        max_drift_threshold_sigmas = 2.5
+        
+        for col in FEATURE_COLUMNS:
+            if col in live_snapshot.columns:
+                live_mean = float(live_snapshot[col].mean())
+                train_meta = metadata["feature_statistics"].get(col, {})
+                train_mean = train_meta.get("mean", live_mean)
+                train_std = train_meta.get("std", 1.0)
+                
+                # Check deviation distance in standard deviation space
+                z_score_distance = abs(live_mean - train_mean) / (train_std + 1e-9)
+                if z_score_distance > max_drift_threshold_sigmas:
+                    print(f" ❌ [DRIFT DETECTED] Feature '{col}' shifted by {z_score_distance:.2f} sigmas from baseline.")
+                    drift_signals += 1
+
+        # Trigger fallback if over 20% of indicators are structurally out-of-bounds
+        if drift_signals > (len(FEATURE_COLUMNS) * 0.20):
+            print(f"🚨 [RETRAIN TRIGGER] Broad structural feature drift detected across {drift_signals} elements.")
+            return True
+
+        # 2. PROBABILITY COLLAPSE CHECK (Inference Variance Compression)
+        try:
+            model = XGBClassifier()
+            model.load_model(MODEL_PATH)
+            
+            # Restrict to allowed domain space matches identical to live evaluation gating logic
+            domain_mask = (
+                (live_snapshot["is_tradable"] == 1) &
+                (live_snapshot["Feature_Sector_Aligned"] == 1) &
+                (live_snapshot["Market_Regime_Risk_Off"] == 0) &
+                (live_snapshot["Feature_RSI"] < 82.0) &
+                (live_snapshot["Close"] >= 15.0)
+            )
+            valid_universe = live_snapshot[domain_mask].copy()
+
+            if not valid_universe.empty:
+                X_live = valid_universe[FEATURE_COLUMNS].values
+                calibrator = joblib.load(CALIBRATOR_MODEL)
+                current_probs = calibrator.predict_proba(X_live)
+                
+                live_success_std = float(current_probs[:, 2].astype(float).std())
+                print(f" 📊 Live Class-2 (Success) Probability Dispersion Std: {live_success_std:.4f}")
+                
+                if live_success_std < 0.03:
+                    print("🚨 [RETRAIN TRIGGER] Model distribution collapse identified. Signal variance too low.")
+                    return True
+        except Exception as ex:
+            print(f" [WARN] Skinned predictive model health validation bypass: {str(ex)}")
+
+        # 3. ALPHA EDGE DEGRADATION CHECK (Trailing Realized Return Attenuation)
+        # Check for external performance ledger records tracking real-world fills
+        perf_ledger_path = os.path.join(REPORTS_DIR, "performance_ledger.csv")
+        if os.path.exists(perf_ledger_path):
+            try:
+                perf_df = pd.read_csv(perf_ledger_path)
+                perf_df['Date'] = pd.to_datetime(perf_df['Date'])
+                trailing_30_days = perf_df[perf_df['Date'] >= (datetime.now() - pd.Timedelta(days=30))]
+                
+                if len(trailing_30_days) >= 5: # Require minimum statistical sample size
+                    rolling_alpha_edge_30d = trailing_30_days['realized_alpha_edge'].mean()
+                    contract_edge_baseline = metadata.get("average_pure_alpha_edge", 0.04)
+                    
+                    print(f" 📉 Realized 30-Day Pure Alpha Edge: {rolling_alpha_edge_30d:.4f} (Baseline: {contract_edge_baseline:.4f})")
+                    if rolling_alpha_edge_30d < (contract_edge_baseline * 0.5):
+                        print("🚨 [RETRAIN TRIGGER] Realized trading edge deteriorated past 50% safety hurdle.")
+                        return True
+            except Exception as pe:
+                print(f" [WARN] Performance ledger processing skipped: {str(pe)}")
+
+        print("✅ [MODEL HEALTH HEALTHY] Operational parameters verified. Skipping retrain phase.")
+        print("="*60 + "\n")
+        return False
+
+    # --- EXISTING INFERENCE SCORING CODE (UNCHANGED) ---
     def execute_ml_signals(self, gold_df: pd.DataFrame = None) -> pd.DataFrame:
-
         if gold_df is None or gold_df.empty:
             print("[WARN] Empty data frame passed to execution engine. Aborting.")
             return pd.DataFrame()
@@ -385,219 +512,93 @@ class StocksRuleEngine:
         model.load_model(MODEL_PATH)
         self.model = model
 
-        working_df = gold_df.copy()
-        working_df = working_df.sort_values(by="Date")
-
-        latest_snapshot = (
-            working_df.groupby("Symbol")
-            .tail(1)
-            .reset_index(drop=True)
-        )
+        working_df = gold_df.copy().sort_values(by="Date")
+        latest_snapshot = working_df.groupby("Symbol").tail(1).reset_index(drop=True)
 
         sector_regime_map = getattr(self, "sector_regime_map", {})
         sector_score_map = getattr(self, "sector_score_map", {})
 
         latest_snapshot["Sector_Regime_Label"] = (
-            latest_snapshot["Sector"]
-            .map(sector_regime_map)
-            .fillna("📈 NEUTRAL_CONSOLIDATION")
+            latest_snapshot["Sector"].map(sector_regime_map).fillna("📈 NEUTRAL_CONSOLIDATION")
         )
-
         latest_snapshot["Sector_GMM_Factor"] = (
-            latest_snapshot["Sector"]
-            .map(sector_score_map)
-            .fillna(0.0)
+            latest_snapshot["Sector"].map(sector_score_map).fillna(0.0)
         )
 
-        # ------------------------------------------------------------------
-        # DOMAIN FILTER
-        # ------------------------------------------------------------------
         domain_mask = (
-            (latest_snapshot["is_tradable"] == 1)
-            &
-            (latest_snapshot["Feature_Sector_Aligned"] == 1)
-            &
-            (latest_snapshot["Market_Regime_Risk_Off"] == 0)
-            &
-            (latest_snapshot["Feature_RSI"] < 82.0)
-            &
+            (latest_snapshot["is_tradable"] == 1) &
+            (latest_snapshot["Feature_Sector_Aligned"] == 1) &
+            (latest_snapshot["Market_Regime_Risk_Off"] == 0) &
+            (latest_snapshot["Feature_RSI"] < 82.0) &
             (latest_snapshot["Close"] >= 15.0)
         )
 
-        cluster_gate = (
-            latest_snapshot["Sector_GMM_Factor"]
-            >= self.macro_score_threshold
-        )
-
+        cluster_gate = latest_snapshot["Sector_GMM_Factor"] >= self.macro_score_threshold
         domain_mask = domain_mask & cluster_gate
-
         valid_universe = latest_snapshot[domain_mask].copy()
 
         if valid_universe.empty:
-            print(
-                f"[WARN] Zero portfolio elements passed macro threshold "
-                f"({self.macro_score_threshold})"
-            )
+            print(f"[WARN] Zero portfolio elements passed macro threshold ({self.macro_score_threshold})")
             return pd.DataFrame()
 
-        # ------------------------------------------------------------------
-        # MODEL PREDICTION
-        # ------------------------------------------------------------------
-        import joblib
         X_live = valid_universe[FEATURE_COLUMNS]
-
         calibrator = joblib.load(CALIBRATOR_MODEL)
-        #probabilities_matrix = model.predict_proba(X_live)
         probabilities_matrix = calibrator.predict_proba(X_live)
 
         if probabilities_matrix.shape[1] < 3:
-            raise ValueError(
-                "❌ Model must be trained as a 3-class classifier."
-            )
+            raise ValueError("❌ Model must be trained as a 3-class classifier.")
 
         valid_universe["Prob_Failure_SL"] = probabilities_matrix[:, 0]
         valid_universe["Prob_Stagnation"] = probabilities_matrix[:, 1]
         valid_universe["Alpha_ML_Score"] = probabilities_matrix[:, 2]
 
-        # ------------------------------------------------------------------
-        # PROBABILITY DIAGNOSTICS
-        # ------------------------------------------------------------------
         print("\n========== PROBABILITY DIAGNOSTICS ==========")
+        print(f"Mean P(Failure):  {probabilities_matrix[:,0].mean():.3f}")
+        print(f"Mean P(Stagnate): {probabilities_matrix[:,1].mean():.3f}")
+        print(f"Mean P(Success):  {probabilities_matrix[:,2].mean():.3f}")
 
-        print(
-            f"Mean P(Failure):  {probabilities_matrix[:,0].mean():.3f}"
-        )
-        print(
-            f"Mean P(Stagnate): {probabilities_matrix[:,1].mean():.3f}"
-        )
-        print(
-            f"Mean P(Success):  {probabilities_matrix[:,2].mean():.3f}"
-        )
-
-        # ------------------------------------------------------------------
-        # RISK STRUCTURE
-        # ------------------------------------------------------------------
         close_prices = valid_universe["Close"].values
+        atr_14 = valid_universe["ATR_14"].fillna(valid_universe["Close"] * 0.03).values if "ATR_14" in valid_universe.columns else close_prices * 0.03
+        piv_lows = valid_universe["Pivot_Low_30"].fillna(valid_universe["Close"] * 0.95).values if "Pivot_Low_30" in valid_universe.columns else close_prices * 0.95
+        sector_aligned_vals = valid_universe["Feature_Sector_Aligned"].values
 
-        if "ATR_14" in valid_universe.columns:
-            atr_14 = valid_universe["ATR_14"].fillna(
-                valid_universe["Close"] * 0.03
-            ).values
-        else:
-            atr_14 = close_prices * 0.03
-
-        if "Pivot_Low_30" in valid_universe.columns:
-            piv_lows = valid_universe["Pivot_Low_30"].fillna(
-                valid_universe["Close"] * 0.95
-            ).values
-        else:
-            piv_lows = close_prices * 0.95
-
-        sector_aligned_vals = valid_universe[
-            "Feature_Sector_Aligned"
-        ].values
-
-        pt_multipliers = np.where(
-            sector_aligned_vals == 1,
-            2.5 * 1.2,
-            2.5 * 0.8
-        )
-
-        sl_multipliers = np.where(
-            sector_aligned_vals == 1,
-            1.5,
-            1.5 * 0.66
-        )
+        pt_multipliers = np.where(sector_aligned_vals == 1, 2.5 * 1.2, 2.5 * 0.8)
+        sl_multipliers = np.where(sector_aligned_vals == 1, 1.5, 1.5 * 0.66)
 
         rupee_rewards = pt_multipliers * atr_14
         rupee_risks = sl_multipliers * atr_14
-
         profit_targets = close_prices + rupee_rewards
-
         volatility_sl = close_prices - rupee_risks
-
-        stop_losses = np.maximum(
-            piv_lows,
-            volatility_sl
-        )
-
-        actual_rupee_risks = np.maximum(
-            close_prices - stop_losses,
-            1e-9
-        )
+        stop_losses = np.maximum(piv_lows, volatility_sl)
+        actual_rupee_risks = np.maximum(close_prices - stop_losses, 1e-9)
 
         valid_universe["Stop_Loss"] = np.round(stop_losses, 2)
         valid_universe["Profit_Target"] = np.round(profit_targets, 2)
 
-        # ------------------------------------------------------------------
-        # REWARD/RISK DIAGNOSTICS
-        # ------------------------------------------------------------------
-        reward_risk_ratio = (
-            rupee_rewards /
-            (actual_rupee_risks + 1e-9)
-        )
-
+        reward_risk_ratio = rupee_rewards / (actual_rupee_risks + 1e-9)
         valid_universe["Reward_Risk"] = reward_risk_ratio
 
         print("\n========== REWARD/RISK DIAGNOSTICS ==========")
         print(valid_universe["Reward_Risk"].describe())
 
-        # ------------------------------------------------------------------
-        # NORMALIZED EV
-        # ------------------------------------------------------------------
         reward_pct = rupee_rewards / close_prices
         risk_pct = actual_rupee_risks / close_prices
 
         valid_universe["Expected_Value"] = (
-            valid_universe["Alpha_ML_Score"] * reward_pct
-            +
-            valid_universe["Prob_Stagnation"] * 0.002
-            -
+            valid_universe["Alpha_ML_Score"] * reward_pct +
+            valid_universe["Prob_Stagnation"] * 0.002 -
             valid_universe["Prob_Failure_SL"] * risk_pct
         )
 
         print("\n========== EV DIAGNOSTICS ==========")
         print(valid_universe["Expected_Value"].describe())
+        print(f"Positive EV Stocks: {(valid_universe['Expected_Value'] > 0).sum()}/{len(valid_universe)}")
 
-        positive_ev_count = (
-            valid_universe["Expected_Value"] > 0
-        ).sum()
-
-        print(
-            f"Positive EV Stocks: "
-            f"{positive_ev_count}/{len(valid_universe)}"
-        )
-
-        # ------------------------------------------------------------------
-        # RANKING
-        # ------------------------------------------------------------------
-        valid_universe = (
-            valid_universe
-            .sort_values(
-                by="Expected_Value",
-                ascending=False
-            )
-            .reset_index(drop=True)
-        )
-
+        valid_universe = valid_universe.sort_values(by="Expected_Value", ascending=False).reset_index(drop=True)
         top_20_signals = valid_universe.head(20).copy()
+        top_20_signals["Alpha_Rank"] = top_20_signals.index + 1
+        top_20_signals["Confidence_Score"] = np.round((0.6 * top_20_signals["Alpha_ML_Score"] + 0.4 * top_20_signals["Sector_GMM_Factor"]), 2)
 
-        top_20_signals["Alpha_Rank"] = (
-            top_20_signals.index + 1
-        )
-
-        top_20_signals["Confidence_Score"] = np.round(
-            (
-                0.6 * top_20_signals["Alpha_ML_Score"]
-                +
-                0.4 * top_20_signals["Sector_GMM_Factor"]
-            ),
-            2
-        )
-
-        # -------------------------------------------------------------
-        # DYNAMIC BASELINE CALIBRATION
-        # -------------------------------------------------------------
         success_baseline = valid_universe["Alpha_ML_Score"].mean()
         stagnation_baseline = valid_universe["Prob_Stagnation"].mean()
 
@@ -605,127 +606,42 @@ class StocksRuleEngine:
         print(f"Mean Success Probability   : {success_baseline:.3f}")
         print(f"Mean Stagnation Probability: {stagnation_baseline:.3f}")
 
-        # ------------------------------------------------------------------
-        # PRESENTATION LAYER
-        # ------------------------------------------------------------------
         def assign_presentation_tags(row):
             p_success = row["Alpha_ML_Score"]
             p_fail = row["Prob_Failure_SL"]
             p_stagnate = row["Prob_Stagnation"]
             ev_val = row["Expected_Value"]
+            deliv_ratio = row.get("Feature_Delivery_Ratio", 1.0)
+            close_strength = row.get("Feature_Close_Strength", 0.5)
 
-            deliv_ratio = row.get(
-                "Feature_Delivery_Ratio",
-                1.0
-            )
+            base_reason = f"EV={ev_val:.4f} | P🚀={p_success*100:.1f}% | P🛑={p_fail*100:.1f}% | P🏢={p_stagnate*100:.1f}%"
 
-            close_strength = row.get(
-                "Feature_Close_Strength",
-                0.5
-            )
-
-            base_reason = (
-                f"EV={ev_val:.4f} | "
-                f"P🚀={p_success*100:.1f}% | "
-                f"P🛑={p_fail*100:.1f}% | "
-                f"P🏢={p_stagnate*100:.1f}%"
-            )
-
-            # -------------------------------------------------
-            # RULE 1 → EV is absolute truth
-            # -------------------------------------------------
             if ev_val <= 0:
-                return pd.Series([
-                    "⚠️ HIGH ASYMMETRY HAZARD",
-                    f"Negative EV profile | {base_reason}"
-                ])
+                return pd.Series(["⚠️ HIGH ASYMMETRY HAZARD", f"Negative EV profile | {base_reason}"])
 
-            # -------------------------------------------------
-            # RULE 2 → Success anomaly relative to baseline
-            # -------------------------------------------------
             if p_success >= (success_baseline + 0.05):
+                if deliv_ratio >= 1.15 or close_strength >= 0.65:
+                    return pd.Series(["🚀 INSIDER BREAKOUT", f"Institutional accumulation confirmed | {base_reason}"])
+                return pd.Series(["🚀 ACTIVE BREAKOUT", f"Momentum expansion profile | {base_reason}"])
 
-                if (
-                    deliv_ratio >= 1.15
-                    or close_strength >= 0.65
-                ):
-                    return pd.Series([
-                        "🚀 INSIDER BREAKOUT",
-                        f"Institutional accumulation confirmed | {base_reason}"
-                    ])
-
-                return pd.Series([
-                    "🚀 ACTIVE BREAKOUT",
-                    f"Momentum expansion profile | {base_reason}"
-                ])
-
-            # -------------------------------------------------
-            # RULE 3 → Stagnation anomaly
-            # -------------------------------------------------
             if p_stagnate >= (stagnation_baseline * 2.0):
+                return pd.Series(["🏢 INSTITUTIONAL LAUNCHPAD", f"Compression structure detected | {base_reason}"])
 
-                return pd.Series([
-                    "🏢 INSTITUTIONAL LAUNCHPAD",
-                    f"Compression structure detected | {base_reason}"
-                ])
+            return pd.Series(["🏢 LAUNCHPAD", f"Positive EV accumulation profile | {base_reason}"])
 
-            # -------------------------------------------------
-            # RULE 4 → Normal positive EV setup
-            # -------------------------------------------------
-            return pd.Series([
-                "🏢 LAUNCHPAD",
-                f"Positive EV accumulation profile | {base_reason}"
-            ])
+        top_20_signals[["Strategic_Label", "Decision_Reason"]] = top_20_signals.apply(assign_presentation_tags, axis=1)
 
-        top_20_signals[
-            ["Strategic_Label", "Decision_Reason"]
-        ] = top_20_signals.apply(
-            assign_presentation_tags,
-            axis=1
-        )
-
-        # ------------------------------------------------------------------
-        # FINAL DIAGNOSTICS
-        # ------------------------------------------------------------------
         print("\n========== FINAL LABEL COUNTS ==========")
-        print(
-            top_20_signals["Strategic_Label"]
-            .value_counts()
-        )
-
-        print(
-            f"\n🎯 Portfolio Allocation Engine "
-            f"dispatched {len(top_20_signals)} positions."
-        )
+        print(top_20_signals["Strategic_Label"].value_counts())
+        print(f"\n🎯 Portfolio Allocation Engine dispatched {len(top_20_signals)} positions.")
 
         required_ui_cols = [
-            "Symbol",
-            "Sector",
-            "Close",
-            "Expected_Value",
-            "Reward_Risk",
-            "Alpha_ML_Score",
-            "Prob_Failure_SL",
-            "Prob_Stagnation",
-            "Confidence_Score",
-            "Alpha_Rank",
-            "Stop_Loss",
-            "Profit_Target",
-            "Strategic_Label",
-            "Decision_Reason"
+            "Symbol", "Sector", "Close", "Expected_Value", "Reward_Risk", "Alpha_ML_Score",
+            "Prob_Failure_SL", "Prob_Stagnation", "Confidence_Score", "Alpha_Rank",
+            "Stop_Loss", "Profit_Target", "Strategic_Label", "Decision_Reason"
         ]
 
-        final_return_columns = list(
-            dict.fromkeys(
-                required_ui_cols +
-                list(FEATURE_COLUMNS)
-            )
-        )
-
-        existing_return_columns = [
-            col
-            for col in final_return_columns
-            if col in top_20_signals.columns
-        ]
+        final_return_columns = list(dict.fromkeys(required_ui_cols + list(FEATURE_COLUMNS)))
+        existing_return_columns = [col for col in final_return_columns if col in top_20_signals.columns]
 
         return top_20_signals[existing_return_columns]

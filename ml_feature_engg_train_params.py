@@ -200,6 +200,15 @@ def run_offline_model_training(raw_universe_df: pd.DataFrame, pipeline_instance:
         "walk_forward_folds": wf_records,
         "feature_importance": dict(sorted(zip(active_features, [float(x) for x in master_model.feature_importances_]), key=lambda x: x[1], reverse=True))
     }
+
+    pipeline_instance.compile_and_save_health_contract(
+        training_pool=training_pool,
+        master_model=master_model,
+        avg_auc=avg_auc,       
+        avg_p10=avg_p10,       
+        avg_edge=avg_edge,     
+        wf_records=wf_records  
+    )
     
     with open(MODEL_SCHEMA_METADATA, "w") as f:
         json.dump(metadata, f, indent=4)
