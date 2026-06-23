@@ -6,7 +6,9 @@ from xgboost import XGBClassifier
 from sklearn.dummy import DummyClassifier
 from sklearn.metrics import log_loss, roc_auc_score
 from rule_engine import StocksRuleEngine
-from constants import MODEL_PATH, TODAY, MODEL_SCHEMA_METADATA, FEATURE_COLUMNS
+from constants import MODEL_PATH, TODAY, MODEL_SCHEMA_METADATA, FEATURE_COLUMNS, CALIBRATOR_MODEL
+from sklearn.calibration import CalibratedClassifierCV
+import joblib
 
 def run_offline_model_training(raw_universe_df: pd.DataFrame, pipeline_instance: StocksRuleEngine):
     """
@@ -55,6 +57,7 @@ def run_offline_model_training(raw_universe_df: pd.DataFrame, pipeline_instance:
     
     wf_records = []
     best_iterations_tracker = []
+    probability_std_tracker = []
     
     print(f"[WALK-FORWARD] Spawning 5-Fold Calendar-Block Analytics Matrix...\n")
     
@@ -90,7 +93,7 @@ def run_offline_model_training(raw_universe_df: pd.DataFrame, pipeline_instance:
             objective="multi:softprob",
             num_class=3,
             eval_metric="mlogloss", 
-            early_stopping_rounds=35,
+            early_stopping_rounds=40,
             random_state=42,
             n_jobs=1,              
             tree_method="hist"     
@@ -119,6 +122,10 @@ def run_offline_model_training(raw_universe_df: pd.DataFrame, pipeline_instance:
         print(f"     • Multi-Class Macro AUC: {fold_auc:.4f} | Precision@Top10% (Success): {precision_top_10:.4f}")
         print(f"     • Pure Strategy Alpha Edge: {alpha_edge:+.4f}")
         print(f"     • Converged at Tree Iteration: {fold_model.best_iteration}\n")
+        print(f"     • Success Probability Std Dev = " f"{np.std(val_probs_all[:,2]):.4f}")
+
+        success_std = np.std(val_probs_all[:,2])
+        probability_std_tracker.append(success_std)
         
         best_iterations_tracker.append(fold_model.best_iteration)
         wf_records.append({
@@ -136,16 +143,28 @@ def run_offline_model_training(raw_universe_df: pd.DataFrame, pipeline_instance:
         })
 
     # 5. Compile Master Model on Complete Production Footprint Using Median Tree Convergence Boundary
-    optimal_master_trees = int(np.median(best_iterations_tracker)) + 5 if best_iterations_tracker else 25
+    good_iterations = [
+        itr
+        for itr, std in zip(best_iterations_tracker, probability_std_tracker)
+        if std > 0.03
+    ]
+
+    optimal_master_trees = (
+        int(np.mean(good_iterations))
+        if good_iterations
+        else 50
+    )
     print(f"[TRAIN] Multi-fold execution complete. Compiling final production network on global data map...")
     print(f"[TRAIN] Regularizing production capacity boundary via MEDIAN metric to exactly {optimal_master_trees} trees.")
     
     X_master = training_pool[active_features]
     y_master = training_pool["Strategic_Label"]
+
+    print(training_pool["Strategic_Label"].value_counts(normalize=True))
     
     # UPGRADE: Final Master Model converted to Multi-Class format
     master_model = XGBClassifier(
-        n_estimators=optimal_master_trees, max_depth=3, learning_rate=0.04,
+        n_estimators=optimal_master_trees, max_depth=5, learning_rate=0.04,
         subsample=0.8, colsample_bytree=0.8,
         objective="multi:softprob",
         num_class=3,
@@ -153,10 +172,19 @@ def run_offline_model_training(raw_universe_df: pd.DataFrame, pipeline_instance:
         n_jobs=1, tree_method="hist"
     )
     master_model.fit(X_master, y_master)
+
+    calibrator = CalibratedClassifierCV(
+        estimator=master_model,
+        method="isotonic",
+        cv=3
+    )
+
+    calibrator.fit(X_master, y_master)
     
     # 6. Export Validated Model Binary and Metadata Audit Tracking Logs
     os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
     master_model.save_model(MODEL_PATH)
+    joblib.dump(calibrator, CALIBRATOR_MODEL)
     
     avg_auc = np.mean([r["auc"] for r in wf_records]) if wf_records else 0.0
     avg_p10 = np.mean([r["precision_top_10"] for r in wf_records]) if wf_records else 0.0

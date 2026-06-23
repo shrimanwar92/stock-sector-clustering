@@ -1,9 +1,6 @@
 name: SWING TRADING STOCKS PIPELINE
 
 on:
-  schedule:
-    # 8:00 PM IST matches 2:30 PM (14:30) UTC. Runs Monday through Friday.
-    - cron: '30 14 * * 1-5'
   workflow_dispatch: # Allows manual trigger from UI
 
 permissions:

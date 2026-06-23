@@ -8,7 +8,8 @@ from constants import (
     MODEL_PATH, 
     FEATURE_COLUMNS,
     REPORTS_DIR,
-    fetch_data_from_nse
+    fetch_data_from_nse,
+    CALIBRATOR_MODEL
 )
 
 warnings.filterwarnings("ignore")
@@ -442,9 +443,12 @@ class StocksRuleEngine:
         # ------------------------------------------------------------------
         # MODEL PREDICTION
         # ------------------------------------------------------------------
+        import joblib
         X_live = valid_universe[FEATURE_COLUMNS]
 
-        probabilities_matrix = model.predict_proba(X_live)
+        calibrator = joblib.load(CALIBRATOR_MODEL)
+        #probabilities_matrix = model.predict_proba(X_live)
+        probabilities_matrix = calibrator.predict_proba(X_live)
 
         if probabilities_matrix.shape[1] < 3:
             raise ValueError(

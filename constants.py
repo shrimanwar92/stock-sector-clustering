@@ -17,6 +17,7 @@ LLM_SENTIMENT_RESULT = f"reports/[{TODAY}]/llm_sentiment_results.json"
 LLM_MODEL_NAME = "gemini-2.5-flash-lite"
 CACHE_FILE = f"reports/[{TODAY}]/.sector_cache.json"
 MODEL_PATH = f"reports/[{TODAY}]/alpha_xgboost_scorer.json"
+CALIBRATOR_MODEL = f"reports/[{TODAY}]/alpha_calibrator.joblib"
 MODEL_SCHEMA_METADATA = f"reports/[{TODAY}]/model_training_metadata.json"
 
 FEATURE_COLUMNS = [
