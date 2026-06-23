@@ -1,25 +1,25 @@
 import json
 import datetime
 import pandas as pd
+import zoneinfo, datetime
 
 class ProgrammaticDashboardDeployer:
     """
-    Acts as the data engine backend. Processes trading configurations into clean,
-    structured JSON data payloads and saves them directly to a local file.
+    Acts as the quantitative data serialization engine. Compiles model matrix outputs, 
+    risk-reward analytics, and 3-class triple barrier metrics directly to a local JSON payload.
     """
     def __init__(self):
-        # Removed GitHub configuration parameters since we are writing locally
         pass
 
     def generate_and_save_data(self, execution_df: pd.DataFrame, target_path: str = "dataset/data.json"):
         """
-        Extracts mathematical parameters from the DataFrame, formats a lightweight JSON structure,
-        and writes it directly to the local filesystem.
+        Extracts structural execution features from the incoming ML DataFrame 
+        and updates mapping bindings to precisely track the revised presentations layer.
         """
         if execution_df.empty:
             qualified_df = pd.DataFrame()
         else:
-            # Clear out vetoed, overextended, and unconfirmed setups
+            # Drop structural configuration failures that should not hit downstream UI components
             invalid_states = [
                 "⏳ FILTERED_OUT", "❌ REGIME_VETO", "⏳ SECTOR_MISALIGNED", 
                 "⏳ SECTOR_VETO", "🛑 OVEREXTENDED", "📉 DEEP FLUSH", 
@@ -35,31 +35,30 @@ class ProgrammaticDashboardDeployer:
                 "close": float(row["Close"]),
                 "stopLoss": float(row.get("Stop_Loss", 0.0)),
                 "profitTarget": float(row.get("Profit_Target", 0.0)),
+                "expectedValue": float(row.get("Expected_Value", 0.0)),
+                "rewardRisk": float(row.get("Reward_Risk", 0.0)),
+                "pSuccess": float(row.get("Alpha_ML_Score", 0.0)),
+                "pFailure": float(row.get("Prob_Failure_SL", 0.0)),
+                "pStagnate": float(row.get("Prob_Stagnation", 0.0)),
+                "confidence": float(row.get("Confidence_Score", 0.0)),
+                "decisionReason": str(row.get("Decision_Reason", "No dynamic reasons generated.")),
                 "rsi": float(row.get("Feature_RSI", 50.0)),
-                "emaDist": float(row.get("Feature_EMA_Dist", 0.0)),
                 "volRatio": float(row.get("Feature_Volume_Ratio", 1.0)),
-                "macdAccel": float(row.get("Feature_MACD_Hist_Accel", 0.0)),
+                "atrRatio": float(row.get("Feature_ATR_Ratio", 1.0)),
                 "closeStrength": float(row.get("Feature_Close_Strength", 0.5)),
                 "sector": str(row.get("Sector", "UNKNOWN")),
-                "trendAligned": int(row.get("Feature_Trend_Aligned", 0)),
-                "relativeStrength": float(row.get("Feature_Relative_Strength", 0.0)),
-                "deliveryRatio": float(row.get("Feature_Delivery_Ratio", 1.0)),
-                "atrRatio": float(row.get("Feature_ATR_Ratio", 1.0)),
-                "sectorAligned": int(row.get("Feature_Sector_Aligned", 0)),
                 "sentiment": str(row.get("Sentiment", "NEUTRAL")),
                 "news_catalyst": str(row.get("News_Catalyst", "No active fundamental catalyst logged.")),
-                "confidence": int(row.get("Confidence_Score", 50)),
                 "threat": str(row.get("Strategic_Threat", "No operational risk threats identified.")),
                 "shapSynthesis": str(row.get("SHAP_Synthesis") or row.get("shap_synthesis") or "No mathematical alignment synthesis generated.")
             })
 
-        # Assemble unified dashboard data ecosystem object
+        # Assemble deployment schema
         dashboard_payload = {
-            "updated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "updated_at": datetime.datetime.now(zoneinfo.ZoneInfo("Asia/Kolkata")).strftime("%Y-%m-%d %H:%M"),
             "tickers": records
         }
         
-        # Write cleanly to the local file path
         try:
             with open(target_path, "w", encoding="utf-8") as f:
                 json.dump(dashboard_payload, f, indent=4)

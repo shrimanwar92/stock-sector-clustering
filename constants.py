@@ -53,26 +53,6 @@ def fetch_data_from_nse(filtered_symbols, symbol_to_sector_map):
     end_date = datetime.datetime.strptime(TODAY, "%d-%m-%Y")
     start_date = end_date - datetime.timedelta(days=int(365 * LOOKBACK_YEARS))
 
-    cache_file = os.path.join(REPORTS_DIR, ".sector_universe_cache.json.gz")
-
-    if os.path.exists(cache_file):
-        try:
-            print(f"✅ [CACHE HIT] Loading sector universe from '{cache_file}'")
-
-            with gzip.open(cache_file, "rt", encoding="utf-8") as f:
-                cached_df = pd.read_json(f, orient="records")
-
-            if not cached_df.empty:
-                cached_df.columns = [
-                    str(c).replace("ï»¿", "").strip()
-                    for c in cached_df.columns
-                ]
-
-                return cached_df
-
-        except Exception as e:
-            print(f"[WARN] Cache read failed ({e}). Falling back to NSE fetch.")
-
     # ------------------------------------------------------------------
     # NORMALIZE SYMBOLS
     # ------------------------------------------------------------------

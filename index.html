@@ -27,7 +27,7 @@
                 <h1 class="text-base sm:text-lg font-bold tracking-tight text-[#0f172a] flex flex-wrap items-center gap-2">
                     QUANT WAVE <span class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded font-mono font-bold">SWING TRADE ANALYSIS</span>
                 </h1>
-                <p class="text-xs text-[#64748b] mt-0.5 hidden md:block">Swing trading analysis 2-12 weeks timeframe</p>
+                <p class="text-xs text-[#64748b] mt-0.5 hidden md:block">3-Class ML Triple Barrier Strategy Execution Layer</p>
             </div>
         </div>
         
@@ -45,46 +45,49 @@
             <h3 class="text-xs font-bold text-[#475569] uppercase tracking-wider mb-3 flex items-center gap-2">
                 <i class="fa-solid fa-circle-info text-emerald-600 text-sm"></i> Strategic Label Explanatory Guide
             </h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="p-3.5 bg-emerald-50/50 border border-emerald-100 rounded-xl">
-                    <div class="flex items-center gap-2 mb-1.5">
-                        <span class="text-xs font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-mono">🚀 ACTIVE BREAKOUT</span>
-                    </div>
-                    <p class="text-xs text-[#475569] leading-relaxed"><strong class="text-[#0f172a]">Plain Meaning:</strong> The stock is showing powerful upward trend momentum right now and has broken out of its short-term price ceiling.</p>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                <div class="p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl text-xs">
+                    <span class="font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1">🚀 INSIDER BREAKOUT</span>
+                    <p class="text-[#475569]">High success probability combined with immediate institutional volume allocation flags.</p>
                 </div>
-                
-                <div class="p-3.5 bg-cyan-50/40 border border-cyan-100 rounded-xl">
-                    <div class="flex items-center gap-2 mb-1.5">
-                        <span class="text-xs font-bold bg-cyan-50 text-cyan-800 border border-cyan-200 px-2 py-0.5 rounded font-mono">🚀 INSIDER BREAKOUT</span>
-                    </div>
-                    <p class="text-xs text-[#475569] leading-relaxed"><strong class="text-[#0f172a]">Plain Meaning:</strong> A breakout backed by high delivery conversion, indicating institutions are absorbing outstanding float supply.</p>
+                <div class="p-3 bg-teal-50/50 border border-teal-100 rounded-xl text-xs">
+                    <span class="font-bold bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1">🚀 ACTIVE BREAKOUT</span>
+                    <p class="text-[#475569]">Strong underlying alpha score predicting positive variance expansion above baseline noise.</p>
                 </div>
-
-                <div class="p-3.5 bg-amber-50/50 border border-amber-100 rounded-xl">
-                    <div class="flex items-center gap-2 mb-1.5">
-                        <span class="text-xs font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-mono">🏢 LAUNCHPAD / INST.</span>
-                    </div>
-                    <p class="text-xs text-[#475569] leading-relaxed"><strong class="text-[#0f172a]">Plain Meaning:</strong> The stock is tightly consolidating inside a quiet compression base, hiding coiled springs before a macro expansion.</p>
+                <div class="p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl text-xs">
+                    <span class="font-bold bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1">🏢 INST. LAUNCHPAD</span>
+                    <p class="text-[#475569]">Extreme price compression; high stagnation cluster indicating coiled energy build-ups.</p>
+                </div>
+                <div class="p-3 bg-amber-50/50 border border-amber-100 rounded-xl text-xs">
+                    <span class="font-bold bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1">🏢 LAUNCHPAD</span>
+                    <p class="text-[#475569]">Standard positive Expected Value setup with structural edge over baseline metrics.</p>
+                </div>
+                <div class="p-3 bg-rose-50/50 border border-rose-100 rounded-xl text-xs">
+                    <span class="font-bold bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1">⚠️ ASYMMETRY HAZARD</span>
+                    <p class="text-[#475569]">Mathematical failure risk or mathematical EV projection ≤ 0. High-risk profiles.</p>
                 </div>
             </div>
         </section>
 
         <section class="flex flex-wrap items-center gap-2 bg-white border border-[#e2e8f0] p-3 rounded-xl shadow-sm">
-            <span class="text-xs font-bold uppercase tracking-wider text-[#64748b] ml-1 mr-2"><i class="fa-solid fa-filter text-slate-500 mr-1.5"></i> Filter Setups:</span>
-            <button onclick="filterTable('ALL')" id="btn-ALL" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-[#0f172a] text-white border-[#0f172a]">
-                All Verified Setups (<span id="count-ALL">0</span>)
+            <span class="text-xs font-bold uppercase tracking-wider text-[#64748b] ml-1 mr-2"><i class="fa-solid fa-filter text-slate-500 mr-1.5"></i> Filters:</span>
+            <button onclick="filterTable('ALL')" id="btn-ALL" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">
+                All Candidates (<span id="count-ALL">0</span>)
             </button>
-            <button onclick="filterTable('ACTIVE')" id="btn-ACTIVE" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
-                🚀 Active Breakout (<span id="count-ACTIVE">0</span>)
+            <button onclick="filterTable('INSIDER')" id="btn-INSIDER" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">
+                🚀 Insider Breakout (<span id="count-INSIDER">0</span>)
             </button>
-            <button onclick="filterTable('INSIDER')" id="btn-INSIDER" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
-                💎 Insider Breakout (<span id="count-INSIDER">0</span>)
+            <button onclick="filterTable('ACTIVE')" id="btn-ACTIVE" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">
+                ⚡ Active Breakout (<span id="count-ACTIVE">0</span>)
             </button>
-            <button onclick="filterTable('LAUNCHPAD')" id="btn-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
-                🏢 Launchpad (<span id="count-LAUNCHPAD">0</span>)
+            <button onclick="filterTable('INST-LAUNCHPAD')" id="btn-INST-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">
+                🏛️ Inst Launchpad (<span id="count-INST-LAUNCHPAD">0</span>)
             </button>
-            <button onclick="filterTable('INST-LAUNCHPAD')" id="btn-INST-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-white text-[#475569] border-[#e2e8f0] hover:bg-slate-50">
-                🏛️ Institutional Launchpad (<span id="count-INST-LAUNCHPAD">0</span>)
+            <button onclick="filterTable('LAUNCHPAD')" id="btn-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">
+                📦 Launchpad (<span id="count-LAUNCHPAD">0</span>)
+            </button>
+            <button onclick="filterTable('HAZARD')" id="btn-HAZARD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">
+                ⚠️ Hazard Trap (<span id="count-HAZARD">0</span>)
             </button>
         </section>
 
@@ -92,7 +95,7 @@
             <div class="bg-white border border-[#e2e8f0] rounded-2xl p-4 sm:p-6 shadow-sm">
                 <div id="ticker-rows" class="grid gap-4">
                     <div class="p-12 text-center text-[#64748b] font-mono text-sm">
-                        <i class="fa-solid fa-spinner fa-spin mr-2"></i> Synchronizing live pipeline data...
+                        <i class="fa-solid fa-spinner fa-spin mr-2"></i> Synchronizing core matrix streams...
                     </div>
                 </div>
             </div>
@@ -103,23 +106,20 @@
         let allTickers = [];
         let currentFilter = 'ALL';
 
-        // 🟢 ASYNC FETCH: Get the pure JSON dataset dumped by Python
         async function loadDashboardData() {
             try {
-                // Fetch cache-busting variant to ensure GitHub Pages doesn't hold old assets
                 const response = await fetch(`./dataset/data.json?t=${new Date().getTime()}`);
-                if (!response.ok) throw new Error("Network metadata payload rejected.");
+                if (!response.ok) throw new Error("Telemetry pipeline rejected structural stream data.");
                 
                 const data = await response.json();
                 allTickers = data.tickers || [];
-                
                 document.getElementById("publish-timestamp").innerText = data.updated_at || "N/A";
                 renderRows();
             } catch (error) {
-                console.error("Critical Runtime Fetch Failure:", error);
+                console.error("Pipeline Failure:", error);
                 document.getElementById("ticker-rows").innerHTML = `
                     <div class="p-12 text-center text-rose-600 font-mono text-sm border border-rose-200 rounded-xl bg-rose-50">
-                        <i class="fa-solid fa-triangle-exclamation mr-2"></i> Failed to sync dashboard telemetry dataset.
+                        <i class="fa-solid fa-triangle-exclamation mr-2"></i> Critical Error: Synchronization failure on telemetry matrix dataset.
                     </div>`;
             }
         }
@@ -127,24 +127,23 @@
         function updateFilterBadges() {
             const counts = {
                 ALL: allTickers.length,
-                ACTIVE: allTickers.filter(t => t.label.includes('ACTIVE BREAKOUT')).length,
                 INSIDER: allTickers.filter(t => t.label.includes('INSIDER BREAKOUT')).length,
+                ACTIVE: allTickers.filter(t => t.label.includes('ACTIVE BREAKOUT')).length,
+                INST_LAUNCHPAD: allTickers.filter(t => t.label.includes('INSTITUTIONAL LAUNCHPAD')).length,
                 LAUNCHPAD: allTickers.filter(t => t.label === '🏢 LAUNCHPAD').length,
-                INST_LAUNCHPAD: allTickers.filter(t => t.label === '🏢 INSTITUTIONAL LAUNCHPAD').length
+                HAZARD: allTickers.filter(t => t.label.includes('HAZARD')).length
             };
 
             document.getElementById("count-ALL").innerText = counts.ALL;
-            document.getElementById("count-ACTIVE").innerText = counts.ACTIVE;
             document.getElementById("count-INSIDER").innerText = counts.INSIDER;
-            document.getElementById("count-LAUNCHPAD").innerText = counts.LAUNCHPAD;
+            document.getElementById("count-ACTIVE").innerText = counts.ACTIVE;
             document.getElementById("count-INST-LAUNCHPAD").innerText = counts.INST_LAUNCHPAD;
+            document.getElementById("count-LAUNCHPAD").innerText = counts.LAUNCHPAD;
+            document.getElementById("count-HAZARD").innerText = counts.HAZARD;
 
             const buttons = {
-                'ALL': 'btn-ALL',
-                'ACTIVE': 'btn-ACTIVE',
-                'INSIDER': 'btn-INSIDER',
-                'LAUNCHPAD': 'btn-LAUNCHPAD',
-                'INST-LAUNCHPAD': 'btn-INST-LAUNCHPAD'
+                'ALL': 'btn-ALL', 'INSIDER': 'btn-INSIDER', 'ACTIVE': 'btn-ACTIVE',
+                'INST-LAUNCHPAD': 'btn-INST-LAUNCHPAD', 'LAUNCHPAD': 'btn-LAUNCHPAD', 'HAZARD': 'btn-HAZARD'
             };
 
             Object.keys(buttons).forEach(key => {
@@ -167,63 +166,69 @@
             const container = document.getElementById("ticker-rows");
             if (!container) return;
             
-            // Clean dynamic filtering criteria logic
             let filteredData = allTickers;
-            if (currentFilter === 'ACTIVE') {
-                filteredData = allTickers.filter(t => t.label.includes('ACTIVE BREAKOUT'));
-            } else if (currentFilter === 'INSIDER') {
-                filteredData = allTickers.filter(t => t.label.includes('INSIDER BREAKOUT'));
-            } else if (currentFilter === 'LAUNCHPAD') {
-                filteredData = allTickers.filter(t => t.label === '🏢 LAUNCHPAD');
-            } else if (currentFilter === 'INST-LAUNCHPAD') {
-                filteredData = allTickers.filter(t => t.label === '🏢 INSTITUTIONAL LAUNCHPAD');
-            }
+            if (currentFilter === 'INSIDER') filteredData = allTickers.filter(t => t.label.includes('INSIDER BREAKOUT'));
+            else if (currentFilter === 'ACTIVE') filteredData = allTickers.filter(t => t.label.includes('ACTIVE BREAKOUT'));
+            else if (currentFilter === 'INST-LAUNCHPAD') filteredData = allTickers.filter(t => t.label.includes('INSTITUTIONAL LAUNCHPAD'));
+            else if (currentFilter === 'LAUNCHPAD') filteredData = allTickers.filter(t => t.label === '🏢 LAUNCHPAD');
+            else if (currentFilter === 'HAZARD') filteredData = allTickers.filter(t => t.label.includes('HAZARD'));
             
             updateFilterBadges();
 
             if (filteredData.length === 0) {
-                container.innerHTML = `<div class="p-12 text-center text-[#64748b] font-mono text-sm border-2 border-dashed border-[#e2e8f0] rounded-xl bg-[#f8fafc]">No active trading candidates matched the selected filter configuration.</div>`;
+                container.innerHTML = `<div class="p-12 text-center text-[#64748b] font-mono text-sm border-2 border-dashed border-[#e2e8f0] rounded-xl bg-[#f8fafc]">No matrix nodes match current system filters.</div>`;
                 return;
             }
             
-            container.innerHTML = filteredData.map(t => `
+            container.innerHTML = filteredData.map(t => {
+                let badgeClass = "bg-amber-50 text-amber-700 border border-amber-200";
+                if (t.label.includes("INSIDER")) badgeClass = "bg-cyan-50 text-cyan-700 border border-cyan-200";
+                else if (t.label.includes("ACTIVE")) badgeClass = "bg-emerald-50 text-emerald-700 border border-emerald-200";
+                else if (t.label.includes("INSTITUTIONAL")) badgeClass = "bg-indigo-50 text-indigo-700 border border-indigo-200";
+                else if (t.label.includes("HAZARD")) badgeClass = "bg-rose-50 text-rose-700 border border-rose-200 animate-pulse";
+
+                // Normalize confidence formatting if passed as raw float ratio
+                const formattedConfidence = t.confidence <= 1.0 ? (t.confidence * 100).toFixed(0) : t.confidence;
+                const evColorClass = t.expectedValue > 0 ? "text-emerald-600" : "text-rose-600 font-bold";
+
+                return `
                 <div class="p-5 bg-white rounded-xl border border-[#e2e8f0] flex flex-col gap-4 hover:border-slate-400 hover:shadow-md transition-all duration-200">
                     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
-                        <div class="w-full lg:max-w-xl">
+                        <div class="w-full lg:max-w-2xl">
                             <div class="flex flex-wrap items-center gap-2">
                                 <h4 class="font-bold text-[#0f172a] font-mono text-base tracking-tight">${t.symbol}</h4>
-                                <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-[#f1f5f9] text-[#475569] border border-[#e2e8f0] font-mono">
-                                    ${t.sector}
-                                </span>
-                                <span class="text-[10px] px-2 py-0.5 rounded font-bold ${
-                                    t.label.includes('BREAKOUT')
-                                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                                        : 'bg-amber-50 text-amber-700 border border-amber-200'
-                                }">
-                                    ${t.label}
-                                </span>
+                                <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-[#f1f5f9] text-[#475569] border border-[#e2e8f0] font-mono">${t.sector}</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded font-bold font-mono ${badgeClass}">${t.label}</span>
                             </div>
 
-                            <div class="text-xs text-[#334155] mt-2.5 bg-[#f8fafc] p-3 rounded-lg border border-[#f1f5f9] flex flex-wrap gap-x-4 gap-y-1.5 font-medium">
-                                <div>Close: <span class="text-[#0f172a] font-mono font-bold">₹${t.close.toLocaleString('en-IN')}</span></div>
-                                <div class="border-l border-[#e2e8f0] pl-4">Stop-Loss: <span class="text-rose-600 font-mono font-bold">₹${t.stopLoss.toLocaleString('en-IN')}</span></div>
-                                <div class="border-l border-[#e2e8f0] pl-4">Target: <span class="text-emerald-600 font-mono font-bold">₹${t.profitTarget.toLocaleString('en-IN')}</span></div>
+                            <div class="text-xs text-[#334155] mt-2.5 bg-[#f8fafc] p-3 rounded-lg border border-[#f1f5f9] grid grid-cols-2 sm:grid-cols-5 gap-3 font-medium">
+                                <div>Price: <span class="text-[#0f172a] font-mono font-bold block sm:inline">₹${t.close.toLocaleString('en-IN')}</span></div>
+                                <div class="sm:border-l sm:border-[#e2e8f0] sm:pl-3">Stop-Loss: <span class="text-rose-600 font-mono font-bold block sm:inline">₹${t.stopLoss.toLocaleString('en-IN')}</span></div>
+                                <div class="sm:border-l sm:border-[#e2e8f0] sm:pl-3">Target: <span class="text-emerald-600 font-mono font-bold block sm:inline">₹${t.profitTarget.toLocaleString('en-IN')}</span></div>
+                                <div class="sm:border-l sm:border-[#e2e8f0] sm:pl-3">Expected Val: <span class="${evColorClass} font-mono font-bold block sm:inline">${t.expectedValue.toFixed(4)}</span></div>
+                                <div class="sm:border-l sm:border-[#e2e8f0] sm:pl-3">R/R Ratio: <span class="text-teal-600 font-mono font-bold block sm:inline">${t.rewardRisk.toFixed(2)}x</span></div>
                             </div>
                         </div>
 
                         <div class="w-full lg:text-right lg:max-w-md border-t lg:border-t-0 pt-3 lg:pt-0 border-[#f1f5f9] flex flex-col lg:items-end gap-1.5">
                             <div>
-                                <span class="text-[10px] px-2.5 py-1 rounded-full font-mono font-bold tracking-wide ${
-                                    t.sentiment === 'BULLISH'
-                                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
-                                        : 'bg-slate-100 text-slate-600 border border-slate-200'
-                                }">
-                                    <i class="fa-solid fa-circle text-[6px] mr-1.5 align-middle"></i>
-                                    ${t.sentiment}
+                                <span class="text-[10px] px-2.5 py-1 rounded-full font-mono font-bold tracking-wide ${t.sentiment === 'BULLISH' ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-600 border border-slate-200'}">
+                                    <i class="fa-solid fa-circle text-[6px] mr-1.5 align-middle"></i>${t.sentiment}
                                 </span>
                             </div>
                             <p class="text-xs font-semibold text-[#334155] mt-1 italic leading-relaxed">"${t.news_catalyst}"</p>
-                            <p class="text-[10px] text-[#94a3b8] font-medium mt-0.5">Confidence Layer Score: <span class="font-mono text-[#475569] font-bold">${t.confidence}%</span></p>
+                            <p class="text-[10px] text-[#94a3b8] font-medium mt-0.5">Confidence Layer Score: <span class="font-mono text-[#475569] font-bold">${formattedConfidence}%</span></p>
+                        </div>
+                    </div>
+
+                    <div class="text-[11px] text-[#475569] font-mono bg-slate-50 border border-[#e2e8f0] px-3 py-2 rounded-lg flex flex-wrap gap-x-6 gap-y-1.5 items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <span>Pipeline Reasoning: <span class="text-slate-900 font-sans font-medium">${t.decisionReason}</span></span>
+                        </div>
+                        <div class="flex items-center gap-3 border-t sm:border-t-0 pt-1.5 sm:pt-0 w-full sm:w-auto text-[10px]">
+                            <span class="px-1.5 py-0.5 bg-emerald-50 text-emerald-700 rounded border border-emerald-100">P(Success): ${(t.pSuccess*100).toFixed(1)}%</span>
+                            <span class="px-1.5 py-0.5 bg-indigo-50 text-indigo-700 rounded border border-indigo-100">P(Stagnate): ${(t.pStagnate*100).toFixed(1)}%</span>
+                            <span class="px-1.5 py-0.5 bg-rose-50 text-rose-700 rounded border border-rose-100">P(Failure): ${(t.pFailure*100).toFixed(1)}%</span>
                         </div>
                     </div>
 
@@ -247,8 +252,8 @@
                         <span>•</span>
                         <span>Close Strength: <strong class="text-[#334155]">${t.closeStrength.toFixed(2)}</strong></span>
                     </div>
-                </div>
-            `).join("");
+                </div>`;
+            }).join("");
         }
 
         window.onload = loadDashboardData;
