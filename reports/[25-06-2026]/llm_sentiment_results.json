@@ -1,0 +1,142 @@
+{
+    "MTARTECH": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong performance in recent quarters, particularly driven by defense and aerospace order book expansion. Potential for increased government spending in these sectors.",
+        "confidence_score": 75,
+        "strategic_threat": "Competition from larger domestic and international players in the defense sector. Execution risk on large, complex projects.",
+        "shap_synthesis": "The strong positive SHAP value for 'Feature_Relative_Strength' (0.94) aligns with MTARTECH's current upward price trend and potential for continued outperformance. The positive 'Feature_ATR_Ratio' (0.42) suggests a manageable volatility relative to its average true range, indicating stability in its upward move. 'Feature_ROC_20' (0.27) further supports this by showing a positive 20-day rate of change. The slightly negative, but not dominant, values for 'Feature_MACD_Hist_Accel' and 'Feature_Volume_Ratio' don't significantly detract from the bullish outlook, suggesting that recent price action is well-supported."
+    },
+    "POWERINDIA": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Beneficiary of increased infrastructure spending, particularly in power transmission and distribution. Recent order wins and strong financial performance have boosted investor confidence.",
+        "confidence_score": 70,
+        "strategic_threat": "Dependency on large project execution which can face delays. Input cost volatility for raw materials.",
+        "shap_synthesis": "The positive SHAP values for 'Feature_Relative_Strength' (0.52) and 'Feature_ROC_20' (0.30) indicate a positive price momentum and historical upward trend, aligning with current positive market sentiment. The positive 'Feature_ATR_Ratio' (0.22) suggests that current price movements are within acceptable volatility. 'Feature_Volume_Ratio' (0.14) also shows increased participation, reinforcing the bullish trend. The negative 'Feature_MACD_Hist_Accel' and 'Feature_EMA_Dist' are minor and do not override the strong positive indicators."
+    },
+    "GRAPHITE": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Mixed signals from the graphite electrode market. Demand fluctuations based on steel production output. Limited recent significant corporate news or sector-specific catalysts.",
+        "confidence_score": 50,
+        "strategic_threat": "Volatility in raw material prices (e.g., petroleum coke). Cyclical nature of the steel industry impacting demand. Potential for oversupply in certain product segments.",
+        "shap_synthesis": "The mixed SHAP values suggest a neutral outlook. The negative 'Feature_ATR_Ratio' (-0.15) and 'Feature_Relative_Strength' (-0.01) indicate potential downward pressure or a lack of strong upward momentum. However, slightly positive 'Feature_ROC_20' (0.08) and 'Feature_Volume_Ratio' (0.08) suggest some underlying demand. The negative 'Feature_ADX_14' and 'Feature_MACD_Hist_Accel' further point to a lack of strong trend or momentum, supporting a neutral classification."
+    },
+    "GESHIP": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Positive sentiment in the shipping sector driven by global trade recovery and potential supply chain disruptions increasing freight rates. Company-specific fleet expansion plans.",
+        "confidence_score": 65,
+        "strategic_threat": "Geopolitical risks impacting trade routes. High capital expenditure for fleet renewal. Fluctuations in global commodity demand.",
+        "shap_synthesis": "The positive SHAP values for 'Feature_ATR_Ratio' (0.20) and 'Feature_ROC_20' (0.16) suggest improving price action and a positive short-term trend. 'Feature_Volume_Ratio' (0.08) indicates increasing investor interest. While 'Feature_Relative_Strength' is only marginally positive (0.008), the confluence of positive momentum indicators points towards a bullish bias. The negative 'Feature_EMA_Dist' does not negate the overall positive trend."
+    },
+    "GPIL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The semiconductor industry is experiencing cyclical demand. While GPIL has shown growth, it faces competition and evolving technological demands. No strong recent news catalysts.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense competition in the semiconductor market. Rapid technological advancements requiring continuous R&D investment. Global supply chain vulnerabilities.",
+        "shap_synthesis": "The mixed SHAP values suggest a neutral stance. The negative 'Feature_ATR_Ratio' (-0.19) and 'Feature_ROC_20' (0.05) indicate potential headwinds or a lack of strong upward momentum. Positive 'Feature_Volume_Ratio' (0.08) is a minor positive, but it's offset by negative 'Feature_Relative_Strength' (-0.02) and 'Feature_RSI' (-0.02). The negative 'Feature_MACD_Hist_Accel' reinforces the lack of strong trending behavior."
+    },
+    "TEJASNET": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Positioned in the telecommunications equipment sector, benefiting from 5G rollout and network upgrades. However, competitive pressures and project timelines can cause volatility. Earnings have been mixed.",
+        "confidence_score": 55,
+        "strategic_threat": "Intense competition from both domestic and international players. Long product development cycles. Government policy shifts impacting telecom infrastructure spending.",
+        "shap_synthesis": "The SHAP values indicate a leaning towards neutral with some conflicting signals. The positive 'Feature_ATR_Ratio' (0.13) and 'Feature_EMA_Dist' (0.08) suggest some stability and recent price support. However, 'Feature_Relative_Strength' is negative (-0.08) and 'Feature_ROC_20' is also negative (-0.02), suggesting a lack of broad upward momentum. The slight positive 'Feature_Volume_Ratio' (0.03) does not strongly indicate conviction."
+    },
+    "USHAMART": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The retail sector has faced headwinds from inflation and changing consumer spending patterns. While the company has a strong brand, recent performance and outlook have been tempered by macro-economic factors.",
+        "confidence_score": 60,
+        "strategic_threat": "Intensifying competition from e-commerce and other retail formats. Rising operational costs (rent, labor). Consumer discretionary spending slowdown.",
+        "shap_synthesis": "The predominantly negative SHAP values point towards a bearish sentiment. 'Feature_Volume_Ratio' (-0.17) indicates declining investor participation or potential selling pressure. 'Feature_ATR_Ratio' (-0.11) and 'Feature_EMA_Dist' (-0.05) suggest increased volatility or a downward price trend. 'Feature_Relative_Strength' (-0.02) also supports a lack of outperformance. The slightly positive 'Feature_ROC_20' is a minor counterpoint but is overwhelmed by the negative drivers."
+    },
+    "HFCL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Involved in telecom infrastructure and optical fiber manufacturing. Benefits from government initiatives like 'Digital India' and 5G rollout, but faces order book fluctuations and competitive pressures.",
+        "confidence_score": 55,
+        "strategic_threat": "Dependence on large government tenders and contracts. Competition from established players. Volatility in raw material costs for optical fiber.",
+        "shap_synthesis": "The SHAP values present a mixed picture, leaning towards neutral. 'Feature_Relative_Strength' (0.46) is a strong positive, indicating recent outperformance. However, 'Feature_ROC_20' (-0.25) is a significant negative, suggesting a downward trend over a longer period. 'Feature_ATR_Ratio' (0.11) indicates manageable volatility. The negative 'Feature_ADX_14' suggests a lack of strong trend. The positive 'Feature_EMA_Dist' and 'Feature_Volume_Ratio' are minor positives, not strong enough to override the conflicting ROC and ADX signals."
+    },
+    "WELSPUNLIV": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "The home textiles sector is sensitive to consumer spending and global demand. While the company has a global presence, it faces competition and raw material price fluctuations. Recent earnings have been stable but not exceptional.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense competition from global players. Volatility in cotton and other raw material prices. Exchange rate fluctuations impacting export margins.",
+        "shap_synthesis": "The SHAP values suggest a neutral classification with some internal conflicts. The strong positive 'Feature_EMA_Dist' (0.33) indicates recent price support and potential for upward movement. 'Feature_ATR_Ratio' (0.19) suggests acceptable volatility. However, 'Feature_ROC_20' (-0.10) and 'Feature_RSI' (-0.02) are negative, indicating a potential lack of sustained upward momentum. 'Feature_Relative_Strength' is only marginally positive (0.01)."
+    },
+    "JS \u0997\u09cb\u09aa\u09a8": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Infra sector player benefiting from government spending, but faces execution challenges and competition. Recent order wins provide some positive momentum, but overall market sentiment for infra is mixed.",
+        "confidence_score": 55,
+        "strategic_threat": "Project execution risks and delays. Competition from larger developers. Regulatory changes impacting infrastructure projects.",
+        "shap_synthesis": "The SHAP values indicate a neutral outlook. 'Feature_EMA_Dist' (0.26) suggests some recent upward price movement. 'Feature_RSI' (0.11) also points to positive momentum. However, 'Feature_ROC_20' (-0.12) and 'Feature_Volume_Ratio' (-0.11) are negative, suggesting potential headwinds or decreasing participation. The positive 'Feature_ATR_Ratio' (0.09) indicates manageable volatility."
+    },
+    "APARINDS": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Apar Industries is a diversified player in power transmission, distribution, and specialty oils. Beneficiary of infrastructure spending, but faces cyclicality and competition. Recent performance has been steady.",
+        "confidence_score": 55,
+        "strategic_threat": "Cyclical nature of the power and oil sectors. Intense competition. Dependence on large projects and government spending.",
+        "shap_synthesis": "The SHAP values present a mixed picture, leaning towards neutral. 'Feature_Relative_Strength' (0.35) is a strong positive, suggesting recent outperformance. However, 'Feature_ROC_20' (-0.22) is a significant negative, indicating a downward trend over a longer period. 'Feature_EMA_Dist' (0.07) and 'Feature_ATR_Ratio' (0.06) are minor positives. The negative 'Feature_ADX_14' and 'Feature_MACD_Hist_Accel' suggest a lack of strong trend."
+    },
+    "SPARC": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Sun Pharma Advanced Research Company (SPARC) operates in the pharmaceutical R&D space. Its performance is driven by clinical trial progress and drug approvals, which are inherently lumpy and speculative. No major recent catalysts.",
+        "confidence_score": 50,
+        "strategic_threat": "High R&D costs and failure rates. Regulatory hurdles for drug approvals. Patent expirations and competition from generics.",
+        "shap_synthesis": "The SHAP values suggest a neutral outlook with some conflicting signals. The positive 'Feature_ATR_Ratio' (0.20) and 'Feature_ROC_20' (0.10) indicate potential upward price movement and positive short-term momentum. 'Feature_Volume_Ratio' (0.06) shows some increasing interest. However, 'Feature_ADX_14' (-0.05) suggests a lack of strong trend, and 'Feature_EMA_Dist' is negative (-0.04), which could indicate recent price weakness. 'Feature_Relative_Strength' is marginally positive."
+    },
+    "SCHNEIDER": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Schneider Electric is a global leader in energy management and automation. Benefits from digitalization, energy efficiency trends, and infrastructure upgrades. Strong order books and consistent financial performance.",
+        "confidence_score": 70,
+        "strategic_threat": "Global economic slowdown impacting industrial capital expenditure. Competition in specific market segments. Supply chain disruptions.",
+        "shap_synthesis": "The SHAP values indicate a predominantly bullish outlook, despite some minor negative technical indicators. 'Feature_Relative_Strength' (0.19) is positive, suggesting recent outperformance. 'Feature_ATR_Ratio' (0.17) indicates manageable volatility, and 'Feature_EMA_Dist' (0.09) shows recent upward price movement. While 'Feature_ADX_14' is negative, the positive strength and momentum indicators suggest a controlled upward trend."
+    },
+    "LAURUSLABS": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Laurus Labs is a pharmaceutical company with a focus on APIs, formulations, and synthesis. Benefits from growth in the global generics market and contract manufacturing opportunities. Strong product pipeline and recent positive earnings.",
+        "confidence_score": 75,
+        "strategic_threat": "Regulatory scrutiny in key markets. Price erosion in generic drug markets. Competition from other API manufacturers.",
+        "shap_synthesis": "The strongly positive 'Feature_Relative_Strength' (0.72) is the most significant SHAP driver, indicating robust outperformance and a strong upward trend. The positive 'Feature_ATR_Ratio' (0.16) suggests that this strength is accompanied by manageable volatility. 'Feature_MACD_Hist_Accel' (0.06) and 'Feature_Volume_Ratio' (0.05) further support positive momentum. The negative 'Feature_ROC_20' and 'Feature_ADX_14' are minor and do not detract from the dominant bullish signal from Relative Strength."
+    },
+    "CAPLIPOINT": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Caplin Point Laboratories is an emerging markets focused pharmaceutical company. Growth driven by product launches and market penetration in its target geographies. Performance can be lumpy due to regulatory approvals and market dynamics.",
+        "confidence_score": 50,
+        "strategic_threat": "Regulatory risks in emerging markets. Currency fluctuations. Competition from local and international players.",
+        "shap_synthesis": "The SHAP values suggest a neutral outlook. 'Feature_EMA_Dist' (0.13) indicates some recent price support or upward movement. 'Feature_ADX_14' (0.11) suggests a developing trend. However, 'Feature_ROC_20' (-0.12) is negative, indicating some prior weakness. 'Feature_ATR_Ratio' is moderately positive, suggesting manageable volatility. The other indicators are mixed and do not provide a strong directional bias."
+    },
+    "BHEL": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Bharat Heavy Electricals Ltd. is a major player in the power and infrastructure equipment sector, benefiting from government initiatives and renewable energy push. Recent order wins, particularly in power generation and transmission, are positive.",
+        "confidence_score": 65,
+        "strategic_threat": "Long project execution cycles. Intense competition. Government policy dependence and reforms.",
+        "shap_synthesis": "The positive SHAP values for 'Feature_ATR_Ratio' (0.25), 'Feature_ROC_20' (0.15), and 'Feature_Relative_Strength' (0.11) strongly suggest a bullish outlook. These indicators point to increasing price, positive momentum, and outperformance. 'Feature_Volume_Ratio' (0.10) further supports this by showing increased investor participation. The slightly negative 'Feature_ADX_14' does not negate the overall positive trend indicated by other metrics."
+    },
+    "IDEA": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "Vodafone Idea (Vi) faces significant challenges in the Indian telecom market, including intense competition, high debt, and the need for capital infusion for network expansion and spectrum acquisition. Recent performance has been weak.",
+        "confidence_score": 60,
+        "strategic_threat": "Extremely high debt levels. Fierce competition from well-funded rivals. Regulatory uncertainty regarding spectrum pricing and AGR dues.",
+        "shap_synthesis": "The SHAP values strongly indicate a bearish sentiment. 'Feature_Relative_Strength' (0.59) is a strong positive, but this is likely reflecting a rebound from very low levels or short-covering, which needs to be interpreted with caution given the underlying fundamental pressures. However, the negative 'Feature_ROC_20' (-0.12) and 'Feature_RSI' (-0.05) are more indicative of ongoing weakness and lack of sustained upward momentum. 'Feature_ADX_14' is also negative, suggesting a lack of trend. The overall fundamental outlook for IDEA remains challenging."
+    },
+    "SIEMENS": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Siemens is a diversified technology company focused on electrification, automation, and digitalization. Benefits from industrial capex and infrastructure development. Performance is generally stable but can be influenced by global economic cycles.",
+        "confidence_score": 55,
+        "strategic_threat": "Global economic slowdown affecting industrial demand. Supply chain disruptions. Competition in specific technology segments.",
+        "shap_synthesis": "The SHAP values suggest a neutral outlook with no strong directional bias. Most technical indicators have moderate absolute values and are mixed. 'Feature_ROC_20' (0.03) and 'Feature_Volume_Ratio' (0.02) show slight positive momentum or interest. However, 'Feature_EMA_Dist' (-0.04) and 'Feature_Relative_Strength' (-0.03) suggest some recent weakness or lack of outperformance. The 'Feature_ATR_Ratio' is also slightly negative."
+    },
+    "ZEEL": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Zee Entertainment Enterprises (ZEEL) operates in the media and entertainment sector. Faces intense competition, regulatory scrutiny, and evolving viewer habits. Pending merger with Sony Pictures Networks India (SPNI) creates uncertainty.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense competition from streaming platforms and other media houses. Regulatory challenges and content restrictions. Uncertainty surrounding the SPNI merger outcome.",
+        "shap_synthesis": "The SHAP values indicate a neutral outlook with conflicting signals. 'Feature_ATR_Ratio' (0.17) and 'Feature_EMA_Dist' (0.09) suggest some price support and recent upward movement. However, 'Feature_ADX_14' (-0.06) indicates a lack of strong trend, and 'Feature_MACD_Hist_Accel' (-0.06) and 'Feature_ROC_20' (-0.03) are negative, suggesting potential headwinds or prior weakness."
+    },
+    "GLENMARK": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Glenmark Pharmaceuticals is focused on branded generics and R&D in specific therapeutic areas. Performance is dependent on product approvals, market penetration, and competition from other generics. No major recent catalysts.",
+        "confidence_score": 50,
+        "strategic_threat": "Regulatory risks in key markets. Price erosion in the generics segment. Competition from established and emerging players.",
+        "shap_synthesis": "The SHAP values suggest a neutral outlook with mixed signals. The positive 'Feature_ROC_20' (0.07) indicates some positive price momentum. However, 'Feature_ATR_Ratio' (-0.14) and 'Feature_EMA_Dist' (-0.02) suggest increased volatility or potential downward pressure. 'Feature_Relative_Strength' is negative (-0.03), indicating underperformance. The 'Feature_ADX_14' is also negative, suggesting a lack of trend."
+    }
+}
