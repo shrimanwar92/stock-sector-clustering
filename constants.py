@@ -16,9 +16,12 @@ os.makedirs(REPORTS_DIR, exist_ok=True)
 LLM_SENTIMENT_RESULT = f"reports/[{TODAY}]/llm_sentiment_results.json"
 LLM_MODEL_NAME = "gemini-2.5-flash-lite"
 CACHE_FILE = f"reports/[{TODAY}]/.sector_cache.json"
-MODEL_PATH = f"reports/[{TODAY}]/alpha_xgboost_scorer.json"
-CALIBRATOR_MODEL = f"reports/[{TODAY}]/alpha_calibrator.joblib"
-MODEL_SCHEMA_METADATA = f"reports/[{TODAY}]/model_training_metadata.json"
+
+# model training artifacts
+MODEL_PATH = "reports/alpha_xgboost_scorer.json"
+CALIBRATOR_MODEL = "reports/alpha_calibrator.joblib"
+MODEL_TRAINING_METADATA = "reports/model_training.json"
+MODEL_HEALTH_METADATA = "reports/model_health.json"
 
 FEATURE_COLUMNS = [
     "Feature_RSI",

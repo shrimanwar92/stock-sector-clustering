@@ -6,7 +6,7 @@ from xgboost import XGBClassifier
 from sklearn.dummy import DummyClassifier
 from sklearn.metrics import log_loss, roc_auc_score
 from rule_engine import StocksRuleEngine
-from constants import MODEL_PATH, TODAY, MODEL_SCHEMA_METADATA, FEATURE_COLUMNS, CALIBRATOR_MODEL
+from constants import MODEL_PATH, TODAY, MODEL_TRAINING_METADATA, FEATURE_COLUMNS, CALIBRATOR_MODEL
 from sklearn.calibration import CalibratedClassifierCV
 import joblib
 
@@ -210,7 +210,7 @@ def run_offline_model_training(raw_universe_df: pd.DataFrame, pipeline_instance:
         wf_records=wf_records  
     )
     
-    with open(MODEL_SCHEMA_METADATA, "w") as f:
+    with open(MODEL_TRAINING_METADATA, "w") as f:
         json.dump(metadata, f, indent=4)
         
     print(f"="*80)

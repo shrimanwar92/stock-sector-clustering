@@ -13,7 +13,8 @@ from constants import (
     REPORTS_DIR,
     fetch_data_from_nse,
     CALIBRATOR_MODEL,
-    TODAY
+    TODAY,
+    MODEL_HEALTH_METADATA
 )
 
 warnings.filterwarnings("ignore")
@@ -44,7 +45,7 @@ class StocksRuleEngine:
         self.macro_score_threshold = macro_score_threshold  
         self.allowed_categories = ['MIDCAP', 'SMALLCAP_100']
         self.cache_file_path = os.path.join(REPORTS_DIR, ".micro_universe_cache.json.gz")
-        self.metadata_path = os.path.join(REPORTS_DIR, "model_health_metadata.json")
+        self.metadata_path = MODEL_HEALTH_METADATA
         self.model = None
 
     # --- EXISTING TELEMETRY & CACHING FUNCTIONS ---
