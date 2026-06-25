@@ -96,11 +96,6 @@ def run_sector_clustering():
     print("\n[STAGE 1] Querying Unsupervised Macro Segmentation Engines...")
     cluster = SectorClusterEngine(lookback_years=LOOKBACK_YEARS)
     sectors = cluster.discover_sectors()
-    cluster.save_sectors_to_cache(sectors)
-
-    if sectors is None or sectors.empty:
-        print("[CRITICAL ERROR] Macro Engine failed to return valid data. Halting.")
-        return None, None, None, None
     
     filtered_df = sectors[sectors["Sector_Score"] >= MIN_SCORE_HURDLE]
     bullish_sectors = set(
@@ -129,12 +124,12 @@ def generate_dashboard(execution_signals):
     print("\n[STAGE 6] Triggering Automated GitHub Deployment Pipelines...")
     deployer = ProgrammaticDashboardDeployer()
     deployer.generate_and_save_data(execution_signals)
-    purge_historical_artifacts()
 
 
 def run_training_pipeline(rule_engine, nse_df):
     print("[HOOK] Train configuration active. Commencing XGBoost parameter updates...")
     run_offline_model_training(nse_df, rule_engine)
+
 
 def compute_SHAP_baselines(rule_engine, execution_signals):
     print("\n[STAGE 5] Querying Autonomous LLM Narrative Analyst (Batch Mode)...")
@@ -173,6 +168,7 @@ if __name__ == "__main__":
     print(" PRODUCTION CONTROL ENGINE: EXECUTING TOP-DOWN HYBRID ML QUANT TRADING SYSTEM")
     print("=" * 110)
 
+    # 1. Unsupervised Clustering fetches full ~500 stock universe & populates compressed day cache file
     cluster, sectors, bullish_set, filtered_list = run_sector_clustering()
 
     score_map = dict(zip(sectors["Sector"], sectors["Sector_Score"]))
@@ -188,8 +184,8 @@ if __name__ == "__main__":
         macro_score_threshold=MIN_SCORE_HURDLE
     )
 
+    # 2. Rule Engine requests only filtered ~150 stocks; automatically catches a cache HIT on the day-cache
     nse_df = rule_engine.fetch_universe_data()
-    rule_engine.save_stocks_to_cache(nse_df)
     
     # 🟢 Step 1: Compute fresh features for health assessment
     gold_features_df = rule_engine.engineer_gold_features(nse_df)
@@ -205,3 +201,4 @@ if __name__ == "__main__":
     signals = run_inference(rule_engine, nse_df)
     signals = compute_SHAP_baselines(rule_engine, signals)
     generate_dashboard(signals)
+    purge_historical_artifacts()

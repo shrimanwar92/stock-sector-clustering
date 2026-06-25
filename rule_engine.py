@@ -1,7 +1,6 @@
 import os
 import json
 import warnings
-import gzip
 import joblib
 import numpy as np
 import pandas as pd
@@ -44,36 +43,13 @@ class StocksRuleEngine:
         self.lookback_years = lookback_years
         self.macro_score_threshold = macro_score_threshold  
         self.allowed_categories = ['MIDCAP', 'SMALLCAP_100']
-        self.cache_file_path = os.path.join(REPORTS_DIR, ".micro_universe_cache.json.gz")
         self.metadata_path = MODEL_HEALTH_METADATA
         self.model = None
 
-    # --- EXISTING TELEMETRY & CACHING FUNCTIONS ---
-    def load_stocks_from_cache(self) -> pd.DataFrame:
-        cached_df = pd.DataFrame()
-        if os.path.exists(self.cache_file_path):
-            print(f"💾 [CACHE READ] Hydrating raw data from today's disk cache: '{self.cache_file_path}'")
-            try:
-                with gzip.open(self.cache_file_path, "rt", encoding="utf-8") as f:
-                    cached_df = pd.read_json(f, orient="records")
-                if not cached_df.empty:
-                    cached_df.columns = [str(col).replace('ï»¿', '').strip() for col in cached_df.columns]
-            except Exception as ce:
-                print(f"[WARN] Cache read collision ({str(ce)}). Falling back to exchange engine...")
-        return cached_df
-    
-    def save_stocks_to_cache(self, df: pd.DataFrame):
-        with gzip.open(self.cache_file_path, "wt", encoding="utf-8") as f:
-            df.to_json(f, orient="records", date_format="iso")
-        print(f"💾 [CACHE WRITE] Successfully stored today's raw micro universe data.")
-
     def fetch_universe_data(self) -> pd.DataFrame:
-        filtered_symbols = self.symbols
-        nse_df = self.load_stocks_from_cache()
-        if nse_df.empty:
-            filtered_symbols = list(set(filtered_symbols + ["NIFTY 500"]))
-            nse_df = fetch_data_from_nse(filtered_symbols, self.symbol_to_sector_map)
-        return nse_df
+        """Delegates directly to unified exchange engine which automatically handles disk-cache hits."""
+        filtered_symbols = list(set(self.symbols + ["NIFTY 500"]))
+        return fetch_data_from_nse(filtered_symbols, self.symbol_to_sector_map)
 
     def _parse_and_sanitize_columns(self, raw_df: pd.DataFrame) -> pd.DataFrame:
         df = raw_df.copy()
@@ -262,24 +238,13 @@ class StocksRuleEngine:
         pt_mult: float = 2.5, 
         sl_mult: float = 1.5
     ) -> pd.DataFrame:
-        """
-        Applies a forward-looking Triple-Barrier labeling matrix across each asset series.
-        Looks forward 'pt_horizon' steps to categorize structural returns into discrete classes.
-        
-        Returns labels matching the downstream 3-class operational target schema:
-          0 = Lower barrier breached first (Stop Loss / Failure)
-          1 = Neither barrier breached within horizon window (Stagnation)
-          2 = Upper barrier breached first (Profit Target / Success)
-        """
         print(f"\n🏷️ [LABELING ENGINE] Generating Triple Barrier target matrix (Horizon={pt_horizon} steps)...")
         if gold_df.empty:
-            print("[WARN] Empty DataFrame supplied to labeling loop. Returning empty shell.")
             return pd.DataFrame()
             
         df = gold_df.copy().sort_values(by=["Symbol", "Date"]).reset_index(drop=True)
         processed_groups = []
         
-        # Isolate asset series to avoid cross-symbol contamination during window shift
         for symbol, group in df.groupby("Symbol"):
             group = group.copy().reset_index(drop=True)
             n_steps = len(group)
@@ -289,30 +254,24 @@ class StocksRuleEngine:
             atr_arr = group["ATR_14"].fillna(group["Close"] * 0.03).values
             
             for i in range(n_steps):
-                # Edge truncation gate: discard windows that run past the terminal boundary of our data
                 if i + pt_horizon >= n_steps:
                     continue
                 
                 entry_price = close_arr[i]
                 current_atr = atr_arr[i]
                 
-                # Compute distinct matrix walls
                 upper_barrier = entry_price + (pt_mult * current_atr)
                 lower_barrier = entry_price - (sl_mult * current_atr)
                 
-                # Extract forward look-ahead segment
                 forward_window = close_arr[i + 1 : i + pt_horizon + 1]
-                
-                # Default assignment is Stagnation (Class 1)
                 assigned_class = 1
                 
-                # Check sequentially which barrier line gets touched first inside the time path
                 for price in forward_window:
                     if price <= lower_barrier:
-                        assigned_class = 0  # Failure / Stop Loss
+                        assigned_class = 0
                         break
                     elif price >= upper_barrier:
-                        assigned_class = 2  # Success / Profit Target
+                        assigned_class = 2
                         break
                         
                 target_labels[i] = assigned_class
@@ -321,30 +280,17 @@ class StocksRuleEngine:
             processed_groups.append(group)
             
         labeled_master_df = pd.concat(processed_groups, ignore_index=True)
-        
-        # Cleanly truncate un-labeled end rows near current date boundaries
-        total_rows_before = len(labeled_master_df)
         labeled_master_df = labeled_master_df.dropna(subset=["Strategic_Label"])
         labeled_master_df["Strategic_Label"] = labeled_master_df["Strategic_Label"].astype(int)
         
-        print(f"✅ Target allocation vector established. Retained {len(labeled_master_df)} / {total_rows_before} training rows after horizon truncation.")
-        print("📊 Training Label Distribution:")
-        print(labeled_master_df["Strategic_Label"].value_counts())
-        print("-" * 60)
-        
+        print(f"✅ Target allocation matrix built. Retained {len(labeled_master_df)} training entries.")
         return labeled_master_df
 
-    # --- ADVANCED MODEL HEALTH MONITORING ENGINE ---
     def compile_and_save_health_contract(self, training_pool: pd.DataFrame, master_model, avg_auc, avg_p10, avg_edge, wf_records):
-        """
-        Constructs and materializes the complete Model Health Metadata Contract 
-        to disk at the end of a master training pipeline run.
-        """
         print("\n⚙️ [METADATA CONTRACT] Generating Model Health Metadata Contract...")
         X_master = training_pool[FEATURE_COLUMNS]
         y_master = training_pool["Strategic_Label"]
 
-        # 1. Feature Statistics
         feature_statistics = {}
         for col in FEATURE_COLUMNS:
             feature_statistics[col] = {
@@ -354,11 +300,9 @@ class StocksRuleEngine:
                 "max": float(X_master[col].max())
             }
 
-        # 2. Label Distribution
         label_dist_raw = y_master.value_counts(normalize=True).sort_index().to_dict()
         label_distribution = {str(k): float(v) for k, v in label_dist_raw.items()}
 
-        # 3. Probability Dispersion Statistics
         master_probs = master_model.predict_proba(X_master.values)
         probability_statistics = {
             "failure_mean": float(master_probs[:, 0].mean()),
@@ -369,13 +313,11 @@ class StocksRuleEngine:
             "success_std": float(master_probs[:, 2].std())
         }
 
-        # 4. Regime Distribution
         if "Sector_Regime_Label" in training_pool.columns:
             regime_distribution = {str(k): float(v) for k, v in training_pool["Sector_Regime_Label"].value_counts(normalize=True).to_dict().items()}
         else:
             regime_distribution = {}
 
-        # 5. Feature Importance Extraction
         feature_importance = dict(
             sorted(
                 zip(FEATURE_COLUMNS, [float(x) for x in master_model.feature_importances_]),
@@ -384,7 +326,6 @@ class StocksRuleEngine:
             )
         )
 
-        # Build Master Contract Object
         metadata = {
             "compiled_on": TODAY,
             "features_schema": list(FEATURE_COLUMNS),
@@ -406,16 +347,11 @@ class StocksRuleEngine:
         return metadata
 
     def check_live_health_degradation(self, live_gold_df: pd.DataFrame) -> bool:
-        """
-        Evaluates current micro universe feature properties against historical thresholds.
-        Returns True if a drift boundary, variance collapse, or performance degradation triggers retraining.
-        """
         if not os.path.exists(self.metadata_path):
             print("⚠️ [HEALTH CHECK] Metadata contract missing from file system. Initial training forced.")
             return True
 
         if live_gold_df.empty:
-            print("[HEALTH CHECK] Live dataset empty. Skipping real-time drift verification.")
             return False
 
         with open(self.metadata_path, "r") as f:
@@ -425,10 +361,7 @@ class StocksRuleEngine:
         print(" 🔍 RUNNING AUTONOMOUS MODEL HEALTH VALIDATION MATRIX")
         print("="*60)
 
-        # Filter to target live snapshot items (latest date step for active cross-sectional profile)
         live_snapshot = live_gold_df.groupby("Symbol").tail(1).reset_index(drop=True)
-        
-        # 1. FEATURE DRIFT CHECK (Statistical Shift Detection)
         drift_signals = 0
         max_drift_threshold_sigmas = 2.5
         
@@ -439,23 +372,19 @@ class StocksRuleEngine:
                 train_mean = train_meta.get("mean", live_mean)
                 train_std = train_meta.get("std", 1.0)
                 
-                # Check deviation distance in standard deviation space
                 z_score_distance = abs(live_mean - train_mean) / (train_std + 1e-9)
                 if z_score_distance > max_drift_threshold_sigmas:
                     print(f" ❌ [DRIFT DETECTED] Feature '{col}' shifted by {z_score_distance:.2f} sigmas from baseline.")
                     drift_signals += 1
 
-        # Trigger fallback if over 20% of indicators are structurally out-of-bounds
         if drift_signals > (len(FEATURE_COLUMNS) * 0.20):
             print(f"🚨 [RETRAIN TRIGGER] Broad structural feature drift detected across {drift_signals} elements.")
             return True
 
-        # 2. PROBABILITY COLLAPSE CHECK (Inference Variance Compression)
         try:
             model = XGBClassifier()
             model.load_model(MODEL_PATH)
             
-            # Restrict to allowed domain space matches identical to live evaluation gating logic
             domain_mask = (
                 (live_snapshot["is_tradable"] == 1) &
                 (live_snapshot["Feature_Sector_Aligned"] == 1) &
@@ -479,8 +408,6 @@ class StocksRuleEngine:
         except Exception as ex:
             print(f" [WARN] Skinned predictive model health validation bypass: {str(ex)}")
 
-        # 3. ALPHA EDGE DEGRADATION CHECK (Trailing Realized Return Attenuation)
-        # Check for external performance ledger records tracking real-world fills
         perf_ledger_path = os.path.join(REPORTS_DIR, "performance_ledger.csv")
         if os.path.exists(perf_ledger_path):
             try:
@@ -488,7 +415,7 @@ class StocksRuleEngine:
                 perf_df['Date'] = pd.to_datetime(perf_df['Date'])
                 trailing_30_days = perf_df[perf_df['Date'] >= (datetime.now() - pd.Timedelta(days=30))]
                 
-                if len(trailing_30_days) >= 5: # Require minimum statistical sample size
+                if len(trailing_30_days) >= 5:
                     rolling_alpha_edge_30d = trailing_30_days['realized_alpha_edge'].mean()
                     contract_edge_baseline = metadata.get("average_pure_alpha_edge", 0.04)
                     
@@ -503,7 +430,6 @@ class StocksRuleEngine:
         print("="*60 + "\n")
         return False
 
-    # --- EXISTING INFERENCE SCORING CODE (UNCHANGED) ---
     def execute_ml_signals(self, gold_df: pd.DataFrame = None) -> pd.DataFrame:
         if gold_df is None or gold_df.empty:
             print("[WARN] Empty data frame passed to execution engine. Aborting.")

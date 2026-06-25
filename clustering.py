@@ -3,10 +3,8 @@ import warnings
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import RobustScaler
-import json
 from constants import (
-    CACHE_FILE, TODAY, NSE_DATASET_PATH, fetch_data_from_nse,
-    SECTOR_REGIMES
+    TODAY, NSE_DATASET_PATH, fetch_data_from_nse, SECTOR_REGIMES
 )
 
 warnings.filterwarnings("ignore")
@@ -26,7 +24,6 @@ class SectorClusterEngine:
             "Sector_ADX"
         ]
         self.sector_mapping = {}
-        self.cache_filename = CACHE_FILE
 
     def _calculate_native_adx(self, df: pd.DataFrame, period: int = 14) -> pd.Series:
         """Computes mathematically precise Wilder's Average Directional Index (ADX) via EMA smoothing."""
@@ -60,41 +57,6 @@ class SectorClusterEngine:
         
         return adx.fillna(0.0)
 
-    def load_cached_sectors(self) -> pd.DataFrame:
-        """Checks the local hidden JSON cache file for valid, same-day sector tracking frames."""
-        if not os.path.exists(self.cache_filename):
-            return pd.DataFrame()
-
-        try:
-            with open(self.cache_filename, "r", encoding="utf-8") as f:
-                cache_data = json.load(f)
-            
-            if cache_data.get("execution_date") == TODAY:
-                print(f"✅ [CACHE HIT] Same-day record discovered ({TODAY}). Restoring sector matrix from disk cache.")
-                self.sector_mapping = cache_data["sector_mapping"]
-                return pd.DataFrame(cache_data["records"])
-        except Exception as e:
-            print(f"[WARN] Failed reading local workspace cache: {e}. Defaulting to live calculation path.")
-        
-        return pd.DataFrame()
-    
-    def save_sectors_to_cache(self, sector_matrix: pd.DataFrame):
-        """Serializes the active sector matrix and current system parameters to a text dictionary layout."""
-        if sector_matrix.empty:
-            return
-
-        try:
-            cache_payload = {
-                "execution_date": TODAY,
-                "sector_mapping": self.sector_mapping,
-                "records": sector_matrix.to_dict(orient="records")
-            }
-            with open(self.cache_filename, "w", encoding="utf-8") as f:
-                json.dump(cache_payload, f, indent=4)
-            print(f"💾 [CACHE WRITE] Successfully stored today's cluster dictionary parameters to '{self.cache_filename}'.")
-        except Exception as e:
-            print(f"[WARN] Execution warning: Could not save sector state variables to disk cache file: {e}")
-
     def load_mappings_from_csv(self):
         """Loads ticker-to-sector configurations from local CSV repository."""
         if not os.path.exists(self.csv_filename):
@@ -121,10 +83,6 @@ class SectorClusterEngine:
         """Gold Layer: Executes deterministic multi-factor ranking and assigns dynamic regime tags."""
         self.load_mappings_from_csv()
         
-        cached_df = self.load_cached_sectors()
-        if not cached_df.empty:
-            return cached_df
-
         raw_df = self.fetch_universe_market_data()
         if raw_df.empty:
             print("[ERR] Combined market matrix generated empty records.")
@@ -219,10 +177,7 @@ class SectorClusterEngine:
         # Standardize features using Robust scaling
         scaled_features = self.scaler.fit_transform(sector_matrix[self.sector_features])
         
-        # -------------------------------------------------------------------------
-        # UPGRADE: Deterministic Logistic Factor Scoring Engine
-        # Replaces unstable GMM optimizations with a mathematical trend vector.
-        # -------------------------------------------------------------------------
+        # Continuous composite trend logic
         raw_composite = (
             0.40 * scaled_features[:, 0] +  # Sector_Relative_Strength
             0.20 * scaled_features[:, 1] +  # Sector_Trend_Breadth
@@ -230,30 +185,21 @@ class SectorClusterEngine:
             0.20 * scaled_features[:, 3]    # Sector_ADX
         )
         
-        # Pass through Sigmoid function to cleanly bind values between 0.0 and 1.0 (Median = 0.50)
         sector_matrix["Sector_Score"] = np.round(1 / (1 + np.exp(-raw_composite)), 4)
 
-        # -------------------------------------------------------------------------
-        # UPGRADE: Continuous Soft Probability Emulator (RBF Kernel)
-        # Reconstructs smooth transitions (e.g. 0.82, 0.16, 0.02) without statistical drift
-        # -------------------------------------------------------------------------
-        centers = [0.20, 0.50, 0.80]  # Idealized centers for Weak, Neutral, and Strong scores
+        # RBF Kernel Multi-class Probability Mapping
+        centers = [0.20, 0.50, 0.80]
         prob_matrix = np.zeros((len(sector_matrix), 3))
         
         for i, center in enumerate(centers):
-            # Compute radial basis function distance to simulate a stable Gaussian density
             prob_matrix[:, i] = np.exp(-((sector_matrix["Sector_Score"] - center) / 0.22) ** 2)
             
-        # Softmax normalization ensures probabilities sum perfectly to 1.0
         prob_matrix /= prob_matrix.sum(axis=1, keepdims=True)
 
         regime_keys = ["DEEP_BEARISH_CAPITULATION", "NEUTRAL_SIDEWAYS_CONSOLIDATION", "LEADING_MOMENTUM_ACCELERATION"]
         for i, key in enumerate(regime_keys):
             sector_matrix[f"Prob_{key}"] = np.round(prob_matrix[:, i], 4)
 
-        # -------------------------------------------------------------------------
-        # PRODUCTION LABELING: Symmetric Slicing Around Market Medians
-        # -------------------------------------------------------------------------
         def assign_deterministic_regime(row):
             score = row["Sector_Score"]
             if score >= 0.60:
@@ -265,7 +211,7 @@ class SectorClusterEngine:
 
         sector_matrix["Macro_Regime"] = sector_matrix.apply(assign_deterministic_regime, axis=1)
 
-        # Generate Descriptive Audit Strings
+        # Descriptive Audit Records
         reasons = []
         for idx, row in sector_matrix.iterrows():
             rs = row["Sector_Relative_Strength"]
@@ -284,6 +230,4 @@ class SectorClusterEngine:
             
         sector_matrix["Decision_Reason"] = reasons
         sector_matrix = sector_matrix.sort_values(by="Sector_Score", ascending=False).reset_index(drop=True)
-        
-        self.save_sectors_to_cache(sector_matrix)
         return sector_matrix
