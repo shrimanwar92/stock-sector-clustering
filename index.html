@@ -187,9 +187,13 @@
                 else if (t.label.includes("INSTITUTIONAL")) badgeClass = "bg-indigo-50 text-indigo-700 border border-indigo-200";
                 else if (t.label.includes("HAZARD")) badgeClass = "bg-rose-50 text-rose-700 border border-rose-200 animate-pulse";
 
-                // Normalize confidence formatting if passed as raw float ratio
                 const formattedConfidence = t.confidence <= 1.0 ? (t.confidence * 100).toFixed(0) : t.confidence;
                 const evColorClass = t.expectedValue > 0 ? "text-emerald-600" : "text-rose-600 font-bold";
+
+                // LLM Data Visibility Logic
+                const hasValidLLM = t.shapSynthesis && 
+                                    t.shapSynthesis.trim() !== "" && 
+                                    !t.shapSynthesis.includes("No mathematical-fundamental alignment synthesis generated.");
 
                 return `
                 <div class="p-5 bg-white rounded-xl border border-[#e2e8f0] flex flex-col gap-4 hover:border-slate-400 hover:shadow-md transition-all duration-200">
@@ -232,6 +236,7 @@
                         </div>
                     </div>
 
+                    ${hasValidLLM ? `
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-3 border-t border-dashed border-[#e2e8f0] text-xs">
                         <div class="bg-slate-50/70 rounded-xl p-3 border border-[#f1f5f9]">
                             <p class="text-[10px] font-bold tracking-wider uppercase text-slate-500 mb-1"><i class="fa-solid fa-calculator mr-1 text-teal-600"></i> SHAP Mathematical Grounding Synthesis</p>
@@ -241,7 +246,7 @@
                             <p class="text-[10px] font-bold tracking-wider uppercase text-rose-700 mb-1"><i class="fa-solid fa-triangle-exclamation mr-1 text-rose-500"></i> Operational Risk & Strategic Threat</p>
                             <p class="text-rose-900/80 font-normal leading-relaxed font-sans">${t.threat}</p>
                         </div>
-                    </div>
+                    </div>` : ''}
 
                     <div class="text-[11px] text-[#64748b] font-mono flex flex-wrap gap-x-3 gap-y-1 bg-[#f1f5f9]/40 px-2.5 py-1.5 rounded border border-dashed border-[#e2e8f0]">
                         <span>RSI: <strong class="text-[#334155]">${t.rsi.toFixed(1)}</strong></span>
