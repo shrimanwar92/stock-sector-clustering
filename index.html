@@ -190,10 +190,13 @@
                 const formattedConfidence = t.confidence <= 1.0 ? (t.confidence * 100).toFixed(0) : t.confidence;
                 const evColorClass = t.expectedValue > 0 ? "text-emerald-600" : "text-rose-600 font-bold";
 
-                // LLM Data Visibility Logic
+                // Logic Flags
                 const hasValidLLM = t.shapSynthesis && 
                                     t.shapSynthesis.trim() !== "" && 
                                     !t.shapSynthesis.includes("No mathematical-fundamental alignment synthesis generated.");
+                
+                // Hide top-right metadata if Neutral/Default
+                const isDefaultMetadata = (t.sentiment === 'NEUTRAL' && t.news_catalyst === 'No active catalyst logged.');
 
                 return `
                 <div class="p-5 bg-white rounded-xl border border-[#e2e8f0] flex flex-col gap-4 hover:border-slate-400 hover:shadow-md transition-all duration-200">
@@ -214,6 +217,7 @@
                             </div>
                         </div>
 
+                        ${!isDefaultMetadata ? `
                         <div class="w-full lg:text-right lg:max-w-md border-t lg:border-t-0 pt-3 lg:pt-0 border-[#f1f5f9] flex flex-col lg:items-end gap-1.5">
                             <div>
                                 <span class="text-[10px] px-2.5 py-1 rounded-full font-mono font-bold tracking-wide ${t.sentiment === 'BULLISH' ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-600 border border-slate-200'}">
@@ -223,6 +227,7 @@
                             <p class="text-xs font-semibold text-[#334155] mt-1 italic leading-relaxed">"${t.news_catalyst}"</p>
                             <p class="text-[10px] text-[#94a3b8] font-medium mt-0.5">Confidence Layer Score: <span class="font-mono text-[#475569] font-bold">${formattedConfidence}%</span></p>
                         </div>
+                        ` : ''}
                     </div>
 
                     <div class="text-[11px] text-[#475569] font-mono bg-slate-50 border border-[#e2e8f0] px-3 py-2 rounded-lg flex flex-wrap gap-x-6 gap-y-1.5 items-center justify-between">
