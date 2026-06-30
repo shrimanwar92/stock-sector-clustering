@@ -189,6 +189,8 @@ if __name__ == "__main__":
     
     # 🟢 Step 1: Compute fresh features for health assessment
     gold_features_df = rule_engine.engineer_gold_features(nse_df)
+
+    print(gold_features_df[['Feature_Trend_Age', 'Feature_Dist_To_200DMA', 'Feature_Bollinger_Width']].describe())
     
     # 🟢 Step 2: Run verification loop against the contract rules
     train_model = rule_engine.check_live_health_degradation(gold_features_df)

@@ -46,49 +46,37 @@
                 <i class="fa-solid fa-circle-info text-emerald-600 text-sm"></i> Strategic Label Explanatory Guide
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
-                <div class="p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl text-xs">
-                    <span class="font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1">🚀 INSIDER BREAKOUT</span>
-                    <p class="text-[#475569]">High success probability combined with immediate institutional volume allocation flags.</p>
+                <div class="p-3 bg-cyan-50/50 border border-cyan-100 rounded-xl text-xs">
+                    <span class="font-bold bg-cyan-100 text-cyan-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1 text-[10px]">🚀 INSIDER BREAKOUT</span>
+                    <p class="text-[#475569]">High conviction; institutional accumulation confirmed.</p>
                 </div>
-                <div class="p-3 bg-teal-50/50 border border-teal-100 rounded-xl text-xs">
-                    <span class="font-bold bg-teal-100 text-teal-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1">🚀 ACTIVE BREAKOUT</span>
-                    <p class="text-[#475569]">Strong underlying alpha score predicting positive variance expansion above baseline noise.</p>
+                <div class="p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl text-xs">
+                    <span class="font-bold bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1 text-[10px]">🚀 ACTIVE BREAKOUT</span>
+                    <p class="text-[#475569]">Momentum expansion profile; alpha score positive.</p>
                 </div>
                 <div class="p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl text-xs">
-                    <span class="font-bold bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1">🏢 INST. LAUNCHPAD</span>
-                    <p class="text-[#475569]">Extreme price compression; high stagnation cluster indicating coiled energy build-ups.</p>
+                    <span class="font-bold bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1 text-[10px]">🏢 INST. LAUNCHPAD</span>
+                    <p class="text-[#475569]">Compression structure detected; coiled energy.</p>
                 </div>
                 <div class="p-3 bg-amber-50/50 border border-amber-100 rounded-xl text-xs">
-                    <span class="font-bold bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1">🏢 LAUNCHPAD</span>
-                    <p class="text-[#475569]">Standard positive Expected Value setup with structural edge over baseline metrics.</p>
+                    <span class="font-bold bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1 text-[10px]">🏢 LAUNCHPAD</span>
+                    <p class="text-[#475569]">Standard positive EV accumulation profile.</p>
                 </div>
                 <div class="p-3 bg-rose-50/50 border border-rose-100 rounded-xl text-xs">
-                    <span class="font-bold bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1">⚠️ ASYMMETRY HAZARD</span>
-                    <p class="text-[#475569]">Mathematical failure risk or mathematical EV projection ≤ 0. High-risk profiles.</p>
+                    <span class="font-bold bg-rose-100 text-rose-800 px-1.5 py-0.5 rounded font-mono block w-max mb-1 text-[10px]">⚠️ LATE STAGE EXHAUSTION</span>
+                    <p class="text-[#475569]">Momentum peak detected; high reversal risk.</p>
                 </div>
             </div>
         </section>
 
         <section class="flex flex-wrap items-center gap-2 bg-white border border-[#e2e8f0] p-3 rounded-xl shadow-sm">
             <span class="text-xs font-bold uppercase tracking-wider text-[#64748b] ml-1 mr-2"><i class="fa-solid fa-filter text-slate-500 mr-1.5"></i> Filters:</span>
-            <button onclick="filterTable('ALL')" id="btn-ALL" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">
-                All Candidates (<span id="count-ALL">0</span>)
-            </button>
-            <button onclick="filterTable('INSIDER')" id="btn-INSIDER" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">
-                🚀 Insider Breakout (<span id="count-INSIDER">0</span>)
-            </button>
-            <button onclick="filterTable('ACTIVE')" id="btn-ACTIVE" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">
-                ⚡ Active Breakout (<span id="count-ACTIVE">0</span>)
-            </button>
-            <button onclick="filterTable('INST-LAUNCHPAD')" id="btn-INST-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">
-                🏛️ Inst Launchpad (<span id="count-INST-LAUNCHPAD">0</span>)
-            </button>
-            <button onclick="filterTable('LAUNCHPAD')" id="btn-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">
-                📦 Launchpad (<span id="count-LAUNCHPAD">0</span>)
-            </button>
-            <button onclick="filterTable('HAZARD')" id="btn-HAZARD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">
-                ⚠️ Hazard Trap (<span id="count-HAZARD">0</span>)
-            </button>
+            <button onclick="filterTable('ALL')" id="btn-ALL" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">All (<span id="count-ALL">0</span>)</button>
+            <button onclick="filterTable('INSIDER')" id="btn-INSIDER" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">🚀 Insider (<span id="count-INSIDER">0</span>)</button>
+            <button onclick="filterTable('ACTIVE')" id="btn-ACTIVE" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">⚡ Active (<span id="count-ACTIVE">0</span>)</button>
+            <button onclick="filterTable('INSTITUTIONAL')" id="btn-INSTITUTIONAL" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">🏛️ Inst. (<span id="count-INSTITUTIONAL">0</span>)</button>
+            <button onclick="filterTable('LAUNCHPAD')" id="btn-LAUNCHPAD" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">📦 Launchpad (<span id="count-LAUNCHPAD">0</span>)</button>
+            <button onclick="filterTable('EXHAUSTION')" id="btn-EXHAUSTION" class="text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200">⚠️ Exhaustion (<span id="count-EXHAUSTION">0</span>)</button>
         </section>
 
         <section class="w-full">
@@ -110,17 +98,13 @@
             try {
                 const response = await fetch(`./dataset/data.json?t=${new Date().getTime()}`);
                 if (!response.ok) throw new Error("Telemetry pipeline rejected structural stream data.");
-                
                 const data = await response.json();
                 allTickers = data.tickers || [];
                 document.getElementById("publish-timestamp").innerText = data.updated_at || "N/A";
                 renderRows();
             } catch (error) {
                 console.error("Pipeline Failure:", error);
-                document.getElementById("ticker-rows").innerHTML = `
-                    <div class="p-12 text-center text-rose-600 font-mono text-sm border border-rose-200 rounded-xl bg-rose-50">
-                        <i class="fa-solid fa-triangle-exclamation mr-2"></i> Critical Error: Synchronization failure on telemetry matrix dataset.
-                    </div>`;
+                document.getElementById("ticker-rows").innerHTML = `<div class="p-12 text-center text-rose-600 font-mono text-sm border border-rose-200 rounded-xl bg-rose-50"><i class="fa-solid fa-triangle-exclamation mr-2"></i> Sync Error.</div>`;
             }
         }
         
@@ -129,26 +113,16 @@
                 ALL: allTickers.length,
                 INSIDER: allTickers.filter(t => t.label.includes('INSIDER BREAKOUT')).length,
                 ACTIVE: allTickers.filter(t => t.label.includes('ACTIVE BREAKOUT')).length,
-                INST_LAUNCHPAD: allTickers.filter(t => t.label.includes('INSTITUTIONAL LAUNCHPAD')).length,
+                INSTITUTIONAL: allTickers.filter(t => t.label.includes('INSTITUTIONAL LAUNCHPAD')).length,
                 LAUNCHPAD: allTickers.filter(t => t.label === '🏢 LAUNCHPAD').length,
-                HAZARD: allTickers.filter(t => t.label.includes('HAZARD')).length
+                EXHAUSTION: allTickers.filter(t => t.label.includes('LATE STAGE EXHAUSTION')).length
             };
 
-            document.getElementById("count-ALL").innerText = counts.ALL;
-            document.getElementById("count-INSIDER").innerText = counts.INSIDER;
-            document.getElementById("count-ACTIVE").innerText = counts.ACTIVE;
-            document.getElementById("count-INST-LAUNCHPAD").innerText = counts.INST_LAUNCHPAD;
-            document.getElementById("count-LAUNCHPAD").innerText = counts.LAUNCHPAD;
-            document.getElementById("count-HAZARD").innerText = counts.HAZARD;
+            Object.keys(counts).forEach(k => { if(document.getElementById(`count-${k}`)) document.getElementById(`count-${k}`).innerText = counts[k]; });
 
-            const buttons = {
-                'ALL': 'btn-ALL', 'INSIDER': 'btn-INSIDER', 'ACTIVE': 'btn-ACTIVE',
-                'INST-LAUNCHPAD': 'btn-INST-LAUNCHPAD', 'LAUNCHPAD': 'btn-LAUNCHPAD', 'HAZARD': 'btn-HAZARD'
-            };
-
-            Object.keys(buttons).forEach(key => {
-                const btn = document.getElementById(buttons[key]);
-                if (!btn) return;
+            const buttons = ['ALL', 'INSIDER', 'ACTIVE', 'INSTITUTIONAL', 'LAUNCHPAD', 'EXHAUSTION'];
+            buttons.forEach(key => {
+                const btn = document.getElementById(`btn-${key}`);
                 if (key === currentFilter) {
                     btn.className = "text-xs font-mono font-bold px-3 py-1.5 rounded-lg border transition-all duration-200 bg-[#0f172a] text-white border-[#0f172a]";
                 } else {
@@ -169,9 +143,9 @@
             let filteredData = allTickers;
             if (currentFilter === 'INSIDER') filteredData = allTickers.filter(t => t.label.includes('INSIDER BREAKOUT'));
             else if (currentFilter === 'ACTIVE') filteredData = allTickers.filter(t => t.label.includes('ACTIVE BREAKOUT'));
-            else if (currentFilter === 'INST-LAUNCHPAD') filteredData = allTickers.filter(t => t.label.includes('INSTITUTIONAL LAUNCHPAD'));
+            else if (currentFilter === 'INSTITUTIONAL') filteredData = allTickers.filter(t => t.label.includes('INSTITUTIONAL LAUNCHPAD'));
             else if (currentFilter === 'LAUNCHPAD') filteredData = allTickers.filter(t => t.label === '🏢 LAUNCHPAD');
-            else if (currentFilter === 'HAZARD') filteredData = allTickers.filter(t => t.label.includes('HAZARD'));
+            else if (currentFilter === 'EXHAUSTION') filteredData = allTickers.filter(t => t.label.includes('LATE STAGE EXHAUSTION'));
             
             updateFilterBadges();
 
@@ -185,10 +159,8 @@
                 if (t.label.includes("INSIDER")) badgeClass = "bg-cyan-50 text-cyan-700 border border-cyan-200";
                 else if (t.label.includes("ACTIVE")) badgeClass = "bg-emerald-50 text-emerald-700 border border-emerald-200";
                 else if (t.label.includes("INSTITUTIONAL")) badgeClass = "bg-indigo-50 text-indigo-700 border border-indigo-200";
-                else if (t.label.includes("HAZARD")) badgeClass = "bg-rose-50 text-rose-700 border border-rose-200 animate-pulse";
+                else if (t.label.includes("EXHAUSTION")) badgeClass = "bg-rose-50 text-rose-700 border border-rose-200 animate-pulse";
 
-                // Normalize confidence formatting if passed as raw float ratio
-                const formattedConfidence = t.confidence <= 1.0 ? (t.confidence * 100).toFixed(0) : t.confidence;
                 const evColorClass = t.expectedValue > 0 ? "text-emerald-600" : "text-rose-600 font-bold";
 
                 return `
@@ -196,61 +168,29 @@
                     <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
                         <div class="w-full lg:max-w-2xl">
                             <div class="flex flex-wrap items-center gap-2">
+                                <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-slate-900 text-white font-mono">#${t.alphaRank || '99'}</span>
                                 <h4 class="font-bold text-[#0f172a] font-mono text-base tracking-tight">${t.symbol}</h4>
                                 <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-[#f1f5f9] text-[#475569] border border-[#e2e8f0] font-mono">${t.sector}</span>
                                 <span class="text-[10px] px-2 py-0.5 rounded font-bold font-mono ${badgeClass}">${t.label}</span>
                             </div>
-
-                            <div class="text-xs text-[#334155] mt-2.5 bg-[#f8fafc] p-3 rounded-lg border border-[#f1f5f9] grid grid-cols-2 sm:grid-cols-5 gap-3 font-medium">
+                            <div class="text-xs text-[#334155] mt-2.5 bg-[#f8fafc] p-3 rounded-lg border border-[#f1f5f9] grid grid-cols-2 sm:grid-cols-6 gap-3 font-medium">
                                 <div>Price: <span class="text-[#0f172a] font-mono font-bold block sm:inline">₹${t.close.toLocaleString('en-IN')}</span></div>
                                 <div class="sm:border-l sm:border-[#e2e8f0] sm:pl-3">Stop-Loss: <span class="text-rose-600 font-mono font-bold block sm:inline">₹${t.stopLoss.toLocaleString('en-IN')}</span></div>
                                 <div class="sm:border-l sm:border-[#e2e8f0] sm:pl-3">Target: <span class="text-emerald-600 font-mono font-bold block sm:inline">₹${t.profitTarget.toLocaleString('en-IN')}</span></div>
                                 <div class="sm:border-l sm:border-[#e2e8f0] sm:pl-3">Expected Val: <span class="${evColorClass} font-mono font-bold block sm:inline">${t.expectedValue.toFixed(4)}</span></div>
-                                <div class="sm:border-l sm:border-[#e2e8f0] sm:pl-3">R/R Ratio: <span class="text-teal-600 font-mono font-bold block sm:inline">${t.rewardRisk.toFixed(2)}x</span></div>
+                                <div class="sm:border-l sm:border-[#e2e8f0] sm:pl-3">R/R: <span class="text-teal-600 font-mono font-bold block sm:inline">${t.rewardRisk.toFixed(2)}x</span></div>
+                                <div class="sm:border-l sm:border-[#e2e8f0] sm:pl-3">Conviction: <span class="text-indigo-600 font-mono font-bold block sm:inline">${t.conviction ? t.conviction.toFixed(3) : '0.000'}</span></div>
                             </div>
                         </div>
-
                         <div class="w-full lg:text-right lg:max-w-md border-t lg:border-t-0 pt-3 lg:pt-0 border-[#f1f5f9] flex flex-col lg:items-end gap-1.5">
-                            <div>
-                                <span class="text-[10px] px-2.5 py-1 rounded-full font-mono font-bold tracking-wide ${t.sentiment === 'BULLISH' ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-600 border border-slate-200'}">
-                                    <i class="fa-solid fa-circle text-[6px] mr-1.5 align-middle"></i>${t.sentiment}
-                                </span>
-                            </div>
+                            <span class="text-[10px] px-2.5 py-1 rounded-full font-mono font-bold tracking-wide ${t.sentiment === 'BULLISH' ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-600 border border-slate-200'}">
+                                <i class="fa-solid fa-circle text-[6px] mr-1.5 align-middle"></i>${t.sentiment}
+                            </span>
                             <p class="text-xs font-semibold text-[#334155] mt-1 italic leading-relaxed">"${t.news_catalyst}"</p>
-                            <p class="text-[10px] text-[#94a3b8] font-medium mt-0.5">Confidence Layer Score: <span class="font-mono text-[#475569] font-bold">${formattedConfidence}%</span></p>
                         </div>
                     </div>
-
                     <div class="text-[11px] text-[#475569] font-mono bg-slate-50 border border-[#e2e8f0] px-3 py-2 rounded-lg flex flex-wrap gap-x-6 gap-y-1.5 items-center justify-between">
-                        <div class="flex items-center gap-4">
-                            <span>Pipeline Reasoning: <span class="text-slate-900 font-sans font-medium">${t.decisionReason}</span></span>
-                        </div>
-                        <div class="flex items-center gap-3 border-t sm:border-t-0 pt-1.5 sm:pt-0 w-full sm:w-auto text-[10px]">
-                            <span class="px-1.5 py-0.5 bg-emerald-50 text-emerald-700 rounded border border-emerald-100">P(Success): ${(t.pSuccess*100).toFixed(1)}%</span>
-                            <span class="px-1.5 py-0.5 bg-indigo-50 text-indigo-700 rounded border border-indigo-100">P(Stagnate): ${(t.pStagnate*100).toFixed(1)}%</span>
-                            <span class="px-1.5 py-0.5 bg-rose-50 text-rose-700 rounded border border-rose-100">P(Failure): ${(t.pFailure*100).toFixed(1)}%</span>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-3 border-t border-dashed border-[#e2e8f0] text-xs">
-                        <div class="bg-slate-50/70 rounded-xl p-3 border border-[#f1f5f9]">
-                            <p class="text-[10px] font-bold tracking-wider uppercase text-slate-500 mb-1"><i class="fa-solid fa-calculator mr-1 text-teal-600"></i> SHAP Mathematical Grounding Synthesis</p>
-                            <p class="text-slate-600 font-normal leading-relaxed font-sans">${t.shapSynthesis}</p>
-                        </div>
-                        <div class="bg-rose-50/30 rounded-xl p-3 border border-rose-100/50">
-                            <p class="text-[10px] font-bold tracking-wider uppercase text-rose-700 mb-1"><i class="fa-solid fa-triangle-exclamation mr-1 text-rose-500"></i> Operational Risk & Strategic Threat</p>
-                            <p class="text-rose-900/80 font-normal leading-relaxed font-sans">${t.threat}</p>
-                        </div>
-                    </div>
-
-                    <div class="text-[11px] text-[#64748b] font-mono flex flex-wrap gap-x-3 gap-y-1 bg-[#f1f5f9]/40 px-2.5 py-1.5 rounded border border-dashed border-[#e2e8f0]">
-                        <span>RSI: <strong class="text-[#334155]">${t.rsi.toFixed(1)}</strong></span>
-                        <span>•</span>
-                        <span>Vol Ratio: <strong class="text-[#334155]">${t.volRatio.toFixed(2)}</strong></span>
-                        <span>•</span>
-                        <span>ATR Ratio: <strong class="text-[#334155]">${t.atrRatio.toFixed(2)}</strong></span>
-                        <span>•</span>
-                        <span>Close Strength: <strong class="text-[#334155]">${t.closeStrength.toFixed(2)}</strong></span>
+                        <span>Reasoning: <span class="text-slate-900 font-sans font-medium">${t.decisionReason}</span></span>
                     </div>
                 </div>`;
             }).join("");

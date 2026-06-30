@@ -211,25 +211,113 @@ class StocksRuleEngine:
 
         return group.dropna(subset=["Feature_ROC_252", "Feature_RSI", "Feature_Volume_Ratio", "Feature_Delivery_Ratio", "Feature_ATR_Ratio"])
 
+    def _add_maturity_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
+        """Calculates maturity and structural metrics."""
+        df = df.copy()
+        
+        # 1. Trend Age (Days above 200 EMA)
+        ema200 = df['Close'].ewm(span=200).mean()
+        df['Feature_Trend_Age'] = (df['Close'] > ema200).rolling(window=200).sum()
+        
+        # 2. Distance to 200 DMA (Support/Resistance Proxy)
+        df['Feature_Dist_To_200DMA'] = (df['Close'] - ema200) / ema200
+        
+        # 3. Bollinger Width (Volatility/Compression Proxy)
+        sma20 = df['Close'].rolling(window=20).mean()
+        std20 = df['Close'].rolling(window=20).std()
+        df['Feature_Bollinger_Width'] = (sma20 + (2 * std20) - (sma20 - (2 * std20))) / sma20
+        
+        # 4. Volume Expansion
+        df['Feature_Vol_Expansion'] = df['Volume'] / df['Volume'].rolling(window=20).mean()
+        
+        # 5. 1-Year Price Percentile
+        df['Feature_1Y_Percentile'] = (df['Close'] - df['Close'].rolling(252).min()) / \
+                                      (df['Close'].rolling(252).max() - df['Close'].rolling(252).min())
+        
+        return df.fillna(0)
+    
+    def apply_trend_quality_ranking(self, df: pd.DataFrame) -> pd.DataFrame:
+        # Normalize and create the Rank
+        # Penalty: If stock is > 40% above 200DMA or Trend Age > 150 days
+        # Reward: If Bollinger width is tight (Compression)
+        
+        # Simple scoring: Higher is better
+        df['Trend_Quality_Score'] = (
+            (df['Expected_Value'] * 0.60) - 
+            (df['Feature_Dist_To_200DMA'].clip(0, 0.5) * 0.20) - 
+            (df['Feature_Trend_Age'].clip(0, 200) / 1000 * 0.20)
+        )
+        
+        return df.sort_values(by='Trend_Quality_Score', ascending=False)
+
+    def _compute_sector_baselines(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Calculates sector-wide medians for key momentum features.
+        Used to normalize features to 'Relative' values.
+        """
+        # Calculate median per Sector per Date
+        sector_baselines = df.groupby(['Sector', 'Date'])[['Feature_ROC_20', 'Feature_Trend_Age']].median()
+        sector_baselines.rename(columns={
+            'Feature_ROC_20': 'Sector_Median_ROC_20',
+            'Feature_Trend_Age': 'Sector_Median_Trend_Age'
+        }, inplace=True)
+        return sector_baselines
+    
+    def _transform_to_percentiles(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Transforms absolute features into cross-sectional percentiles (0.0 to 1.0).
+        Calculated per-day to compare stocks against their peers.
+        """
+        features_to_rank = ['Feature_ROC_20', 'Feature_Trend_Age', 'Feature_Bollinger_Width']
+        
+        for feat in features_to_rank:
+            # We group by Date to rank each stock against the others on that specific day
+            df[f"{feat}_PctRank"] = df.groupby('Date')[feat].rank(pct=True)
+            
+        return df
+    
     def engineer_gold_features(self, raw_df: pd.DataFrame) -> pd.DataFrame:
         df = self._parse_and_sanitize_columns(raw_df)
-        if df.empty: 
-            return pd.DataFrame()
+        if df.empty: return pd.DataFrame()
+        
+        # 1. Pre-calculate Feature_ROC_20 globally
+        df = df.sort_values(by=["Symbol", "Date"])
+        df["Feature_ROC_20"] = df.groupby("Symbol")["Close"].pct_change(periods=20) * 100
             
         index_roc_20, index_roc_252, regime_risk, dynamic_alpha = self._generate_benchmark_regime_maps(df)
         stock_pool_df = df[df["Symbol"] != "NIFTY 500"].sort_values(by="Date").copy()
-        if stock_pool_df.empty: 
-            return pd.DataFrame()
-            
+        
+        # Maturity metrics
+        stock_pool_df = stock_pool_df.groupby("Symbol").apply(self._add_maturity_metrics).reset_index()
+        
+        # 3. Compute Sector Baselines
+        sector_baselines = self._compute_sector_baselines(stock_pool_df)
         sector_trends = self._generate_sector_trend_maps(stock_pool_df)
         
         processed_stocks = []
         for _, group in stock_pool_df.groupby("Symbol"):
-            feat_df = self._engineer_single_asset_features(group, index_roc_20, index_roc_252, regime_risk, sector_trends, dynamic_alpha)
+            group = group.merge(sector_baselines, on=['Sector', 'Date'], how='left')
+            
+            group['Feature_Rel_ROC_20'] = group['Feature_ROC_20'] - group['Sector_Median_ROC_20']
+            group['Feature_Rel_Trend_Age'] = group['Feature_Trend_Age'] - group['Sector_Median_Trend_Age']
+            
+            feat_df = self._engineer_single_asset_features(
+                group, index_roc_20, index_roc_252, regime_risk, sector_trends, dynamic_alpha
+            )
             if not feat_df.empty: 
                 processed_stocks.append(feat_df)
+
+        # --- FIX STARTS HERE ---
+        if not processed_stocks:
+            return pd.DataFrame()
+
+        # 1. Combine the list of DataFrames into one massive DataFrame
+        full_df = pd.concat(processed_stocks, ignore_index=True)
+        
+        # 2. Now transform the unified DataFrame to percentiles
+        full_df = self._transform_to_percentiles(full_df)
                 
-        return pd.concat(processed_stocks, ignore_index=True) if processed_stocks else pd.DataFrame()
+        return full_df
     
     def engineer_training_labels(
         self, 
@@ -431,10 +519,16 @@ class StocksRuleEngine:
         return False
 
     def execute_ml_signals(self, gold_df: pd.DataFrame = None) -> pd.DataFrame:
+        """
+        Executes ML signals using a continuous Conviction Score for internal ranking,
+        maps UI labels directly to Conviction Score tiers, and preserves feature columns
+        for downstream SHAP baseline explanation engines.
+        """
         if gold_df is None or gold_df.empty:
             print("[WARN] Empty data frame passed to execution engine. Aborting.")
             return pd.DataFrame()
 
+        # 1. Model Loading
         model = XGBClassifier()
         model.load_model(MODEL_PATH)
         self.model = model
@@ -442,133 +536,111 @@ class StocksRuleEngine:
         working_df = gold_df.copy().sort_values(by="Date")
         latest_snapshot = working_df.groupby("Symbol").tail(1).reset_index(drop=True)
 
-        sector_regime_map = getattr(self, "sector_regime_map", {})
-        sector_score_map = getattr(self, "sector_score_map", {})
+        # 2. Contextual Mappings
+        latest_snapshot["Sector_Regime_Label"] = latest_snapshot["Sector"].map(getattr(self, "sector_regime_map", {})).fillna("📈 NEUTRAL_CONSOLIDATION")
+        latest_snapshot["Sector_GMM_Factor"] = latest_snapshot["Sector"].map(getattr(self, "sector_score_map", {})).fillna(0.0)
 
-        latest_snapshot["Sector_Regime_Label"] = (
-            latest_snapshot["Sector"].map(sector_regime_map).fillna("📈 NEUTRAL_CONSOLIDATION")
-        )
-        latest_snapshot["Sector_GMM_Factor"] = (
-            latest_snapshot["Sector"].map(sector_score_map).fillna(0.0)
-        )
-
+        # 3. Domain Filtering
         domain_mask = (
             (latest_snapshot["is_tradable"] == 1) &
             (latest_snapshot["Feature_Sector_Aligned"] == 1) &
             (latest_snapshot["Market_Regime_Risk_Off"] == 0) &
             (latest_snapshot["Feature_RSI"] < 82.0) &
-            (latest_snapshot["Close"] >= 15.0)
+            (latest_snapshot["Close"] >= 15.0) &
+            (latest_snapshot["Sector_GMM_Factor"] >= self.macro_score_threshold)
         )
-
-        cluster_gate = latest_snapshot["Sector_GMM_Factor"] >= self.macro_score_threshold
-        domain_mask = domain_mask & cluster_gate
         valid_universe = latest_snapshot[domain_mask].copy()
 
         if valid_universe.empty:
-            print(f"[WARN] Zero portfolio elements passed macro threshold ({self.macro_score_threshold})")
             return pd.DataFrame()
 
+        # 4. Probability Inference
         X_live = valid_universe[FEATURE_COLUMNS]
         calibrator = joblib.load(CALIBRATOR_MODEL)
-        probabilities_matrix = calibrator.predict_proba(X_live)
+        probs = calibrator.predict_proba(X_live)
 
-        if probabilities_matrix.shape[1] < 3:
-            raise ValueError("❌ Model must be trained as a 3-class classifier.")
+        valid_universe["Prob_Failure_SL"] = probs[:, 0]
+        valid_universe["Prob_Stagnation"] = probs[:, 1]
+        valid_universe["Alpha_ML_Score"] = probs[:, 2]
 
-        valid_universe["Prob_Failure_SL"] = probabilities_matrix[:, 0]
-        valid_universe["Prob_Stagnation"] = probabilities_matrix[:, 1]
-        valid_universe["Alpha_ML_Score"] = probabilities_matrix[:, 2]
-
-        print("\n========== PROBABILITY DIAGNOSTICS ==========")
-        print(f"Mean P(Failure):  {probabilities_matrix[:,0].mean():.3f}")
-        print(f"Mean P(Stagnate): {probabilities_matrix[:,1].mean():.3f}")
-        print(f"Mean P(Success):  {probabilities_matrix[:,2].mean():.3f}")
-
-        close_prices = valid_universe["Close"].values
-        atr_14 = valid_universe["ATR_14"].fillna(valid_universe["Close"] * 0.03).values if "ATR_14" in valid_universe.columns else close_prices * 0.03
-        piv_lows = valid_universe["Pivot_Low_30"].fillna(valid_universe["Close"] * 0.95).values if "Pivot_Low_30" in valid_universe.columns else close_prices * 0.95
-        sector_aligned_vals = valid_universe["Feature_Sector_Aligned"].values
-
-        pt_multipliers = np.where(sector_aligned_vals == 1, 2.5 * 1.2, 2.5 * 0.8)
-        sl_multipliers = np.where(sector_aligned_vals == 1, 1.5, 1.5 * 0.66)
-
-        rupee_rewards = pt_multipliers * atr_14
-        rupee_risks = sl_multipliers * atr_14
-        profit_targets = close_prices + rupee_rewards
-        volatility_sl = close_prices - rupee_risks
-        stop_losses = np.maximum(piv_lows, volatility_sl)
-        actual_rupee_risks = np.maximum(close_prices - stop_losses, 1e-9)
-
-        valid_universe["Stop_Loss"] = np.round(stop_losses, 2)
-        valid_universe["Profit_Target"] = np.round(profit_targets, 2)
-
-        reward_risk_ratio = rupee_rewards / (actual_rupee_risks + 1e-9)
-        valid_universe["Reward_Risk"] = reward_risk_ratio
-
-        print("\n========== REWARD/RISK DIAGNOSTICS ==========")
-        print(valid_universe["Reward_Risk"].describe())
-
-        reward_pct = rupee_rewards / close_prices
-        risk_pct = actual_rupee_risks / close_prices
-
+        # 5. Financial Metrics
+        close = valid_universe["Close"].values
+        atr = valid_universe["ATR_14"].fillna(valid_universe["Close"] * 0.03).values
+        # PT/SL Multipliers
+        pt_mult = np.where(valid_universe["Feature_Sector_Aligned"] == 1, 3.0, 2.0)
+        sl_mult = np.where(valid_universe["Feature_Sector_Aligned"] == 1, 1.5, 1.0)
+        
+        rupee_rewards = pt_mult * atr
+        rupee_risks = sl_mult * atr
+        
         valid_universe["Expected_Value"] = (
-            valid_universe["Alpha_ML_Score"] * reward_pct +
-            valid_universe["Prob_Stagnation"] * 0.002 -
-            valid_universe["Prob_Failure_SL"] * risk_pct
+            valid_universe["Alpha_ML_Score"] * (rupee_rewards / close) -
+            valid_universe["Prob_Failure_SL"] * (rupee_risks / close)
         )
+        
+        valid_universe["Stop_Loss"] = np.round(close - rupee_risks, 2)
+        valid_universe["Profit_Target"] = np.round(close + rupee_rewards, 2)
+        valid_universe["Reward_Risk"] = rupee_rewards / (rupee_risks + 1e-9)
 
-        print("\n========== EV DIAGNOSTICS ==========")
-        print(valid_universe["Expected_Value"].describe())
-        print(f"Positive EV Stocks: {(valid_universe['Expected_Value'] > 0).sum()}/{len(valid_universe)}")
+        # 6. INTERNAL CONVICTION ENGINE (The "Brain")
+        # Store 'is_overextended' inside the DataFrame to protect index alignment
+        valid_universe["is_overextended"] = (valid_universe.get("Feature_Dist_To_200DMA", 0) > 0.40) | \
+                                            (valid_universe.get("Feature_Trend_Age", 0) > 200)
+        
+        # Raw Conviction: Weighted composite of EV, ML Score, and Peer Relative Strength
+        rel_roc = valid_universe.get("Feature_Rel_ROC_20_PctRank", 0.5)
+        raw_conv = (valid_universe["Expected_Value"] * 0.3) + (valid_universe["Alpha_ML_Score"] * 0.5) + (rel_roc * 0.2)
+        
+        # Apply Overextension Penalty
+        valid_universe["Conviction_Score"] = np.round(np.where(valid_universe["is_overextended"], raw_conv * 0.5, raw_conv), 3)
 
-        valid_universe = valid_universe.sort_values(by="Expected_Value", ascending=False).reset_index(drop=True)
-        top_20_signals = valid_universe.head(20).copy()
-        top_20_signals["Alpha_Rank"] = top_20_signals.index + 1
-        top_20_signals["Confidence_Score"] = np.round((0.6 * top_20_signals["Alpha_ML_Score"] + 0.4 * top_20_signals["Sector_GMM_Factor"]), 2)
+        # 7. RANKING
+        # Filter for edge-positive trades, then rank by pure Conviction
+        valid_universe = valid_universe[valid_universe["Expected_Value"] > 0].copy()
+        valid_universe = valid_universe.sort_values(by="Conviction_Score", ascending=False).reset_index(drop=True)
+        valid_universe["Alpha_Rank"] = valid_universe.index + 1
 
-        success_baseline = valid_universe["Alpha_ML_Score"].mean()
-        stagnation_baseline = valid_universe["Prob_Stagnation"].mean()
+        # 8. UI COMPATIBILITY LAYER (Option B: Conviction-Driven Labels)
+        # Establish dynamic thresholds based on current cross-sectional distribution
+        conv_mean = valid_universe["Conviction_Score"].mean()
+        conv_std = valid_universe["Conviction_Score"].std() if len(valid_universe) > 1 else 0.1
+        
+        high_conv_cutoff = conv_mean + (0.4 * conv_std)
+        mid_conv_cutoff = conv_mean - (0.2 * conv_std)
 
-        print("\n========== BASELINE CALIBRATION ==========")
-        print(f"Mean Success Probability   : {success_baseline:.3f}")
-        print(f"Mean Stagnation Probability: {stagnation_baseline:.3f}")
-
-        def assign_presentation_tags(row):
-            p_success = row["Alpha_ML_Score"]
-            p_fail = row["Prob_Failure_SL"]
-            p_stagnate = row["Prob_Stagnation"]
-            ev_val = row["Expected_Value"]
-            deliv_ratio = row.get("Feature_Delivery_Ratio", 1.0)
-            close_strength = row.get("Feature_Close_Strength", 0.5)
-
-            base_reason = f"EV={ev_val:.4f} | P🚀={p_success*100:.1f}% | P🛑={p_fail*100:.1f}% | P🏢={p_stagnate*100:.1f}%"
-
-            if ev_val <= 0:
-                return pd.Series(["⚠️ HIGH ASYMMETRY HAZARD", f"Negative EV profile | {base_reason}"])
-
-            if p_success >= (success_baseline + 0.05):
-                if deliv_ratio >= 1.15 or close_strength >= 0.65:
+        def get_labels(row):
+            base_reason = f"Conviction={row['Conviction_Score']:.3f} | EV={row['Expected_Value']:.4f} | P🚀={row['Alpha_ML_Score']*100:.1f}%"
+            
+            # Tier 1: Overextended
+            if row["is_overextended"]:
+                return pd.Series(["⚠️ LATE STAGE EXHAUSTION", f"Momentum peak detected | {base_reason}"])
+            
+            # Tier 2: High Conviction Score maps directly to Breakout classes
+            if row["Conviction_Score"] >= high_conv_cutoff:
+                if row.get("Feature_Delivery_Ratio", 1.0) >= 1.15 or row.get("Feature_Close_Strength", 0.5) >= 0.65:
                     return pd.Series(["🚀 INSIDER BREAKOUT", f"Institutional accumulation confirmed | {base_reason}"])
                 return pd.Series(["🚀 ACTIVE BREAKOUT", f"Momentum expansion profile | {base_reason}"])
-
-            if p_stagnate >= (stagnation_baseline * 2.0):
+            
+            # Tier 3: Mid Conviction Score maps to Institutional Launchpad
+            if row["Conviction_Score"] >= mid_conv_cutoff:
                 return pd.Series(["🏢 INSTITUTIONAL LAUNCHPAD", f"Compression structure detected | {base_reason}"])
-
+                
+            # Tier 4: Fallback for lower positive conviction
             return pd.Series(["🏢 LAUNCHPAD", f"Positive EV accumulation profile | {base_reason}"])
 
-        top_20_signals[["Strategic_Label", "Decision_Reason"]] = top_20_signals.apply(assign_presentation_tags, axis=1)
+        # Safely map to UI columns
+        valid_universe[["Strategic_Label", "Decision_Reason"]] = valid_universe.apply(get_labels, axis=1)
 
-        print("\n========== FINAL LABEL COUNTS ==========")
-        print(top_20_signals["Strategic_Label"].value_counts())
-        print(f"\n🎯 Portfolio Allocation Engine dispatched {len(top_20_signals)} positions.")
-
+        # 9. COLUMN CLEANUP & RETURN (FIXED)
+        # We preserve BOTH the UI presentation columns AND the raw mathematical features 
+        # so downstream analytical functions (like SHAP baselines) don't crash.
         required_ui_cols = [
             "Symbol", "Sector", "Close", "Expected_Value", "Reward_Risk", "Alpha_ML_Score",
-            "Prob_Failure_SL", "Prob_Stagnation", "Confidence_Score", "Alpha_Rank",
+            "Prob_Failure_SL", "Prob_Stagnation", "Conviction_Score", "Alpha_Rank",
             "Stop_Loss", "Profit_Target", "Strategic_Label", "Decision_Reason"
         ]
-
-        final_return_columns = list(dict.fromkeys(required_ui_cols + list(FEATURE_COLUMNS)))
-        existing_return_columns = [col for col in final_return_columns if col in top_20_signals.columns]
-
-        return top_20_signals[existing_return_columns]
+        
+        # Combine required UI columns with the model feature inputs uniquely
+        combined_output_cols = required_ui_cols + [col for col in FEATURE_COLUMNS if col not in required_ui_cols]
+        
+        return valid_universe[[c for c in combined_output_cols if c in valid_universe.columns]]

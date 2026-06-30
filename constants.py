@@ -26,14 +26,28 @@ MODEL_TRAINING_METADATA = "reports/model_training.json"
 MODEL_HEALTH_METADATA = "reports/model_health.json"
 
 FEATURE_COLUMNS = [
+    # Original Technicals
     "Feature_RSI",
     "Feature_EMA_Dist",
     "Feature_Volume_Ratio",
     "Feature_ADX_14",
     "Feature_ATR_Ratio",
-    "Feature_ROC_20",
     "Feature_MACD_Hist_Accel",
-    "Feature_Relative_Strength"
+    "Feature_Relative_Strength",
+    
+    # Raw Metrics (Absolute Context)
+    "Feature_ROC_20",
+    "Feature_Trend_Age",
+    "Feature_Vol_Expansion",
+    "Feature_Dist_To_200DMA",
+    "Feature_Bollinger_Width",
+    "Feature_Rel_ROC_20",
+    "Feature_Rel_Trend_Age",
+    
+    # --- ADD THESE PERCENTILE RANKS (The "Quant-Grade" features) ---
+    "Feature_ROC_20_PctRank",
+    "Feature_Trend_Age_PctRank",
+    "Feature_Bollinger_Width_PctRank"
 ]
 
 APPROVED_REGIMES = [

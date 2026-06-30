@@ -1,7 +1,7 @@
 import json
 import datetime
 import pandas as pd
-import zoneinfo, datetime
+import zoneinfo
 
 class ProgrammaticDashboardDeployer:
     """
@@ -29,6 +29,10 @@ class ProgrammaticDashboardDeployer:
         
         records = []
         for _, row in qualified_df.iterrows():
+            # Safely cast and extract Alpha Rank
+            raw_rank = row.get("Alpha_Rank")
+            alpha_rank_val = int(raw_rank) if pd.notna(raw_rank) else 99
+
             records.append({
                 "symbol": str(row["Symbol"]),
                 "label": str(row["Strategic_Label"]),
@@ -40,7 +44,9 @@ class ProgrammaticDashboardDeployer:
                 "pSuccess": float(row.get("Alpha_ML_Score", 0.0)),
                 "pFailure": float(row.get("Prob_Failure_SL", 0.0)),
                 "pStagnate": float(row.get("Prob_Stagnation", 0.0)),
-                "confidence": float(row.get("Confidence_Score", 0.0)),
+                # UPGRADED: Added explicit tracking for conviction mapping layer
+                "conviction": float(row.get("Conviction_Score", 0.0)),
+                "alphaRank": alpha_rank_val,
                 "decisionReason": str(row.get("Decision_Reason", "No dynamic reasons generated.")),
                 "rsi": float(row.get("Feature_RSI", 50.0)),
                 "volRatio": float(row.get("Feature_Volume_Ratio", 1.0)),
