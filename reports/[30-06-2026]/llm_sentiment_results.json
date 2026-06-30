@@ -1,1 +1,170 @@
-{}
+{
+    "TORNTPHARM": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "No significant recent news or institutional flow identified. Sector sentiment for pharmaceuticals is mixed, with ongoing concerns about drug pricing and regulatory hurdles potentially impacting growth.",
+        "confidence_score": 50,
+        "strategic_threat": "Potential for increased regulatory scrutiny on drug pricing and development costs. Competition from generic manufacturers remains a persistent threat.",
+        "shap_synthesis": "The negative SHAP values for 'Feature_ROC_20', 'Feature_Bollinger_Width', and 'Feature_Volume_Ratio' suggest a bearish outlook. A decreasing rate of change, narrowing Bollinger Bands, and reduced trading volume indicate a potential downtrend or consolidation. The positive attribution to 'Feature_Bollinger_Width_PctRank' might imply that the current width is relatively narrow compared to its historical range, potentially signaling an impending breakout, but the stronger negative drivers outweigh this."
+    },
+    "AJANTPHARM": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The pharmaceutical sector faces ongoing challenges with R&D productivity and patent expirations. Specific news for AJANTPHARM is limited, suggesting a reliance on broader sector trends and technical indicators.",
+        "confidence_score": 45,
+        "strategic_threat": "R&D pipeline risks, potential for patent cliffs, and increasing competition within specialized therapeutic areas.",
+        "shap_synthesis": "The dominant negative SHAP values for 'Feature_ROC_20' and 'Feature_Bollinger_Width_PctRank' strongly point towards a bearish sentiment. A negative rate of change and a decreasing percentile rank of Bollinger Band width suggest a loss of momentum and potential price decline. The negative 'Feature_Volume_Ratio' further supports this, indicating lower volume accompanying price movements."
+    },
+    "USHAMART": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "No specific news or institutional flows. The broader retail sector is experiencing mixed consumer sentiment and inflation concerns which could impact discretionary spending.",
+        "confidence_score": 50,
+        "strategic_threat": "Supply chain disruptions, rising input costs, and potential shifts in consumer spending patterns due to economic uncertainty.",
+        "shap_synthesis": "The strong negative SHAP values for 'Feature_Bollinger_Width_PctRank' and 'Feature_ATR_Ratio' suggest a bearish outlook. A low percentile rank for Bollinger Band width indicates tight price action, and a lower Average True Range ratio can imply reduced volatility, potentially preceding a downward move. The negative 'Feature_Rel_ROC_20' further reinforces this by indicating a declining relative rate of change."
+    },
+    "TITAGARH": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Recent positive news regarding infrastructure spending and government focus on manufacturing. However, the company operates in a cyclical industry sensitive to economic conditions.",
+        "confidence_score": 60,
+        "strategic_threat": "Project execution risks, potential for cost overruns in large infrastructure projects, and competition from both domestic and international players.",
+        "shap_synthesis": "The SHAP drivers present a mixed picture, suggesting a neutral sentiment. While 'Feature_ROC_20' and 'Feature_Bollinger_Width_PctRank' are negative, indicating potential weakness, 'Feature_Bollinger_Width' and 'Feature_ATR_Ratio' are positive, suggesting expanding volatility. The moderate negative contributions from 'Feature_Dist_To_200DMA' and 'Feature_Rel_Trend_Age' also contribute to the lack of a strong directional signal."
+    },
+    "LUPIN": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The pharmaceutical industry is under pressure due to pricing concerns and R&D challenges. Specific company news for Lupin is limited, suggesting reliance on broader market trends and technical signals.",
+        "confidence_score": 45,
+        "strategic_threat": "Pipeline risks, generic competition, and ongoing regulatory compliance burdens.",
+        "shap_synthesis": "The negative SHAP values for 'Feature_ROC_20', 'Feature_Bollinger_Width', and 'Feature_ATR_Ratio' strongly indicate a bearish sentiment. A declining rate of change, narrowing Bollinger Bands, and reduced volatility suggest a loss of upward momentum. The negative 'Feature_Dist_To_200DMA' implies the price is not trading above its long-term average."
+    },
+    "KPRMILL": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The textile and apparel sector is facing input cost pressures and evolving consumer demand. Specific recent news for KPR Mill is not prominently available, indicating a focus on technical indicators.",
+        "confidence_score": 50,
+        "strategic_threat": "Volatile raw material prices (cotton), changing fashion trends, and competition from lower-cost manufacturing regions.",
+        "shap_synthesis": "The predominantly negative SHAP drivers for 'Feature_Volume_Ratio', 'Feature_ROC_20', and 'Feature_Bollinger_Width_PctRank' point to a bearish outlook. A decrease in volume accompanying price action, negative rate of change, and a low percentile rank for Bollinger Band width suggest weakening momentum and potential for a price decline."
+    },
+    "THERMAX": {
+        "sentiment": "NEUTRAL",
+        "news_catalyst": "Positive outlook for the energy and environmental solutions sector due to increased focus on sustainable energy and infrastructure development. Recent order wins have been reported.",
+        "confidence_score": 70,
+        "strategic_threat": "Project execution challenges, reliance on large capital expenditure cycles, and geopolitical risks impacting global energy markets.",
+        "shap_synthesis": "The SHAP values present a neutral outlook. Negative drivers like 'Feature_Bollinger_Width_PctRank' and 'Feature_ROC_20' are offset by positive contributors such as 'Feature_Rel_ROC_20' and 'Feature_ADX_14'. The balanced nature of these opposing influences suggests consolidation or a period of indecision in the stock's price action."
+    },
+    "CIPLA": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The pharmaceutical industry faces ongoing pricing pressures and regulatory scrutiny. Specific news for Cipla is mixed, with some product approvals but also concerns about its generics business.",
+        "confidence_score": 45,
+        "strategic_threat": "Patent expirations, competition from generic manufacturers, and evolving regulatory landscapes in key markets.",
+        "shap_synthesis": "The negative SHAP values for 'Feature_ROC_20', 'Feature_Bollinger_Width', and 'Feature_Rel_Trend_Age' suggest a bearish sentiment. A declining rate of change, narrowing Bollinger Bands, and a decreasing relative trend age indicate a loss of momentum. The negative 'Feature_Dist_To_200DMA' implies the price is not trading above its long-term average."
+    },
+    "VIJAYA": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "Limited specific news. The pharmaceutical sector faces headwinds from pricing regulations and R&D challenges. Companies with a strong focus on niche segments might perform differently, but broad technicals suggest caution.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense competition, regulatory hurdles for new drug approvals, and potential pricing pressures on existing products.",
+        "shap_synthesis": "The predominantly negative SHAP drivers for 'Feature_Volume_Ratio', 'Feature_ROC_20', 'Feature_ADX_14', and 'Feature_Rel_Trend_Age' indicate a bearish sentiment. Decreased volume, a negative rate of change, weakening trend momentum, and declining trend age suggest downward price pressure."
+    },
+    "JSWINFRA": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "Infrastructure sector is seeing government support and increased project pipeline. However, concerns remain about project execution, debt levels, and competition.",
+        "confidence_score": 55,
+        "strategic_threat": "Execution risks on large-scale projects, interest rate sensitivity due to high debt levels, and competition from established players.",
+        "shap_synthesis": "The strong negative SHAP values for 'Feature_Bollinger_Width', 'Feature_ROC_20', and 'Feature_Bollinger_Width_PctRank' indicate a bearish outlook. Narrowing Bollinger Bands, a negative rate of change, and a low percentile rank for Bollinger Band width suggest a loss of upward momentum and potential for a price decline. The negative 'Feature_Volume_Ratio' also contributes to this bearish signal."
+    },
+    "SIEMENS": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The industrial and technology sector is performing well with a focus on electrification and automation. However, global economic slowdown and supply chain issues remain a concern.",
+        "confidence_score": 50,
+        "strategic_threat": "Supply chain disruptions, geopolitical risks affecting global demand, and the cyclical nature of capital goods spending.",
+        "shap_synthesis": "The strong negative SHAP values for 'Feature_Rel_ROC_20', 'Feature_Bollinger_Width_PctRank', and 'Feature_Bollinger_Width' suggest a bearish sentiment. A declining relative rate of change, widening Bollinger Bands that are moving lower, and a high percentile rank for Bollinger Band width indicate potential downward pressure and increased volatility in a bearish context."
+    },
+    "GLAND": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The pharmaceutical sector is subject to ongoing regulatory and pricing pressures. Specific news for Gland is limited, suggesting technical factors are driving the prediction.",
+        "confidence_score": 50,
+        "strategic_threat": "Regulatory scrutiny on drug pricing and development, competition from both domestic and international pharmaceutical companies.",
+        "shap_synthesis": "The negative SHAP values for 'Feature_ROC_20', 'Feature_Bollinger_Width', and 'Feature_Rel_Trend_Age' indicate a bearish sentiment. A declining rate of change, narrowing Bollinger Bands, and a decrease in the relative trend age suggest a loss of upward momentum and potential for price weakness."
+    },
+    "TATACOMM": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The telecommunications sector is experiencing intense competition and evolving technological landscapes. Specific news is limited, suggesting technical indicators are dominant.",
+        "confidence_score": 50,
+        "strategic_threat": "Intense competition, high capital expenditure requirements for network upgrades, and regulatory changes impacting service pricing.",
+        "shap_synthesis": "The negative SHAP values for 'Feature_ATR_Ratio', 'Feature_Bollinger_Width', and 'Feature_ROC_20' suggest a bearish outlook. A decrease in average true range, narrowing Bollinger Bands, and a negative rate of change indicate a loss of volatility and momentum, potentially preceding a downward price movement. The negative 'Feature_Dist_To_200DMA' also contributes to this sentiment."
+    },
+    "JBCHEPHARM": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The pharmaceutical industry faces persistent challenges related to drug pricing, R&D costs, and patent expirations. Specific news for JBCHEPHARM is sparse, implying a technical-driven prediction.",
+        "confidence_score": 50,
+        "strategic_threat": "Pipeline risks, intense competition from generic and innovator drugs, and evolving regulatory requirements.",
+        "shap_synthesis": "The strong negative SHAP values for 'Feature_ROC_20' and 'Feature_Bollinger_Width' point to a bearish sentiment. A declining rate of change and narrowing Bollinger Bands suggest a loss of upward momentum. The negative 'Feature_Dist_To_200DMA' indicates the price is trading below its long-term average, reinforcing the bearish outlook."
+    },
+    "NH": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "No specific news or institutional flows. The company operates in a sector sensitive to interest rates and consumer discretionary spending, both of which are facing headwinds.",
+        "confidence_score": 50,
+        "strategic_threat": "Interest rate sensitivity, potential for softening consumer demand, and competitive pressures in its market segments.",
+        "shap_synthesis": "The dominant negative SHAP drivers for 'Feature_Bollinger_Width_PctRank', 'Feature_Bollinger_Width', and 'Feature_ROC_20' indicate a bearish sentiment. A low percentile rank of Bollinger Band width suggests tight trading, and the negative rate of change implies a loss of upward momentum. The negative 'Feature_Volume_Ratio' further supports this by suggesting lower volume accompanying price action."
+    },
+    "TIMKEN": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The industrial goods sector is sensitive to global economic conditions and manufacturing activity. Concerns about a global slowdown could impact demand for Timken's products.",
+        "confidence_score": 55,
+        "strategic_threat": "Global economic slowdown impacting industrial demand, supply chain vulnerabilities, and currency fluctuations affecting international sales.",
+        "shap_synthesis": "The strong negative SHAP values for 'Feature_Bollinger_Width', 'Feature_ATR_Ratio', and 'Feature_MACD_Hist_Accel' suggest a bearish sentiment. Narrowing Bollinger Bands, reduced volatility, and a negative MACD histogram indicate a loss of upward momentum and potential for price decline. The negative 'Feature_Volume_Ratio' further supports this bearish signal."
+    },
+    "REDINGTON": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "No significant recent news or institutional flow identified. The IT services sector is generally stable but can be impacted by global economic sentiment and client spending.",
+        "confidence_score": 50,
+        "strategic_threat": "Competition from larger IT service providers, pressure on margins from clients, and geopolitical risks affecting global IT spending.",
+        "shap_synthesis": "The predominantly negative SHAP drivers for 'Feature_Bollinger_Width_PctRank', 'Feature_Bollinger_Width', and 'Feature_ROC_20' strongly indicate a bearish sentiment. A low percentile rank of Bollinger Band width suggests tight trading, and the negative rate of change points to a loss of upward momentum. The negative 'Feature_Rel_ROC_20' further reinforces this bearish signal."
+    },
+    "MTARTECH": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Strong performance in the defense and aerospace manufacturing sector, driven by increased government spending and domestic production initiatives. Recent order wins have been reported.",
+        "confidence_score": 85,
+        "strategic_threat": "Execution risks on complex projects, long lead times for specialized components, and potential shifts in government defense spending priorities.",
+        "shap_synthesis": "The overwhelmingly positive SHAP values for 'Feature_Relative_Strength', 'Feature_ATR_Ratio', and 'Feature_Bollinger_Width' strongly indicate a bullish sentiment. A high relative strength suggests outperformance, increasing volatility implies upward momentum, and widening Bollinger Bands can signal an uptrend. The positive 'Feature_Trend_Age' also supports the notion of an established upward trend."
+    },
+    "SCHNEIDER": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "The industrial automation and energy management sector is experiencing strong demand driven by energy transition and digitalization trends. Recent positive earnings reports and guidance have been observed.",
+        "confidence_score": 80,
+        "strategic_threat": "Supply chain constraints, competition from global players, and the cyclical nature of capital expenditure in industrial sectors.",
+        "shap_synthesis": "The predominantly positive SHAP values for 'Feature_Relative_Strength', 'Feature_Bollinger_Width', and 'Feature_ATR_Ratio' point to a bullish sentiment. High relative strength indicates outperformance, widening Bollinger Bands suggest upward momentum, and increased volatility can be associated with an uptrend. The positive 'Feature_EMA_Dist' suggests the price is trading above its exponential moving averages."
+    },
+    "IDEA": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "The telecommunications sector is seeing increased demand for data services and is undergoing infrastructure upgrades. Recent government initiatives to boost the sector could be a positive catalyst.",
+        "confidence_score": 75,
+        "strategic_threat": "Intense competition within the telecom sector, high capital expenditure requirements for network expansion, and evolving regulatory frameworks.",
+        "shap_synthesis": "The strong positive SHAP values for 'Feature_Relative_Strength', 'Feature_ATR_Ratio', and 'Feature_Bollinger_Width_PctRank' suggest a bullish sentiment. High relative strength indicates outperformance, increasing volatility signals upward momentum, and a high percentile rank for Bollinger Band width suggests potential for further expansion. The positive 'Feature_ROC_20' also supports this bullish outlook."
+    },
+    "HFCL": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "Positive outlook for the telecommunications and infrastructure sectors, driven by government initiatives and increasing demand for digital services. Recent order wins have been noted.",
+        "confidence_score": 80,
+        "strategic_threat": "Intense competition within the telecom sector, high capital expenditure requirements for network expansion, and potential regulatory shifts.",
+        "shap_synthesis": "The strong positive SHAP values for 'Feature_Relative_Strength', 'Feature_Bollinger_Width_PctRank', and 'Feature_ROC_20' indicate a bullish sentiment. High relative strength suggests outperformance, a high percentile rank for Bollinger Band width implies potential for further price expansion, and a positive rate of change confirms upward momentum. The positive 'Feature_Bollinger_Width' also supports this bullish trend."
+    },
+    "APARINDS": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The automotive components sector is sensitive to consumer spending and global economic conditions. Concerns about a potential economic slowdown could impact demand.",
+        "confidence_score": 50,
+        "strategic_threat": "Cyclical demand linked to auto production, input cost volatility, and competition from both domestic and international suppliers.",
+        "shap_synthesis": "The strong negative SHAP values for 'Feature_ROC_20' and 'Feature_Bollinger_Width_PctRank' indicate a bearish sentiment. A significant negative rate of change and a low percentile rank for Bollinger Band width suggest a loss of upward momentum and potential for a price decline. The negative 'Feature_Rel_ROC_20' further reinforces this bearish signal."
+    },
+    "SYRMA": {
+        "sentiment": "BULLISH",
+        "news_catalyst": "The electronics manufacturing services sector is benefiting from increased outsourcing and 'Make in India' initiatives. Recent order wins and positive sector outlook suggest growth potential.",
+        "confidence_score": 75,
+        "strategic_threat": "Dependence on key clients, rapid technological obsolescence, and competition from lower-cost manufacturing hubs.",
+        "shap_synthesis": "The predominantly positive SHAP drivers for 'Feature_Relative_Strength', 'Feature_ROC_20', and 'Feature_Bollinger_Width' suggest a bullish sentiment. High relative strength indicates outperformance, a positive rate of change confirms upward momentum, and widening Bollinger Bands suggest increasing volatility in an uptrend. The positive 'Feature_Trend_Age' also supports the idea of an established upward trend."
+    },
+    "WELCORP": {
+        "sentiment": "BEARISH",
+        "news_catalyst": "The industrial sector is sensitive to economic cycles and interest rate movements. Headwinds in global manufacturing could impact demand for Welcorp's products.",
+        "confidence_score": 50,
+        "strategic_threat": "Economic slowdown impacting industrial demand, interest rate sensitivity due to leveraged balance sheet, and competitive pressures.",
+        "shap_synthesis": "The strong negative SHAP values for 'Feature_ROC_20' and 'Feature_Relative_Strength' indicate a bearish sentiment. A significant negative rate of change and underperformance relative to peers suggest downward price pressure. The negative 'Feature_Bollinger_Width' and 'Feature_Volume_Ratio' further support this by indicating narrowing volatility and potentially decreasing investor interest."
+    }
+}

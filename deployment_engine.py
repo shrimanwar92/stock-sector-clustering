@@ -65,9 +65,24 @@ class ProgrammaticDashboardDeployer:
             "tickers": records
         }
         
+        import os
+        import tempfile
+
         try:
-            with open(target_path, "w", encoding="utf-8") as f:
-                json.dump(dashboard_payload, f, indent=4)
-            print(f"✅ Telemetry data successfully compiled locally to: {target_path}")
+            # 1. Get the directory of the target path
+            target_dir = os.path.dirname(target_path) or "."
+            
+            # 2. Write safely to a hidden temporary file in the same directory
+            with tempfile.NamedTemporaryFile("w", dir=target_dir, delete=False, encoding="utf-8") as tf:
+                json.dump(dashboard_payload, tf, indent=4)
+                temp_name = tf.name
+            
+            # 3. Atomically replace the old data.json with the completed new file
+            os.replace(temp_name, target_path)
+            print(f"✅ Telemetry data safely compiled atomically to: {target_path}")
+            
         except Exception as e:
+            # Clean up temp file if it failed before replacement
+            if 'temp_name' in locals() and os.path.exists(temp_name):
+                os.remove(temp_name)
             print(f"❌ Failed to write file to disk: {e}")
