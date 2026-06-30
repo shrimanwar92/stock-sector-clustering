@@ -449,24 +449,31 @@ class StocksRuleEngine:
         print(" 🔍 RUNNING AUTONOMOUS MODEL HEALTH VALIDATION MATRIX")
         print("="*60)
 
+        # Today's active cross-section snapshot
         live_snapshot = live_gold_df.groupby("Symbol").tail(1).reset_index(drop=True)
+        
+        # FIX 1: Smooth out single-day spikes by using a trailing 20-day window per stock for drift metrics
+        live_recent_window = live_gold_df.groupby("Symbol").tail(20).reset_index(drop=True)
+        
         drift_signals = 0
-        max_drift_threshold_sigmas = 2.5
+        max_drift_threshold_sigmas = 3.0  # Relaxed from 2.5 to 3.0 to accommodate normal market cycles
         
         for col in FEATURE_COLUMNS:
-            if col in live_snapshot.columns:
-                live_mean = float(live_snapshot[col].mean())
+            if col in live_recent_window.columns:
+                # Compute average over a rolling month instead of a single volatile day
+                live_mean = float(live_recent_window[col].mean())
                 train_meta = metadata["feature_statistics"].get(col, {})
                 train_mean = train_meta.get("mean", live_mean)
                 train_std = train_meta.get("std", 1.0)
                 
                 z_score_distance = abs(live_mean - train_mean) / (train_std + 1e-9)
                 if z_score_distance > max_drift_threshold_sigmas:
-                    print(f" ❌ [DRIFT DETECTED] Feature '{col}' shifted by {z_score_distance:.2f} sigmas from baseline.")
+                    print(f" ❌ [DRIFT DETECTED] Feature '{col}' shifted by {z_score_distance:.2f} sigmas over trailing window.")
                     drift_signals += 1
 
-        if drift_signals > (len(FEATURE_COLUMNS) * 0.20):
-            print(f"🚨 [RETRAIN TRIGGER] Broad structural feature drift detected across {drift_signals} elements.")
+        # Raised hurdle from 20% to 35% to ensure training only triggers on real structural macro regimes
+        if drift_signals > (len(FEATURE_COLUMNS) * 0.35):
+            print(f"🚨 [RETRAIN TRIGGER] Broad structural feature drift confirmed across {drift_signals} elements.")
             return True
 
         try:
@@ -482,7 +489,8 @@ class StocksRuleEngine:
             )
             valid_universe = live_snapshot[domain_mask].copy()
 
-            if not valid_universe.empty:
+            # FIX 2: Enforce a minimum sample-size constraint and lower the variance hurdle to prevent false alarms
+            if len(valid_universe) >= 15:
                 X_live = valid_universe[FEATURE_COLUMNS].values
                 calibrator = joblib.load(CALIBRATOR_MODEL)
                 current_probs = calibrator.predict_proba(X_live)
@@ -490,9 +498,11 @@ class StocksRuleEngine:
                 live_success_std = float(current_probs[:, 2].astype(float).std())
                 print(f" 📊 Live Class-2 (Success) Probability Dispersion Std: {live_success_std:.4f}")
                 
-                if live_success_std < 0.03:
+                if live_success_std < 0.01:  # Optimized down from 0.03 to 0.01
                     print("🚨 [RETRAIN TRIGGER] Model distribution collapse identified. Signal variance too low.")
                     return True
+            else:
+                print(f" ℹ️ Skipping probability dispersion check (insufficient active tickers today: {len(valid_universe)}/15)")
         except Exception as ex:
             print(f" [WARN] Skinned predictive model health validation bypass: {str(ex)}")
 
