@@ -184,6 +184,10 @@
             "news_catalyst": "No active catalyst logged.",
             "threat": "No structural risk identified.",
             "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
+            "sentiment": "NEUTRAL",
+            "news_catalyst": "No active catalyst logged.",
+            "threat": "No structural risk identified.",
+            "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
         },
         {
             "symbol": "HONAUT",
@@ -203,6 +207,10 @@
             "atrRatio": 1.0932521905595163,
             "closeStrength": 0.5,
             "sector": "CAPITAL_GOODS",
+            "sentiment": "NEUTRAL",
+            "news_catalyst": "No active catalyst logged.",
+            "threat": "No structural risk identified.",
+            "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
             "sentiment": "NEUTRAL",
             "news_catalyst": "No active catalyst logged.",
             "threat": "No structural risk identified.",
@@ -227,6 +235,9 @@
             "closeStrength": 0.5,
             "sector": "CAPITAL_GOODS",
             "sentiment": "NEUTRAL",
+            "news_catalyst": "No active catalyst logged.",
+            "threat": "No structural risk identified.",
+            "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
             "news_catalyst": "No active catalyst logged.",
             "threat": "No structural risk identified.",
             "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
@@ -299,6 +310,11 @@
             "news_catalyst": "No active catalyst logged.",
             "threat": "No structural risk identified.",
             "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
+            "sector": "CAPITAL_GOODS",
+            "sentiment": "NEUTRAL",
+            "news_catalyst": "No active catalyst logged.",
+            "threat": "No structural risk identified.",
+            "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
         },
         {
             "symbol": "POLYCAB",
@@ -319,6 +335,9 @@
             "closeStrength": 0.5,
             "sector": "CAPITAL_GOODS",
             "sentiment": "NEUTRAL",
+            "news_catalyst": "No active catalyst logged.",
+            "threat": "No structural risk identified.",
+            "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
             "news_catalyst": "No active catalyst logged.",
             "threat": "No structural risk identified.",
             "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
@@ -598,6 +617,9 @@
             "news_catalyst": "No active catalyst logged.",
             "threat": "No structural risk identified.",
             "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
+            "news_catalyst": "No active catalyst logged.",
+            "threat": "No structural risk identified.",
+            "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
         },
         {
             "symbol": "AJANTPHARM",
@@ -616,7 +638,7 @@
             "volRatio": 2.1166514383623394,
             "atrRatio": 1.158081002618919,
             "closeStrength": 0.5,
-            "sector": "HEALTHCARE",
+            "sector": "CAPITAL_GOODS",
             "sentiment": "NEUTRAL",
             "news_catalyst": "No active catalyst logged.",
             "threat": "No structural risk identified.",
@@ -897,6 +919,9 @@
             "news_catalyst": "No active catalyst logged.",
             "threat": "No structural risk identified.",
             "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
+            "news_catalyst": "No active catalyst logged.",
+            "threat": "No structural risk identified.",
+            "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
         },
         {
             "symbol": "NH",
@@ -1100,7 +1125,11 @@
             "atrRatio": 1.2340403009883998,
             "closeStrength": 0.5,
             "sector": "CAPITAL_GOODS",
+            "sector": "CAPITAL_GOODS",
             "sentiment": "NEUTRAL",
+            "news_catalyst": "No active catalyst logged.",
+            "threat": "No structural risk identified.",
+            "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
             "news_catalyst": "No active catalyst logged.",
             "threat": "No structural risk identified.",
             "shapSynthesis": "No mathematical-fundamental alignment synthesis generated."
